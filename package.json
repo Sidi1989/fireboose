@@ -1,6 +1,6 @@
 {
   "name": "fireboose",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Tool created to work with Firebase, simplifying the Model-View-Controller communication",
   "main": "index.js",
   "directories": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:Sidi1989/fireboose.git"
+    "url": "git+ssh://git@github.com/Sidi1989/fireboose.git"
   },
   "author": "Miguel Díaz",
   "license": "ISC"
