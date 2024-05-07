@@ -1,10 +1,11 @@
+import db from './index.js';
 import { flatten } from 'flat';
 import { 
   collection, doc,
   setDoc, getDoc, getDocs, 
   updateDoc, deleteDoc,
   arrayUnion, arrayRemove,
-  query, limit, orderBy,
+  query, where, limit,
 } from 'firebase/firestore';
 
 
@@ -17,22 +18,19 @@ import {
  * @param {String} collectionName E.g: members
  * @returns Array (of firestore docs)
  */
-const findMany = async function (db, collectionName) {
+const findMany = async function (collectionName) {
   if (!collectionName) {
-    console.warn('[WARNING] [utils/db/findMany] Not enough params');
+    console.warn('[WARNING] [methods/findMany] Not enough params');
     return [];
   }
+  
   const collectionRef = collection(db, collectionName);
   const queryLimit = limit(10);
   const queryDocs = query(collectionRef, queryLimit);
 
   try {
-    const docs = [];
     var querySnap = await getDocs(queryDocs);
-    if (!querySnap) {
-      console.warn(`[WARNING] [utils/db/findMany] Not found Docs in <${collectionName}>`);
-      return [];
-    }
+    const docs = [];
     querySnap.forEach((doc) => docs.push(doc.data()));
     return docs;
   } catch (e) {
@@ -50,9 +48,9 @@ const findMany = async function (db, collectionName) {
  * @param {String} collectionName E.g: members
  * @returns Object (firestore doc) || null
  */
-const findOne = async function (docId, collectionName) {
+const findOneById = async function (docId, collectionName) {
   if (!docId || !collectionName) {
-    console.warn('[WARNING] [utils/db/findOne] Not enough params');
+    console.warn('[WARNING] [methods/findOne] Not enough params');
     return [];
   }
   const collectionRef = collection(db, collectionName); 
@@ -64,8 +62,44 @@ const findOne = async function (docId, collectionName) {
       const doc = docSnap.data();
       return doc;
     } else {
-      console.warn(`[WARNING] [utils/db/findOne] Document <${docId}> not found`);
       return null;
+    }
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+};
+
+
+/**
+ * @description
+ * Función asíncrona para recuperar un document consignado 
+ * en una collection, no sólo por su Id, sino por cualquier 
+ * propiedad que contenga
+ * @param {String} propertyName E.g: age
+ * @param {} propertyValue E.g: 23
+ * @param {String} collectionName E.g: members
+ * @returns Object (firestore doc) || null
+ */
+const findOneByProperty = async function (collectionName, propertyName, propertyValue) {
+  if (!collectionName || !propertyName || !propertyValue) {
+    console.warn('[WARNING] [methods/findOneByProperty] Not enough params');
+    return null;
+  }
+  
+  const collectionRef = collection(db, collectionName);
+  const queryConditions = where(propertyName, '==', propertyValue);
+  const queryDocs = query(collectionRef, queryConditions);
+
+  try {
+    const docs = [];
+    var querySnap = await getDocs(queryDocs);
+    querySnap.forEach((doc) => docs.push(doc.data()));
+    
+    if (docs.length > 0) {
+      return docs[0];
+    } else {
+      return null
     }
   } catch (e) {
     console.error(e);
@@ -78,13 +112,13 @@ const findOne = async function (docId, collectionName) {
  * @description
  * Función asíncrona para añadir un document a una collection
  * @param {String} docId E.g: m1a
- * @param {Object} docInfo E.g: {name: Miguel, firstname: Díaz, lastname: Laclaustra}
+ * @param {Object} docInfo E.g: {name: Miguel, username: Gobo}
  * @param {String} collectionName E.g: members
  * @returns String || null
  */
 const insertOne = async function (docId, docInfo, collectionName) {
   if (!docId || !docInfo || !collectionName) {
-    console.warn('[WARNING] [utils/db/insertOne] Not enough params');
+    console.warn('[WARNING] [methods/insertOne] Not enough params');
     return [];
   }
   const collectionRef = collection(db, collectionName); 
@@ -104,13 +138,13 @@ const insertOne = async function (docId, docInfo, collectionName) {
  * @description
  * Función asíncrona para sobreescribir un document de una collection
  * @param {String} docId E.g: m1a
- * @param {Object} docInfo E.g: {name: Fernando, firstname: Díaz, lastname: Laclaustra}
+ * @param {Object} docInfo E.g: {name: Fernando, username: Fer}
  * @param {String} collectionName E.g: members
  * @returns String || null
  */
 const updateOne = async function (docId, docInfo, collectionName) {
   if (!docId || !docInfo || !collectionName) {
-    console.warn('[WARNING] [utils/db/updateOne] Not enough params');
+    console.warn('[WARNING] [methods/updateOne] Not enough params');
     return [];
   }
   const collectionRef = collection(db, collectionName);  
@@ -152,7 +186,7 @@ const updateOne = async function (docId, docInfo, collectionName) {
  */
 const deleteOne = async function (docId, collectionName) {
   if (!docId || !collectionName) {
-    console.warn('[WARNING] [utils/db/deleteOne] Not enough params');
+    console.warn('[WARNING] [methods/deleteOne] Not enough params');
     return [];
   }
   const collectionRef = collection(db, collectionName); 
@@ -170,36 +204,60 @@ const deleteOne = async function (docId, collectionName) {
 
 /**
  * @description
- * Función asíncrona para eliminar un document consignado 
- * en una collection
+ * Función asíncrona para actualizar un document consignado 
+ * en una collection respecto de una de sus propiedades tipo array,
+ * añadiéndola un elemento
  * @param {String} docId E.g: m1a
  * @param {String} collectionName E.g: members
- * @param {String} arrayToUpdate E.g: integrations
- * @param {String} operation 'add' || 'remove'
+ * @param {String} arrayToUpdate E.g: shkleps
  * @param {Mixed} fieldInfo 46 || 'Miguel' || {name: Miguel, userRole: admin}
  * @returns String || null
  */
-const updateArrayInOne = async function (docId, collectionName, arrayToUpdate, operation, fieldInfo) {
-  if (!docId || !collectionName || !arrayToUpdate || !operation || !fieldInfo) {
-    console.warn('[WARNING] [utils/db/updateArrayInOne] Not enough params');
-    return [];
+const updateArrayByAddingOne = async function (docId, collectionName, arrayToUpdate, fieldInfo) {
+  if (!docId || !collectionName || !arrayToUpdate || !fieldInfo) {
+    console.warn('[WARNING] [methods/updateArrayByAddingOne] Not enough params');
+    return null;
   }
   const collectionRef = collection(db, collectionName); 
   const docRef = doc(collectionRef, docId);
 
   try {
-    if (operation == 'add') {
-      let updateInfo = {
-        [arrayToUpdate]: arrayUnion(fieldInfo)
-      }
-      await updateDoc(docRef, updateInfo);
+    let updateInfo = {
+      [arrayToUpdate]: arrayUnion(fieldInfo)
     }
-    if (operation == 'remove') {
-      let updateInfo = {
-        [arrayToUpdate]: arrayRemove(fieldInfo)
-      }
-      await updateDoc(docRef, updateInfo);
+    await updateDoc(docRef, updateInfo);
+    return docId;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+};
+
+
+/**
+ * @description
+ * Función asíncrona para actualizar un document consignado 
+ * en una collection respecto de una de sus propiedades tipo array,
+ * quitándola uno de sus elementos
+ * @param {String} docId E.g: m1a
+ * @param {String} collectionName E.g: members
+ * @param {String} arrayToUpdate E.g: shkleps
+ * @param {Mixed} fieldInfo 46 || 'Miguel' || {name: Miguel, userRole: admin}
+ * @returns String || null
+ */
+const updateArrayByRemovingOne = async function (docId, collectionName, arrayToUpdate, fieldInfo) {
+  if (!docId || !collectionName || !arrayToUpdate || !fieldInfo) {
+    console.warn('[WARNING] [methods/updateArrayByRemovingOne] Not enough params');
+    return null;
+  }
+  const collectionRef = collection(db, collectionName); 
+  const docRef = doc(collectionRef, docId);
+
+  try {
+    let updateInfo = {
+      [arrayToUpdate]: arrayRemove(fieldInfo)
     }
+    await updateDoc(docRef, updateInfo);
     return docId;
   } catch (e) {
     console.error(e);
@@ -212,9 +270,11 @@ const updateArrayInOne = async function (docId, collectionName, arrayToUpdate, o
 
 export { 
   findMany,
-  findOne,
+  findOneById,
+  findOneByProperty,
   insertOne,
   updateOne,
   deleteOne,
-  updateArrayInOne,
+  updateArrayByAddingOne,
+  updateArrayByRemovingOne,
 };
