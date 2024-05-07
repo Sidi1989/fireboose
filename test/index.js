@@ -1,10 +1,9 @@
-import fireboose, {findMany} from '../src/index.js';
-import app from '../runtime/config/firebase-client.js';
+import Trial from './model-test.js';
 
 
-const db = fireboose(app);
 
 
-findMany(db, 'members').then(function (resolve) {
+Trial.findMany().then(function (resolve) {
   console.debug(resolve);
 });
+
