@@ -1,18 +1,36 @@
-import app from '../runtime/config/firebase-client.js';
-import { getFirestore, } from 'firebase/firestore';
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
+// import model from './model.js'
 
 
 
-// Initialize Cloud Firestore and get a reference to the service
-const fireboose = function (app) {
-  return getFirestore(app)
+
+const fireboose = {};
+
+/**
+ * @description 
+ * @param {Object} clientConfig 
+ * @return void
+ */
+const connect = function (clientConfig) {
+  this.config = clientConfig;
+
+  // Initialize a Firebase App (without name 'ad hoc', as this will be
+  // considered the default app created for the project)
+  const app = initializeApp(clientConfig);
+  this.app = app;
+  
+  // Initialize Cloud Firestore and get a reference to the service
+  const db = getFirestore(app);
+  this.db = db;
 }
 
-// The creation of the DB must begin through the execution of 
-// fireboose function
-const db = fireboose(app);
+fireboose.connect = connect;
+
+// Import model (with its functions) as a property of fireboose main object:
+// fireboose.model = model;
 
 
 
 
-export default db;
+export default fireboose;

@@ -1,9 +1,19 @@
-import Trial from './model-test.js';
+import fireboose from '../src';
+import firebooseConnectionSettings from '../runtime/config/firebase-config.json';
 
 
 
 
-Trial.findMany().then(function (resolve) {
-  console.debug(resolve);
-});
+fireboose.connect(firebooseConnectionSettings);
 
+// const Trial = fireboose.model('Trial', 'trials')
+
+// const expectedName = 'Trial';
+// const actualName = Trial.name;
+// if (expectedName == actualName) {
+//   console.debug('[Success] Test of name value')
+// } else {
+//   console.debug('[Failure] Test of name value')
+// }
+
+console.debug(fireboose);
