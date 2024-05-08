@@ -4,9 +4,14 @@
 import * from 'react'
 ```
 
-## v0.1.2 (#) 7 de mayo
+## v0.2.0 (#)
 
-+ feature:
++ feature: Actualiza proyecto a v0.2.0
+
+## v0.1.2 (#f27a98c)
+
++ feature: Define el objeto básico fireboose, a semejanza de mongoose
++ fix: Corrige sintaxis de importaciones, y propiedades a emplear en el test
 
 ## v0.1.1 (#bec2746)
 
