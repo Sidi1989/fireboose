@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-// import model from './model.js'
+import model from './model.js'
 
 
 
@@ -28,7 +28,7 @@ const connect = function (clientConfig) {
 fireboose.connect = connect;
 
 // Import model (with its functions) as a property of fireboose main object:
-// fireboose.model = model;
+fireboose.model = model;
 
 
 
