@@ -1,5 +1,5 @@
-import fireboose from '../src';
-import firebooseConnectionSettings from '../runtime/config/firebase-config.json';
+import fireboose from '../src/index.js';
+import firebooseConnectionSettings from '../runtime/config/firebase-config.json' assert { type: "json" };
 
 
 
