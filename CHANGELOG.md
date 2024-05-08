@@ -4,7 +4,11 @@
 import * from 'react'
 ```
 
-## v0.1.1 (#)
+## v0.1.2 (#) 7 de mayo
+
++ feature:
+
+## v0.1.1 (#bec2746)
 
 + feature: Actualiza la estructura básica de un model y sus methods, según WebApp
 + feature: Crea la estructura básica de una clase Trial para el testeo
