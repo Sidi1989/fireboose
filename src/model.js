@@ -1,19 +1,30 @@
 import { 
-  factorFindMany, 
-  factorFindOneById, 
-  factorFindOneByProperty,
-  factorInsertOne, 
-  factorUpdateOne, 
-  factorDeleteOne,
-  factorUpdateArrayByAddingOne,
-  factorUpdateArrayByRemovingOne,
-} from './factories.js';
+  findMany,
+  findOneByProperty,
+  findOneById,
+  insertOne,
+  updateOne,
+  deleteOne,
+  updateArrayByAddingOne,
+  updateArrayByRemovingOne
+} from './methods.js';
 
 
 
 
+/**
+ * @description
+ * @param {String} name Name of the Class. E.g.: Dog
+ * @param {String} collection Name of the collection in Firestore.
+ * It is usually a lowerCase & pluralized version of {name}. E.g.: dogs
+ * @returns 
+ */
 const model = function (name, collection) {
+  const fireboose = this;
+
   const FirebooseClass = class {
+    static app = fireboose.app;
+    static db = fireboose.db;
     static collection = collection;
 
     constructor () {}
@@ -21,14 +32,14 @@ const model = function (name, collection) {
 
   Object.defineProperty (FirebooseClass, 'name', {value: name});
 
-  FirebooseClass.findMany = factorFindMany(FirebooseClass.collection);
-  FirebooseClass.findOneById = factorFindOneById(FirebooseClass.collection);
-  FirebooseClass.findOneByProperty = factorFindOneByProperty(FirebooseClass.collection, '');
-  FirebooseClass.insertOne = factorInsertOne(FirebooseClass.collection);
-  FirebooseClass.updateOne = factorUpdateOne(FirebooseClass.collection);
-  FirebooseClass.deleteOne = factorDeleteOne(FirebooseClass.collection);
-  FirebooseClass.updateArrayByAddingOne = factorUpdateArrayByAddingOne(FirebooseClass.collection);
-  FirebooseClass.updateArrayByRemovingOne = factorUpdateArrayByRemovingOne(FirebooseClass.collection);
+  FirebooseClass.findMany = findMany.bind(FirebooseClass);
+  FirebooseClass.findOneByProperty = findOneByProperty.bind(FirebooseClass);
+  FirebooseClass.findOneById = findOneById.bind(FirebooseClass);
+  FirebooseClass.insertOne = insertOne.bind(FirebooseClass);
+  FirebooseClass.updateOne = updateOne.bind(FirebooseClass);
+  FirebooseClass.deleteOne = deleteOne.bind(FirebooseClass);
+  FirebooseClass.updateArrayByAddingOne = updateArrayByAddingOne.bind(FirebooseClass);
+  FirebooseClass.updateArrayByRemovingOne = updateArrayByRemovingOne.bind(FirebooseClass);
 
   return FirebooseClass;
 }
@@ -36,4 +47,4 @@ const model = function (name, collection) {
 
 
 
-export default model;
+export {model};
