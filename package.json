@@ -1,11 +1,11 @@
 {
   "name": "fireboose",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "type": "module",
   "author": "Miguel Díaz",
   "license": "ISC",
   "description": "Tool created to work with Firebase, simplifying the Model-View-Controller communication",
-  "main": "index.js",
+  "main": "src/index.js",
   "directories": {
     "doc": "doc"
   },
