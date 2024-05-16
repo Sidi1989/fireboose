@@ -12,7 +12,8 @@ import {
 
 import {
   save,
-  inspect
+  inspect,
+  toObject,
 } from './instance-methods.js';
 
 
@@ -36,11 +37,9 @@ const model = function (name, collection) {
 
     // Instance properties
     constructor (info, id) {
-      const instanceInfo = {};
       for (var key in info) {
-        instanceInfo[key] = info[key];
+        this[key] = info[key];
       }
-      this.info = instanceInfo;
       this.__id = id;
     }
   };
@@ -59,6 +58,7 @@ const model = function (name, collection) {
   // Instance methods
   FirebooseClass.prototype.save = save;
   FirebooseClass.prototype.inspect = inspect;
+  FirebooseClass.prototype.toObject = toObject;
 
   return FirebooseClass;
 }
