@@ -11,6 +11,6 @@ const Perro = fireboose.model('Perro', 'perros');
 // Test
 const kira = new Perro({name:'kira'}, 'test3id');
 const pancho = new Perro({name:'pancho'}, 'test3id2');
-// console.debug(Perro.name)
 
-kira.save();
+kira.inspect();
+pancho.save();

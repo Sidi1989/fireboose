@@ -11,7 +11,7 @@ const Pet = fireboose.model('Pet', 'pets');
 // Test
 Pet.create({name: 'kira'}, 'test2id')
   .then(function(resolve) {
-    console.debug('insertOneResolve', resolve);
+    console.debug('createResolve', resolve);
     return resolve;
   })
   .then(function(resolve) {
@@ -21,6 +21,22 @@ Pet.create({name: 'kira'}, 'test2id')
       })
   })
   .catch(function(reject) {
-    console.error('Error in Test 2!');
+    console.error('Error in create Test 2!');
+    console.error(reject);
+  })
+
+Pet.create({name: 'pancho'},)
+  .then(function(resolve) {
+    console.debug('addResolve', resolve);
+    return resolve;
+  })
+  .then(function(resolve) {
+    Pet.findOneById(resolve)
+      .then(function(resolve) {
+        console.debug('findOneByIdResolve', resolve);
+      })
+  })
+  .catch(function(reject) {
+    console.error('Error in add Test 2!');
     console.error(reject);
   })
