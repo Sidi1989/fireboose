@@ -21,6 +21,16 @@ const save = async function () {
   const docRef = doc(collectionRef, this.__id);
   await setDoc(docRef, this.info);
   return this.__id;
+};
+
+
+/**
+ * @description
+ * Function to help logging information about the instance
+ */
+const inspect = async function () {
+  console.log('Info about this instance of:', this)
+  console.log('And its instance methods:', this.__proto__)
 }
 
 
@@ -28,4 +38,5 @@ const save = async function () {
 
 export {
   save,
+  inspect,
 }

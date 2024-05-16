@@ -8,10 +8,11 @@ import {
   deleteOne,
   updateArrayByAddingOne,
   updateArrayByRemovingOne
-} from './methods.js';
+} from './class-methods.js';
 
 import {
   save,
+  inspect
 } from './instance-methods.js';
 
 
@@ -35,9 +36,11 @@ const model = function (name, collection) {
 
     // Instance properties
     constructor (info, id) {
+      const instanceInfo = {};
       for (var key in info) {
-        this[key] = info[key];
+        instanceInfo[key] = info[key];
       }
+      this.info = instanceInfo;
       this.__id = id;
     }
   };
@@ -55,6 +58,7 @@ const model = function (name, collection) {
   
   // Instance methods
   FirebooseClass.prototype.save = save;
+  FirebooseClass.prototype.inspect = inspect;
 
   return FirebooseClass;
 }
