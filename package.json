@@ -10,7 +10,7 @@
     "doc": "doc"
   },
   "scripts": {
-    "test": "echo 'it is working'"
+    "test": "echo 'hello world'"
   },
   "repository": {
     "type": "git",
