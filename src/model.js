@@ -25,7 +25,8 @@ import {
  * 
  * Create a Fireboose Class, directly connected to a collection in Firestore
  * @param {String} name Name of the Class. E.g.: Dog
- * @param {Schema} schema instance of Schema Class
+ * @param {Schema} schema Schematic definition and conditions for the properties
+ * of all the Class' instances
  * @param {String} collection Name of the collection in Firestore.
  * It is usually a lowerCase & pluralized version of {name}. E.g.: dogs
  */
