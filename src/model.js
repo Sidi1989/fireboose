@@ -11,9 +11,10 @@ import {
 } from './class-methods.js';
 
 import {
-  save,
-  inspect,
   toObject,
+  inspect,
+  validate,
+  save,
 } from './instance-methods.js';
 
 
@@ -21,21 +22,23 @@ import {
 
 /**
  * @description
+ * 
+ * Create a Fireboose Class, directly connected to a collection in Firestore
  * @param {String} name Name of the Class. E.g.: Dog
+ * @param {Schema} schema instance of Schema Class
  * @param {String} collection Name of the collection in Firestore.
  * It is usually a lowerCase & pluralized version of {name}. E.g.: dogs
  */
-const model = function (name, collection) {
+const model = function (name, schema, collection) {
   const fireboose = this;
 
   const FirebooseClass = class {
-    // Class properties
     static app = fireboose.app;
     static db = fireboose.db;
     static collection = collection;
     static name = name;
+    static schema = schema;
 
-    // Instance properties
     constructor (info, id) {
       for (var key in info) {
         this[key] = info[key];
@@ -56,9 +59,10 @@ const model = function (name, collection) {
   FirebooseClass.updateArrayByRemovingOne = updateArrayByRemovingOne.bind(FirebooseClass);
   
   // Instance methods
-  FirebooseClass.prototype.save = save;
-  FirebooseClass.prototype.inspect = inspect;
   FirebooseClass.prototype.toObject = toObject;
+  FirebooseClass.prototype.inspect = inspect;
+  FirebooseClass.prototype.validate = validate;
+  FirebooseClass.prototype.save = save;
 
   return FirebooseClass;
 }
