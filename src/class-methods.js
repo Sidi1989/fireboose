@@ -13,17 +13,28 @@ import {
 
 /**
  * @description
- * Async function to retrieve multiple documents from a colelction
- * (with an optional limit in their retrieval)
- * @returns Array (of firestore docs)
+ * Retrieve multiple Firestore documents from a collection
+ * (with an optional limit in their retrieval; so if it's not
+ * set, it will be 10 documents).
+ * @param {Number} documentsLimit Optional
+ * @returns Array (of Firestore docs)
+ * @example
+ * const countriesRetrieved = await Country.findMany(3);
+ * 
+ * console.log(countriesRetrieved)
+ * // [
+ * //   {name: 'Spain' capital: 'Madrid'},
+ * //   {name: 'France' capital: 'Paris'},
+ * //   {name: 'Germany' capital: 'Berlin'}
+ * // ]
  */
-const findMany = async function () {
+const findMany = async function (documentsLimit = 10) {
   const db = this.db;
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName);
   
   // Set the number of documents to be retrieved
-  const queryLimit = limit(10);
+  const queryLimit = limit(documentsLimit);
   const queryDocs = query(collectionRef, queryLimit);
 
   var querySnap = await getDocs(queryDocs);
@@ -35,11 +46,11 @@ const findMany = async function () {
 
 /**
  * @description
- * Async function to retrieve a document from a collection, known by any of
- * its attributes
+ * Retrieve a Firestore document from a collection, found by any of
+ * its properties.
  * @param {String} propertyName E.g: age
- * @param {} propertyValue E.g: 23
- * @returns Object (firestore doc) || null
+ * @param {Mixed} propertyValue E.g: 23 (Coincident with typeof(propertyName))
+ * @returns Firestore doc || null
  */
 const findOneByProperty = async function (propertyName, propertyValue) {
   const db = this.db;
@@ -50,7 +61,7 @@ const findOneByProperty = async function (propertyName, propertyValue) {
     throw new Error('Not enough params for [findOneByProperty]')
   }
   
-  // Here is set the attribute to be searched for
+  // Here is set the property to be searched for:
   const queryConditions = where(propertyName, '==', propertyValue);
   const queryDocs = query(collectionRef, queryConditions);
 
@@ -58,6 +69,7 @@ const findOneByProperty = async function (propertyName, propertyValue) {
   var querySnap = await getDocs(queryDocs);
   querySnap.forEach((doc) => docs.push(doc.data()));
   
+  // It only returns the first coincidence:
   if (docs.length > 0) {
     return docs[0];
   } else {
@@ -68,10 +80,9 @@ const findOneByProperty = async function (propertyName, propertyValue) {
 
 /**
  * @description
- * Async function to retrieve a document from a collection, known by
- * its ID
+ * Retrieve a Firestore document from a collection, found by its ID.
  * @param {String} docId E.g: m1a
- * @returns Object (firestore doc) || null
+ * @returns Firestore doc || null
  */
 const findOneById = async function (docId) {
   const db = this.db;
@@ -212,25 +223,38 @@ const deleteOne = async function (docId) {
 
 /**
  * @description
- * Async function to update a document in a collection, concerning one of 
- * its array attributes, in which new elements are included
- * @param {String} docId E.g: m1a
- * @param {String} arrayToUpdate E.g: countries
- * @param {Mixed} fieldInfo 46 || 'Spain' || {name: Spain, city: Madrid}
+ * Updates a document, by adding a new element in one of its array properties,
+ * appending it at the end
+ * @param {String} docId E.g: 'm1a'
+ * @param {String} fieldName E.g: 'countries'
+ * @param {Mixed} fieldValue 46 || 'Spain' || {name: 'Spain', city: 'Madrid'}
  * @returns String
+ * @example
+ * const country1a = {
+ *   id: 'country1a',
+ *   cities: ['Barcelona', 'Valencia']
+ * };
+ *  
+ * await Country.updateArrayByAddingOne(country1a, cities, 'Madrid');
+ * 
+ * console.log(country1a)
+ * // {
+ * //   id: 'country1a',
+ * //   cities: ['Barcelona', 'Valencia', 'Madrid']
+ * // };
  */
-const updateArrayByAddingOne = async function (docId, arrayToUpdate, fieldInfo) {
+const updateArrayByAddingOne = async function (docId, fieldName, fieldValue) {
   const db = this.db;
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName);
 
-  if (!docId || !arrayToUpdate || !fieldInfo) {
+  if (!docId || !fieldName || !fieldValue) {
     throw new Error('Not enough params for [updateArrayByAddingOne]')
   }
 
   const docRef = doc(collectionRef, docId);
   let updateInfo = {
-    [arrayToUpdate]: arrayUnion(fieldInfo)
+    [fieldName]: arrayUnion(fieldValue)
   }
   await updateDoc(docRef, updateInfo);
   return docId;
@@ -244,7 +268,7 @@ const updateArrayByAddingOne = async function (docId, arrayToUpdate, fieldInfo) 
  * @param {String} docId E.g: m1a
  * @param {String} arrayToUpdate E.g: countries
  * @param {Mixed} fieldInfo 46 || 'Spain' || {name: Spain, city: Madrid}
- * @returns String || null
+ * @returns String || null 
  */
 const updateArrayByRemovingOne = async function (docId, arrayToUpdate, fieldInfo) {
   const db = this.db;

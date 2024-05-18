@@ -8,8 +8,66 @@ import {
 
 /**
  * @description
- * Async function to set a Firebase document in a collection, after its creation
- * as a new Instance of a Class
+ * Convert an instance into a Plain Object.
+ * 
+ * It includes only ownProperties (both enumerable and non-enumerable),
+ * but not inherited properties, so it excludes methods like:
+ * inspect(), save(),... which are inherited from its parent Class.
+ * @return {Object}
+ */
+const toObject = function () {
+  const pojo = {}
+  for (let prop of Object.getOwnPropertyNames(this)) {
+    pojo[prop] = this[prop];
+  }
+
+  return pojo;
+}
+
+
+/**
+ * @description
+ * Help logging information about an instance.
+ * 
+ * It exposes both ownProperties and the inherited ones, but only if 
+ * they are enumerable.
+ * @return {Log}
+ */
+const inspect = function () {
+  for (let prop in this) {
+    console.log(prop, this[prop]);
+  }
+};
+
+/**
+ * @description
+ * Check multiple conditions to be fulfilled by an instance,
+ * before saving it.
+ * 
+ * @return {Boolean}
+ */
+const validate = function () {
+  const selfSchema = this.__proto__.constructor.schema;
+  const selfSchemaDefinition = selfSchema.definition;
+  const selfSchemaConfig = selfSchema.config;
+
+  // Check if a property defined as required in the Schema exists
+  // in the instance
+  for (let prop in selfSchemaDefinition) {
+    if (selfSchemaDefinition[prop].required && this[prop] === undefined) {
+      console.error(`Required property ${prop} not found in instance`);
+      return false;
+    }
+  }
+}
+
+
+/**
+ * @description
+ * Set an instance (previously created through: new Class(info)) as a 
+ * Firestore document in a collection.
+ * 
+ * @return {String} Id of the instance
  */
 const save = async function () {
   let Constructor = this.__proto__.constructor;
@@ -24,42 +82,11 @@ const save = async function () {
 };
 
 
-/**
- * @description
- * Function to help logging information about the instance
- * 
- * It includes both inherited and owned properties
- * Its result will be coincident to the .toObject() instance method
- */
-const inspect = function () {
-  for (let prop of Object.getOwnPropertyNames(this)) {
-    console.log(prop);
-  }
-};
-
-
-/**
- * @description
- * Function to convert an instance into a plain object
- * 
- * It includes only ownPropertyNames (both enumerable and non-enumerable),
- * but not inherited properties, since we want to exclude methods like:
- * save(), inspect(),... which are inherited from its parent Class
- */
-const toObject = function () {
-  const pojo = {}
-  for (let prop of Object.getOwnPropertyNames(this)) {
-    pojo[prop] = this[prop];
-  }
-
-  return pojo;
-}
-
-
 
 
 export {
-  save,
-  inspect,
   toObject,
+  inspect,
+  validate,
+  save,
 }
