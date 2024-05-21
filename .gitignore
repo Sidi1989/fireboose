@@ -3,7 +3,6 @@
 /.pnp
 .pnp.js
 
-
 # environment variables
 .env
 .env.local
@@ -11,15 +10,12 @@
 .env.production.local
 .env.test.local
 
-
 # runtime files
 /runtime
-
 
 # builtime files
 /build
 /dist
-
 
 # static files eligible for CDN
 public/

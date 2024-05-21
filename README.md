@@ -83,4 +83,4 @@ kira.save()
 
 ## License
 
-MIT
+ISC
