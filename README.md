@@ -11,8 +11,8 @@ building, business logic hooks and more, out of the box.
 Use the package manager 'npm' to install Fireboose:
 
 ```js
-npm install firefose --save
-yarn add firefose
+npm install fireboose --save
+yarn add fireboose
 ```
 Then you will be able to import it:
 
