@@ -2,15 +2,15 @@
   "name": "fireboose",
   "version": "0.4.0",
   "type": "module",
-  "author": "Miguel Díaz",
+  "author": "Miguel Díaz Laclaustra",
   "license": "ISC",
-  "description": "Tool created to work with Firebase, simplifying the Model-View-Controller communication",
+  "description": "Library created to work with Firebase's Firestore, simplifying the Model-View-Controller communication",
   "main": "index.js",
   "directories": {
     "doc": "doc"
   },
   "scripts": {
-    "test": "echo 'hello world'"
+    "test": "echo 'hello fireboose'"
   },
   "repository": {
     "type": "git",
