@@ -1,19 +1,23 @@
 # API
 
-## Instance Methods
-
-- save()
-- inspect()
-- toObject()
-
 ## Class Methods
 
+- findOneById
 - findMany
-- findOneByProperty
-- findOneById 
+- findOneByProperty 
+- findManyByProperty
+- findByArrayElement
+- findByArrayElements
 - create
 - insertOne
 - updateOne
+- addToArray
+- removeFromArray
 - deleteOne
-- updateArrayByAddingOne
-- updateArrayByRemovingOne
+
+## Instance Methods
+
+- toObject()
+- inspect()
+- validate()
+- save()

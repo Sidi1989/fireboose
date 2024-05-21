@@ -1,13 +1,16 @@
 import { 
+  findOneById,
   findMany,
   findOneByProperty,
-  findOneById,
+  findManyByProperty,
+  findByArrayElement,
+  findByArrayElements,
   create,
   insertOne,
   updateOne,
+  addToArray,
+  removeFromArray,
   deleteOne,
-  updateArrayByAddingOne,
-  updateArrayByRemovingOne
 } from './class-methods.js';
 
 import {
@@ -49,15 +52,18 @@ const model = function (name, schema, collection) {
   };
 
   // Class methods
+  FirebooseClass.findOneById = findOneById.bind(FirebooseClass);
   FirebooseClass.findMany = findMany.bind(FirebooseClass);
   FirebooseClass.findOneByProperty = findOneByProperty.bind(FirebooseClass);
-  FirebooseClass.findOneById = findOneById.bind(FirebooseClass);
+  FirebooseClass.findManyByProperty = findManyByProperty.bind(FirebooseClass);
+  FirebooseClass.findByArrayElement = findByArrayElement.bind(FirebooseClass);
+  FirebooseClass.findByArrayElements = findByArrayElements.bind(FirebooseClass);
   FirebooseClass.create = create.bind(FirebooseClass);
   FirebooseClass.insertOne = insertOne.bind(FirebooseClass);
   FirebooseClass.updateOne = updateOne.bind(FirebooseClass);
+  FirebooseClass.addToArray = addToArray.bind(FirebooseClass);
+  FirebooseClass.removeFromArray = removeFromArray.bind(FirebooseClass);
   FirebooseClass.deleteOne = deleteOne.bind(FirebooseClass);
-  FirebooseClass.updateArrayByAddingOne = updateArrayByAddingOne.bind(FirebooseClass);
-  FirebooseClass.updateArrayByRemovingOne = updateArrayByRemovingOne.bind(FirebooseClass);
   
   // Instance methods
   FirebooseClass.prototype.toObject = toObject;
