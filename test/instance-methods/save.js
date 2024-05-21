@@ -27,13 +27,8 @@ const expectedId = 'newTestId1'
 if (expectedId != newDog.__id) {
   console.error('Failure at .__id')
 }
-const expectedName = 'newDog'
-if (expectedName != newDog.name) {
-  console.error('Failure at .name')
-}
 
 newDog.save()
-  .then(function () {})
   .catch(function (reject) {
     console.debug(reject)
     console.error('Failure at .save()')

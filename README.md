@@ -41,7 +41,7 @@ fireboose.connect(connectionConfig);
 
 ## Schema
 
-Once achieved the connection, you can build an schema:
+Once achieved the connection, you can build an Schema:
 
 ```js
 const definition = {

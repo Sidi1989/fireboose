@@ -42,7 +42,7 @@ const inspect = function () {
 /**
  * @description
  * Check multiple conditions to be fulfilled by an instance,
- * before saving it.
+ * triggering before it could be saved.
  * 
  * @return {Boolean}
  */
