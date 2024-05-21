@@ -1,4 +1,4 @@
-import fireboose from '../../src/index.js';
+import fireboose, {Schema} from '../../src/index.js';
 import firebooseConnectionSettings from '../../runtime/config/firebase-config.json' assert { type: "json" };
 
 
@@ -6,19 +6,34 @@ import firebooseConnectionSettings from '../../runtime/config/firebase-config.js
 
 fireboose.connect(firebooseConnectionSettings);
 
-const Pet = fireboose.model('Pet', 'pets');
+const countrySchemaDefinition = {
+  name: {
+    $type: String,
+    required: true
+  },
+  capital: {
+    $type: String,
+    required: true
+  },
+};
+const countrySchemaConfig = {};
+const countrySchema = new Schema(countrySchemaDefinition, countrySchemaConfig);
+const Country = fireboose.model('Country', countrySchema, 'countries');
 
 // Test
-const expectedName = 'Pet';
-const actualName = Pet.name;
-if (expectedName == actualName) {
-  console.debug('[Success] Test of name value')
-} else {
-  console.debug('[Failure] Test of name value')
+if (!fireboose.db) {
+  console.error('Failure at new Class DbTest')
 }
 
-if (fireboose.db) {
-  console.debug('[Success] Test of db value')
-} else {
-  console.debug('[Failure] Test of db value')
+const actualCollection = Country.collection;
+const expectedCollection = 'countries';
+if (expectedCollection != actualCollection) {
+  console.error('Failure at new Class CollectionTest')
 }
+
+const actualName = Country.name;
+const expectedName = 'Country';
+if (expectedName != actualName) {
+  console.error('Failure at new Class NameTest')
+}
+
