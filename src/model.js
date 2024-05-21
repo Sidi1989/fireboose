@@ -1,19 +1,23 @@
 import { 
+  findOneById,
   findMany,
   findOneByProperty,
-  findOneById,
+  findManyByProperty,
+  findByArrayElement,
+  findByArrayElements,
   create,
   insertOne,
   updateOne,
+  addToArray,
+  removeFromArray,
   deleteOne,
-  updateArrayByAddingOne,
-  updateArrayByRemovingOne
 } from './class-methods.js';
 
 import {
-  save,
-  inspect,
   toObject,
+  inspect,
+  validate,
+  save,
 } from './instance-methods.js';
 
 
@@ -21,21 +25,24 @@ import {
 
 /**
  * @description
+ * 
+ * Create a Fireboose Class, directly connected to a collection in Firestore
  * @param {String} name Name of the Class. E.g.: Dog
+ * @param {Schema} schema Schematic definition and conditions for the properties
+ * of all the Class' instances
  * @param {String} collection Name of the collection in Firestore.
  * It is usually a lowerCase & pluralized version of {name}. E.g.: dogs
  */
-const model = function (name, collection) {
+const model = function (name, schema, collection) {
   const fireboose = this;
 
   const FirebooseClass = class {
-    // Class properties
     static app = fireboose.app;
     static db = fireboose.db;
     static collection = collection;
     static name = name;
+    static schema = schema;
 
-    // Instance properties
     constructor (info, id) {
       for (var key in info) {
         this[key] = info[key];
@@ -45,20 +52,24 @@ const model = function (name, collection) {
   };
 
   // Class methods
+  FirebooseClass.findOneById = findOneById.bind(FirebooseClass);
   FirebooseClass.findMany = findMany.bind(FirebooseClass);
   FirebooseClass.findOneByProperty = findOneByProperty.bind(FirebooseClass);
-  FirebooseClass.findOneById = findOneById.bind(FirebooseClass);
+  FirebooseClass.findManyByProperty = findManyByProperty.bind(FirebooseClass);
+  FirebooseClass.findByArrayElement = findByArrayElement.bind(FirebooseClass);
+  FirebooseClass.findByArrayElements = findByArrayElements.bind(FirebooseClass);
   FirebooseClass.create = create.bind(FirebooseClass);
   FirebooseClass.insertOne = insertOne.bind(FirebooseClass);
   FirebooseClass.updateOne = updateOne.bind(FirebooseClass);
+  FirebooseClass.addToArray = addToArray.bind(FirebooseClass);
+  FirebooseClass.removeFromArray = removeFromArray.bind(FirebooseClass);
   FirebooseClass.deleteOne = deleteOne.bind(FirebooseClass);
-  FirebooseClass.updateArrayByAddingOne = updateArrayByAddingOne.bind(FirebooseClass);
-  FirebooseClass.updateArrayByRemovingOne = updateArrayByRemovingOne.bind(FirebooseClass);
   
   // Instance methods
-  FirebooseClass.prototype.save = save;
-  FirebooseClass.prototype.inspect = inspect;
   FirebooseClass.prototype.toObject = toObject;
+  FirebooseClass.prototype.inspect = inspect;
+  FirebooseClass.prototype.validate = validate;
+  FirebooseClass.prototype.save = save;
 
   return FirebooseClass;
 }
