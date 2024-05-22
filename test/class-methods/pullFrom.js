@@ -22,17 +22,17 @@ const countrySchema = new Schema(countrySchemaDefinition, countrySchemaConfig);
 const Country = fireboose.model('Country', countrySchema, 'countries');
 
 // Test
-Country.create({name: 'Spain', rivers: ['Ebro', 'Tajo']}, 'addToArrayTestId1');
-const element = 'Duero';
+Country.create({name: 'Spain', rivers: ['Ebro', 'Tajo', 'Duero']}, 'pullFromTestId1');
+const element = 'Tajo';
 
-Country.addToArray('addToArrayTestId1', 'rivers', element)
+Country.pullFrom('pullFromTestId1', 'rivers', element)
   .then(function(resolve) {
     Country.findOneById(resolve)
       .then(function(resolve) {
-        let expectedResolve = {name: 'Spain', rivers: ['Ebro', 'Tajo', 'Duero']};
+        let expectedResolve = {name: 'Spain', rivers: ['Ebro', 'Duero']};
 
         if (!_.isEqual(expectedResolve, resolve)) {
-          console.error('Failure at .addToArray()');
+          console.error('Failure at .pullFrom()');
         }
       })
   })

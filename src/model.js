@@ -6,10 +6,9 @@ import {
   findByArrayElement,
   findByArrayElements,
   create,
-  insertOne,
   updateOne,
-  addToArray,
-  removeFromArray,
+  pushInto,
+  pullFrom,
   deleteOne,
 } from './class-methods.js';
 
@@ -59,10 +58,9 @@ const model = function (name, schema, collection) {
   FirebooseClass.findByArrayElement = findByArrayElement.bind(FirebooseClass);
   FirebooseClass.findByArrayElements = findByArrayElements.bind(FirebooseClass);
   FirebooseClass.create = create.bind(FirebooseClass);
-  FirebooseClass.insertOne = insertOne.bind(FirebooseClass);
   FirebooseClass.updateOne = updateOne.bind(FirebooseClass);
-  FirebooseClass.addToArray = addToArray.bind(FirebooseClass);
-  FirebooseClass.removeFromArray = removeFromArray.bind(FirebooseClass);
+  FirebooseClass.pushInto = pushInto.bind(FirebooseClass);
+  FirebooseClass.pullFrom = pullFrom.bind(FirebooseClass);
   FirebooseClass.deleteOne = deleteOne.bind(FirebooseClass);
   
   // Instance methods
