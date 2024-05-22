@@ -1,3 +1,5 @@
 /runtime
+/doc
 /public
+/test
 .env

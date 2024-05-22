@@ -9,10 +9,9 @@
 - findByArrayElement
 - findByArrayElements
 - create
-- insertOne
 - updateOne
-- addToArray
-- removeFromArray
+- pushInto
+- pullFrom
 - deleteOne
 
 ## Instance Methods

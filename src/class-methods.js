@@ -64,8 +64,8 @@ const findMany = async function (documentsLimit = 25) {
   const queryLimit = limit(documentsLimit);
   const queryDocs = query(collectionRef, queryLimit);
 
-  var querySnap = await getDocs(queryDocs);
   const docs = [];
+  var querySnap = await getDocs(queryDocs);
   querySnap.forEach((doc) => docs.push(doc.data()));
   return docs;
 };
@@ -83,6 +83,22 @@ const findOneByProperty = async function (property, value) {
   const db = this.db;
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName);
+
+  // About 'nested objects':
+
+  // If the value is that of a property in a nested object, it should be passed
+  // as a flatten string. E.g.:
+  // Country.create(
+  //    {
+  //      name: 'Spain', 
+  //      capital: {
+  //        river: 'Manzanares',
+  //        coasted: false,
+  //      }, 
+  //    },
+  //    'newCountryId'
+  // );
+  // const foundCountry = await Country.findOneByProperty('capital.river', 'Manzanares');
 
   if (!property || !value) {
     throw new Error('Not enough params for [findOneByProperty]')
@@ -108,39 +124,47 @@ const findOneByProperty = async function (property, value) {
 /**
  * @description
  * Retrieve Firestore documents from a collection, found by the presence of
- * certain values for one of their properties.
- * @param {String} array E.g: 'seas'
+ * some values for one of their properties.
+ * @param {String} property E.g: 'seas'
  * @param {Array} elements E.g.: ['Atlantic', 'Mediterranean']
- * @param {Boolean} presence True by default
- * @param {Number} documentsLimit Optional (Just 1 document by default)
+ * Although the values could be of different types (according to the property 
+ * queried), all of the possible matches must be passed inside an array
+ * @param {Object} matchProps Always includes two properties:
+ *  -documentsLimit ({Number}): how many docs it will return; 
+ *      1 by default
+ *  -equality ({Boolean}): whether it will search for the equality or
+ *   non-equality of the elements to the values of the property; 
+ *      true by default
+ * E.g.: {documentsLimit: 10, equality: true}
  * @returns Array (of Firestore docs)
  * @example 
- * When looking for the presence, it operates as the combination of
+ * When looking for the existence, it operates as the combination of
  * up to 30 equality (==) clauses on the same property with a logical OR;
  * so the query will return documents where the given property matches 
  * any of the comparison values.
  * 
- * When looking for the absence, it operates as the combination of
+ * When looking for the inexistence, it operates as the combination of
  * up to 10 non-equality (!=) clauses on the same property with a logical AND;
  * so the query will return documents where the given property exists, it is 
  * not null, and does not match any of the comparison values.
  */
-const findManyByProperty = async function (array, elements, presence = true, documentsLimit = 1) {
+const findManyByProperty = async function (property, elements, matchProps={documentsLimit: 1, equality: true}) {
   const db = this.db;
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName); 
 
-  if (!array || !elements) {
+  if (!property || !elements) {
     throw new Error('Not enough params for [findManyByProperty]')
   }
   
-  // Here are set the values to be searched for (with their respective limits),
-  // as well as the decision of searching for their presence or absence in there:
+  // Here are set the values to be searched for (with their respective limits of
+  // up to 30 or up to 10 clauses), as well as the decision of searching for their
+  // equality or non-equality to values of the property:
   var queryConditions;
-  if (presence == true) {
-    queryConditions = where(array, 'in', elements);
-  } else {
-    queryConditions = where(array, 'not-in', elements);
+  if (matchProps && matchProps.equality == false) {
+    queryConditions = where(property, 'not-in', elements);
+  } else if (!matchProps || matchProps && matchProps.equality == true) {
+    queryConditions = where(property, 'in', elements);
   }
   const queryDocs = query(collectionRef, queryConditions);
 
@@ -149,9 +173,16 @@ const findManyByProperty = async function (array, elements, presence = true, doc
   querySnap.forEach((doc) => docs.push(doc.data()));
   
   // It will return all the documents where the elements are or not matched,
-  // up to the optional limit:
+  // according to the equality option, up to the optional limit:
+  var sliceLimit;
+  if (matchProps && matchProps.documentsLimit != 1) {
+    sliceLimit = matchProps.documentsLimit;
+  } else if (!matchProps || matchProps && matchProps.documentsLimit == 1) {
+    sliceLimit = 1;
+  }
+
   if (docs.length > 0) {
-    const slice = docs.slice(0, documentsLimit)
+    const slice = docs.slice(0, sliceLimit)
     return slice;
   } else {
     return docs;
@@ -163,29 +194,35 @@ const findManyByProperty = async function (array, elements, presence = true, doc
  * @description
  * Retrieve Firestore documents from a collection, found by the presence
  * of a certain element in one of its {Array} properties.
- * @param {String} array E.g: 'countries'
+ * @param {String} arrayProp E.g: 'countries'
  * @param {Mixed} element 27 || 'Spain' || true
+ * However, about arrays of objects:
+ *  -In order to return documents that contain a particular object in the array, 
+ *   you need to pass the entire object as an argument, not only a single field.
+ *  -So if you need to filter based on one of the object properties, then you could: 
+ *      create an additional array that only contains that one; or
+ *      store the objects as a sub-collection instead of as an array.
  * @param {Number} documentsLimit Optional (Just 1 document by default)
  * @returns Array (of Firestore docs)
  */
-const findByArrayElement = async function (array, element, documentsLimit = 1) {
+const findByArrayElement = async function (arrayProp, element, documentsLimit = 1) {
   const db = this.db;
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName); 
 
-  if (!array || !element) {
+  if (!arrayProp || !element) {
     throw new Error('Not enough params for [findByArrayElement]')
   }
   
-  // Here is set the element of the array to be searched for:
-  const queryConditions = where(array, 'array-contains', element);
+  // Here is set the element of the arrayProp to be searched for:
+  const queryConditions = where(arrayProp, 'array-contains', element);
   const queryDocs = query(collectionRef, queryConditions);
 
   const docs = [];
   var querySnap = await getDocs(queryDocs);
   querySnap.forEach((doc) => docs.push(doc.data()));
   
-  // It will returns all the documents where the array field contains
+  // It will returns all the documents where the array contains
   // the searched element, up to the optional limit:
   if (docs.length > 0) {
     const slice = docs.slice(0, documentsLimit)
@@ -200,7 +237,7 @@ const findByArrayElement = async function (array, element, documentsLimit = 1) {
  * @description
  * Retrieve Firestore documents from a collection, found by the existence
  * of certain elements in one of its {Array} properties.
- * @param {String} array E.g: 'seas'
+ * @param {String} arrayProp E.g: 'seas'
  * @param {Array} elements E.g.: ['Atlantic', 'Mediterranean']
  * @param {Number} documentsLimit Optional (Just 1 document by default)
  * @returns Array (of Firestore docs)
@@ -209,24 +246,24 @@ const findByArrayElement = async function (array, element, documentsLimit = 1) {
  * array property, with a logical OR; so the query will return documents where that
  * given array contains one or more of the comparison elements.
  */
-const findByArrayElements = async function (array, elements, documentsLimit = 1) {
+const findByArrayElements = async function (arrayProp, elements, documentsLimit = 1) {
   const db = this.db;
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName); 
 
-  if (!array || !elements) {
+  if (!arrayProp || !elements) {
     throw new Error('Not enough params for [findByArrayElements]')
   }
   
-  // Here are set the elements of the array to be searched for:
-  const queryConditions = where(array, 'array-contains-any', elements);
+  // Here are set the elements of the arrayProp to be searched for:
+  const queryConditions = where(arrayProp, 'array-contains-any', elements);
   const queryDocs = query(collectionRef, queryConditions);
 
   const docs = [];
   var querySnap = await getDocs(queryDocs);
   querySnap.forEach((doc) => docs.push(doc.data()));
   
-  // It will returns all the documents where the array field contains one or more 
+  // It will returns all the documents where the array contains one or more 
   // of the searched elements, up to the optional limit:
   if (docs.length > 0) {
     const slice = docs.slice(0, documentsLimit)
@@ -276,28 +313,6 @@ const create = async function (docInfo, docId) {
     return docRef.id;
   }
 }
-
-
-/**
- * @description
- * Async function to create a document in a collection
- * @param {Object} docInfo E.g: {name: Miguel, username: Gobo}
- * @param {String} docId E.g: m1a
- * @returns String
- */
-const insertOne = async function (docInfo, docId) {
-  const db = this.db;
-  const collectionName = this.collection;
-  const collectionRef = collection(db, collectionName);
-
-  if (!docInfo || !docId) {
-    throw new Error('Not enough params for [insertOne]')
-  }
-
-  const docRef = doc(collectionRef, docId);
-  await setDoc(docRef, docInfo);
-  return docId;
-};
 
 
 /**
@@ -361,7 +376,7 @@ const updateOne = async function (docInfo, docId) {
  * a new element that doesn’t exist there already, appending it 
  * at the end of the array.
  * @param {String} docId E.g: 'country1a'
- * @param {String} array E.g: 'countries'
+ * @param {String} arrayProp E.g: 'countries'
  * @param {Mixed} element 27 || 'Spain' || {name: 'Spain', city: 'Madrid'}
  * @returns String
  * @example
@@ -370,7 +385,7 @@ const updateOne = async function (docInfo, docId) {
  *   cities: ['Madrid, 'Barcelona']
  * };
  *  
- * await Country.addToArray(country1a, cities, 'Valencia');
+ * await Country.pushInto(country1a, cities, 'Valencia');
  * 
  * console.log(country1a)
  * // {
@@ -378,13 +393,13 @@ const updateOne = async function (docInfo, docId) {
  * //   cities: ['Madrid', 'Barcelona', 'Valencia']
  * // };
  */
-const addToArray = async function (docId, array, element) {
+const pushInto = async function (docId, arrayProp, element) {
   const db = this.db;
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName);
 
-  if (!docId || !array || !element) {
-    throw new Error('Not enough params for [addToArray]')
+  if (!docId || !arrayProp || !element) {
+    throw new Error('Not enough params for [pushInto]')
   }
 
   // According to Firebase Blog: 
@@ -396,7 +411,7 @@ const addToArray = async function (docId, array, element) {
 
   const docRef = doc(collectionRef, docId);
   let updateInfo = {
-    [array]: arrayUnion(element)
+    [arrayProp]: arrayUnion(element)
   }
   await updateDoc(docRef, updateInfo);
   return docId;
@@ -409,17 +424,17 @@ const addToArray = async function (docId, array, element) {
  * those elements whose value is coincident with the element passed
  * as the argument.
  * @param {String} docId E.g: 'country1a'
- * @param {String} array E.g: 'countries'
+ * @param {String} arrayProp E.g: 'countries'
  * @param {Mixed} element 27 || 'Spain' || {name: 'Spain', city: 'Madrid'}
  * @returns String
  */
-const removeFromArray = async function (docId, array, element) {
+const pullFrom = async function (docId, arrayProp, element) {
   const db = this.db;
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName); 
 
-  if (!docId || !array || !element) {
-    throw new Error('Not enough params for [removeFromArray]')
+  if (!docId || !arrayProp || !element) {
+    throw new Error('Not enough params for [pullFrom]')
   }
   
   // According to Firebase Blog: 
@@ -431,7 +446,7 @@ const removeFromArray = async function (docId, array, element) {
   
   const docRef = doc(collectionRef, docId);
   let updateInfo = {
-    [array]: arrayRemove(element)
+    [arrayProp]: arrayRemove(element)
   }
   await updateDoc(docRef, updateInfo);
   return docId;
@@ -471,9 +486,8 @@ export {
   findByArrayElement,
   findByArrayElements,
   create,
-  insertOne,
   updateOne,
-  addToArray,
-  removeFromArray,
+  pushInto,
+  pullFrom,
   deleteOne,
 };
