@@ -27,30 +27,36 @@ Country.create({name: 'Italy', continent: 'Europe'}, 'findManyByPropertyTestId3'
 Country.create({name: 'Japan', continent: 'Asia'}, 'findManyByPropertyTestId4');
 
 // Test 1
-const countries1 = await Country.findManyByProperty('continent', ['Europe', 'Africa'], 2);
+const matchProps1 = {documentsLimit: 2, equality: true}
+const countries1 = await Country.findManyByProperty('continent', ['Europe', 'Africa'], matchProps1);
 const expectedResolve1 = [
   {name: 'Spain', continent: 'Europe'},
   {name: 'Morocco', continent: 'Africa'}
 ];
-
-console.log('countries1', countries2)
-console.log('expectedResolve1', expectedResolve2)
 
 if (!_.isEqual(expectedResolve1, countries1)) {
   console.error('Failure at .findManyByProperty() in Test 1');
 }
 
 // Test 2
-const countries2 = await Country.findManyByProperty('continent', ['Africa'], false, 3);
+const matchProps2 = {documentsLimit: 3, equality: false}
+const countries2 = await Country.findManyByProperty('continent', ['Africa'], matchProps2);
 const expectedResolve2 = [
+  {name: 'Japan', continent: 'Asia'},
   {name: 'Spain', continent: 'Europe'},
   {name: 'Italy', continent: 'Europe'},
-  {name: 'Japan', continent: 'Asia'}
 ];
-
-console.log('countries2', countries2)
-console.log('expectedResolve2', expectedResolve2)
 
 if (!_.isEqual(expectedResolve2, countries2)) {
   console.error('Failure at .findManyByProperty() in Test 2');
+}
+
+// Test 3
+const countries3 = await Country.findManyByProperty('continent', ['Europe']);
+const expectedResolve3 = [
+  {name: 'Spain', continent: 'Europe'},
+];
+
+if (!_.isEqual(expectedResolve3, countries3)) {
+  console.error('Failure at .findManyByProperty() in Test 3');
 }
