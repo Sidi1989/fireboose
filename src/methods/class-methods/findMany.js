@@ -12,7 +12,7 @@ import {
  * Retrieve multiple Firestore documents from a collection
  * (with an optional limit in their retrieval; so if it's not
  * set, it will be 10 documents).
- * @param {Number} documentsLimit Optional (25 documents by default)
+ * @param {Number} documentsLimit Optional (1 document by default)
  * @returns Array (of Firestore docs)
  * @example
  * const countriesRetrieved = await Country.findMany(3);
@@ -24,7 +24,7 @@ import {
  * //   {name: 'Germany' capital: 'Berlin'}
  * // ]
  */
-const findMany = async function (documentsLimit = 25) {
+const findMany = async function (documentsLimit = 1) {
   const db = this.db;
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName);

@@ -10,7 +10,7 @@
     "doc": "doc"
   },
   "scripts": {
-    "test": "mocha ./test/class-methods/.js"
+    "test": "mocha ./test/class-methods/create.js"
   },
   "repository": {
     "type": "git",
