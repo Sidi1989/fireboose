@@ -17,7 +17,7 @@ import {
   inspect,
   validate,
   save,
-} from './instance-methods.js';
+} from './methods/index.js';
 
 
 
