@@ -1,25 +1,8 @@
 import _ from 'lodash';
-import fireboose, {Schema} from '../../src/index.js';
-import firebooseConnectionSettings from '../../runtime/config/firebase-config.json' assert { type: "json" };
+import {Country} from '../../utils/load-db.js';
 
 
 
-
-fireboose.connect(firebooseConnectionSettings);
-
-const countrySchemaDefinition = {
-  name: {
-    $type: String,
-    required: true
-  },
-  seas: {
-    $type: Array,
-    required: true
-  },
-};
-const countrySchemaConfig = {};
-const countrySchema = new Schema(countrySchemaDefinition, countrySchemaConfig);
-const Country = fireboose.model('Country', countrySchema, 'countries');
 
 // Test
 Country.create({name: 'Spain', seas: ['Atlantic', 'Mediterranean']}, 'findByArrayElementTestId1');
@@ -27,12 +10,24 @@ Country.create({name: 'Denmark', seas: ['Atlantic', 'Baltic']}, 'findByArrayElem
 Country.create({name: 'Italy', seas: ['Mediterranean']}, 'findByArrayElementTestId3');
 Country.create({name: 'Greece', seas: ['Mediterranean', 'Aegean']}, 'findByArrayElementTestId4');
 
-const countries = await Country.findByArrayElement('seas', 'Mediterranean', 2);
-const expectedResolve = [
-  {name: 'Spain', seas: ['Atlantic', 'Mediterranean']},
-  {name: 'Italy', seas: ['Mediterranean']}
-];
-
-if (!_.isEqual(expectedResolve, countries)) {
-  console.error('Failure at .findByArrayElement()');
-}
+describe('Model', function () {
+  describe('#findByArrayElement()', function () {
+    it('should find multiple Docs without error', function (done) {
+      Country.findByArrayElement('seas', 'Mediterranean', 2)
+        .then(function (resolve) {
+          let expectedResolve = [
+            {name: 'Spain', seas: ['Atlantic', 'Mediterranean']},
+            {name: 'Italy', seas: ['Mediterranean']}
+          ];
+          if (_.isEqual(expectedResolve, resolve)) {
+            done()
+          } else {
+            done(new Error('Failure at #findByArrayElement()'))
+          }
+        })
+        .catch(function(reject) {
+          done(reject)
+        })
+    });
+  });
+});

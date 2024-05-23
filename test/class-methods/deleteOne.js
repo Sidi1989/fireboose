@@ -1,43 +1,39 @@
-import _ from 'lodash';
-import fireboose, {Schema} from '../../src/index.js';
-import firebooseConnectionSettings from '../../runtime/config/firebase-config.json' assert { type: "json" };
+import {Country} from '../../utils/load-db.js';
 
 
 
-
-fireboose.connect(firebooseConnectionSettings);
-
-const countrySchemaDefinition = {
-  name: {
-    $type: String,
-    required: true
-  },
-  capital: {
-    $type: String,
-    required: true
-  },
-};
-const countrySchemaConfig = {};
-const countrySchema = new Schema(countrySchemaDefinition, countrySchemaConfig);
-const Country = fireboose.model('Country', countrySchema, 'countries');
 
 // Test
-Country.create({name: 'Spain', capital: 'Madrid'}, 'deleteOneTestId1');
-
-Country.deleteOne('deleteOneTestId1')
-  .then(function(resolve) {
-    let expectedResolve = 'deleteOneTestId1';
-    if (expectedResolve != resolve) {
-      console.error('Failure at first promise of .deleteOne()');
-    }
-    return resolve;
-  })
-  .then(function(resolve) {
-    Country.findOneById(resolve)
-      .then(function(resolve) {
-        let expectedResolve = null;
-        if (expectedResolve != resolve) {
-          console.error('Failure at second promise of .deleteOne()');
-        }
-      })
-  })
+describe('Model', function () {
+  describe('#deleteOne()', function () {
+    it('should delete 1 Doc without error', function (done) {
+      Country.create({name: 'Spain', capital: 'Madrid'}, 'deleteOneTestId1')
+        .then(function (resolve) {
+          Country.deleteOne(resolve)
+          return resolve;
+        })
+        .then(function (resolve) {
+          let expectedResolve = 'deleteOneTestId1';
+          if (expectedResolve == resolve) {
+            return resolve;
+          } else {
+            done(new Error('Failure at first step #deleteOne()'))
+          }
+        })
+        .then(function(resolve) {
+          Country.findOneById(resolve)
+            .then(function(resolve) {
+              let expectedResolve = null;
+              if (expectedResolve == resolve) {
+                done()
+              } else {
+                done(new Error('Failure at second step #deleteOne()'))
+              }
+            })
+        })
+        .catch(function(reject) {
+          done(reject)
+        })
+    });
+  });
+});

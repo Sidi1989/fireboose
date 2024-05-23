@@ -1,25 +1,8 @@
 import _ from 'lodash';
-import fireboose, {Schema} from '../../src/index.js';
-import firebooseConnectionSettings from '../../runtime/config/firebase-config.json' assert { type: "json" };
+import {Country} from '../../utils/load-db.js';
 
 
 
-
-fireboose.connect(firebooseConnectionSettings);
-
-const countrySchemaDefinition = {
-  name: {
-    $type: String,
-    required: true
-  },
-  capital: {
-    $type: String,
-    required: true
-  },
-};
-const countrySchemaConfig = {};
-const countrySchema = new Schema(countrySchemaDefinition, countrySchemaConfig);
-const Country = fireboose.model('Country', countrySchema, 'countries');
 
 // Test
 Country.create({name: 'Spain', capital: 'Madrid'}, 'findManyTestId1');
@@ -27,12 +10,24 @@ Country.create({name: 'France', capital: 'Paris'}, 'findManyTestId2');
 Country.create({name: 'Germany', capital: 'Berlin'}, 'findManyTestId3');
 Country.create({name: 'Morocco', capital: 'Rabat'}, 'findManyTestId4');
 
-const countries = await Country.findMany(2);
-const expectedResolve = [
-  {name: 'Spain', capital: 'Madrid'},
-  {name: 'France', capital: 'Paris'}
-];
-
-if (!_.isEqual(expectedResolve, countries)) {
-  console.error('Failure at .findMany()');
-}
+describe('Model', function () {
+  describe('#findMany()', function () {
+    it('should find multiple Docs without error', function (done) {
+      Country.findMany(2)
+        .then(function (resolve) {
+          let expectedResolve = [
+            {name: 'France', capital: 'Paris'},
+            {name: 'Spain', capital: 'Madrid'}
+          ];
+          if (_.isEqual(expectedResolve, resolve)) {
+            done()
+          } else {
+            done(new Error('Failure at #findMany()'))
+          }
+        })
+        .catch(function(reject) {
+          done(reject)
+        })
+    });
+  });
+});

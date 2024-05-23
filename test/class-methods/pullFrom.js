@@ -1,38 +1,31 @@
 import _ from 'lodash';
-import fireboose, {Schema} from '../../src/index.js';
-import firebooseConnectionSettings from '../../runtime/config/firebase-config.json' assert { type: "json" };
+import {Country} from '../../utils/load-db.js';
 
 
 
-
-fireboose.connect(firebooseConnectionSettings);
-
-const countrySchemaDefinition = {
-  name: {
-    $type: String,
-    required: true
-  },
-  rivers: {
-    $type: Array,
-    required: true
-  },
-};
-const countrySchemaConfig = {};
-const countrySchema = new Schema(countrySchemaDefinition, countrySchemaConfig);
-const Country = fireboose.model('Country', countrySchema, 'countries');
 
 // Test
 Country.create({name: 'Spain', rivers: ['Ebro', 'Tajo', 'Duero']}, 'pullFromTestId1');
-const element = 'Tajo';
 
-Country.pullFrom('pullFromTestId1', 'rivers', element)
-  .then(function(resolve) {
-    Country.findOneById(resolve)
-      .then(function(resolve) {
-        let expectedResolve = {name: 'Spain', rivers: ['Ebro', 'Duero']};
-
-        if (!_.isEqual(expectedResolve, resolve)) {
-          console.error('Failure at .pullFrom()');
-        }
-      })
-  })
+describe('Model', function () {
+  describe('#pullFrom()', function () {
+    it('should remove 1 element from an arrayProp, without error', function (done) {
+      const element = 'Tajo';
+      Country.pullFrom('pullFromTestId1', 'rivers', element)
+        .then(function (resolve) {
+          Country.findOneById(resolve)
+            .then(function(resolve) {
+              let expectedResolve = {name: 'Spain', rivers: ['Ebro', 'Duero']};
+              if (_.isEqual(expectedResolve, resolve)) {
+                done()
+              } else {
+                done(new Error('Failure at #pullFrom()'))
+              }
+            })
+        })
+        .catch(function(reject) {
+          done(reject)
+        })
+    });
+  });
+});
