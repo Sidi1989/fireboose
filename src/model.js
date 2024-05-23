@@ -1,4 +1,8 @@
-import { 
+import {
+  toObject,
+  inspect,
+  validate,
+  save,
   findOneById,
   findMany,
   findOneByProperty,
@@ -10,13 +14,6 @@ import {
   pushInto,
   pullFrom,
   deleteOne,
-} from './class-methods.js';
-
-import {
-  toObject,
-  inspect,
-  validate,
-  save,
 } from './methods/index.js';
 
 
