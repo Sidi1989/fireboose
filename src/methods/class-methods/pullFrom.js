@@ -13,7 +13,7 @@ import {
  * as the argument.
  * @param {String} docId E.g: 'country1a'
  * @param {String} arrayProp E.g: 'countries'
- * @param {Mixed} element 27 || 'Spain' || {name: 'Spain', city: 'Madrid'}
+ * @param {Mixed} element 27 || 'Spain' || true || {name: 'Spain', city: 'Madrid'}
  * @returns String
  */
 const pullFrom = async function (docId, arrayProp, element) {

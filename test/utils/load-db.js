@@ -1,5 +1,5 @@
-import fireboose, {Schema} from '../src/index.js';
-import firebooseConnectionSettings from '../runtime/config/firebase-config.json' assert { type: "json" };
+import fireboose, {Schema} from '../../src/index.js';
+import firebooseConnectionSettings from '../../runtime/config/firebase-config.json' assert { type: "json" };
 
 
 
@@ -35,22 +35,6 @@ const countrySchema = new Schema(countrySchemaDefinition, countrySchemaConfig);
 const Country = fireboose.model('Country', countrySchema, 'countries');
 
 
-// Dog Model
-const dogSchemaDefinition = {
-  name: {
-    $type: String,
-    required: true
-  },
-  age: {
-    $type: Number,
-    required: true
-  },
-};
-const dogSchemaConfig = {};
-const dogSchema = new Schema(dogSchemaDefinition, dogSchemaConfig);
-const Dog = fireboose.model('Dog', dogSchema, 'dogs');
 
 
-
-
-export {Country, Dog}
+export {Country}
