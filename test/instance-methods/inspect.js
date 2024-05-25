@@ -1,10 +1,10 @@
-import {Country} from '../utils/load-db';
+import {Country} from '../utils/load-db.js';
 
 
 
 
 // Test
-const inspectCountry = new Country({name:'inspectCountry', age: 3}, 'inspectTestId');
+const inspectCountry = new Country({name:'inspectCountry', continent: 'Pangea'}, 'inspectTestId');
 
 const expectedId = 'inspectTestId'
 if (expectedId != inspectCountry.__id) {

@@ -7,9 +7,9 @@ import {Country} from '../utils/load-db.js';
 describe('Model', function () {
   describe('#create()', function () {
     it('should create 1 Doc without error', function (done) {
-      Country.create({name: 'Spain', capital: 'Madrid'}, 'createTest1Id')
+      Country.create({name: 'Mongolia', capital: 'Ulán Bator'}, 'createTest1Id')
         .then(function (resolve) {
-          let expectedResolve = 'createTestId';
+          let expectedResolve = 'createTest1Id';
           if (expectedResolve == resolve) {
             return resolve
           } else {
@@ -19,7 +19,7 @@ describe('Model', function () {
         .then(function (resolve) {
           Country.findOneById(resolve)
             .then(function(resolve) {
-              let expectedResolve = {name: 'Spain', capital: 'Madrid'};
+              let expectedResolve = {name: 'Mongolia', capital: 'Ulán Bator'};
               if (_.isEqual(expectedResolve, resolve)) {
                 done()
               } else {
@@ -39,11 +39,11 @@ describe('Model', function () {
 describe('Model', function () {
   describe('#create()', function () {
     it('should create 1 Doc without error', function (done) {
-      Country.create({name: 'France', capital: 'Paris'})
+      Country.create({name: 'China', capital: 'Pekín'})
         .then(function (resolve) {
           Country.findOneById(resolve)
             .then(function(resolve) {
-              let expectedResolve = {name: 'France', capital: 'Paris'};
+              let expectedResolve = {name: 'China', capital: 'Pekín'};
               if (_.isEqual(expectedResolve, resolve)) {
                 done()
               } else {

@@ -1,4 +1,4 @@
-import {Country} from '../utils/load-db';
+import {Country} from '../utils/load-db.js';
 
 
 
