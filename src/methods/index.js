@@ -15,6 +15,12 @@ import pushInto from './class-methods/pushInto.js';
 import pullFrom from './class-methods/pullFrom.js';
 import deleteOne from './class-methods/deleteOne.js';
 
+import where from './query-methods/where.js';
+import orderBy from './query-methods/orderBy.js';
+import limit from './query-methods/limit.js';
+import skip from './query-methods/skip.js';
+import populate from './query-methods/populate.js';
+
 
 
 
@@ -34,4 +40,9 @@ export {
   pushInto,
   pullFrom,
   deleteOne,
+  where,
+  orderBy,
+  limit,
+  skip,
+  populate,
 }

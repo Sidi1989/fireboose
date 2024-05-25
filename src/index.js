@@ -1,6 +1,7 @@
 import { connect } from './connection.js';
 import { model } from './model.js';
 import Schema from './schema.js';
+import Query from './query.js';
 
 
 
@@ -14,4 +15,4 @@ const fireboose = {
 
 
 export default fireboose;
-export {Schema};
+export {Schema, Query};
