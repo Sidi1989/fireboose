@@ -1,25 +1,23 @@
 import _ from 'lodash';
-import {Country} from '../../utils/load-db.js';
+import {Country} from '../utils/load-db.js';
 
 
 
 
 // Test
-Country.create({name: 'Spain', rivers: ['Ebro', 'Tajo']}, 'pushIntoTestId1');
-
 describe('Model', function () {
   describe('#pullFrom()', function () {
     it('should add 1 element into an arrayProp, without error', function (done) {
-      const element = 'Duero';
-      Country.pushInto('pushIntoTestId1', 'rivers', element)
+      const element = 'Teshio';
+      Country.pushInto('findByTestId6', 'rivers', element)
         .then(function (resolve) {
           Country.findOneById(resolve)
             .then(function(resolve) {
-              let expectedResolve = {name: 'Spain', rivers: ['Ebro', 'Tajo', 'Duero']};
+              let expectedResolve = {name: 'Japan', continent: 'Asia', rivers: ['Tone', 'Ishikari', 'Teshio']};
               if (_.isEqual(expectedResolve, resolve)) {
                 done()
               } else {
-                done(new Error('Failure at #pushInto()'))
+                done(new Error('Failure in #pushInto()'))
               }
             })
         })

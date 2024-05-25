@@ -1,4 +1,4 @@
-import {Country} from '../../utils/load-db.js';
+import {Country} from '../utils/load-db.js';
 
 
 
@@ -7,17 +7,13 @@ import {Country} from '../../utils/load-db.js';
 describe('Model', function () {
   describe('#deleteOne()', function () {
     it('should delete 1 Doc without error', function (done) {
-      Country.create({name: 'Spain', capital: 'Madrid'}, 'deleteOneTestId1')
+      Country.deleteOne('deleteOneTestId')
         .then(function (resolve) {
-          Country.deleteOne(resolve)
-          return resolve;
-        })
-        .then(function (resolve) {
-          let expectedResolve = 'deleteOneTestId1';
+          let expectedResolve = 'deleteOneTestId';
           if (expectedResolve == resolve) {
             return resolve;
           } else {
-            done(new Error('Failure at first step #deleteOne()'))
+            done(new Error('Failure at delete instance in #deleteOne()'))
           }
         })
         .then(function(resolve) {
@@ -27,7 +23,7 @@ describe('Model', function () {
               if (expectedResolve == resolve) {
                 done()
               } else {
-                done(new Error('Failure at second step #deleteOne()'))
+                done(new Error('Failure at find deleted instance in #deleteOne()'))
               }
             })
         })

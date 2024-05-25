@@ -1,35 +1,33 @@
 import _ from 'lodash';
-import {Country} from '../../utils/load-db.js';
+import {Country} from '../utils/load-db.js';
 
 
 
 
 // Test
-Country.create({name: 'Spain', capital: 'Madrid'}, 'updateOneTestId1');
-
 describe('Model', function () {
-  describe('#pullFrom()', function () {
+  describe('#updateOne()', function () {
     it('should update 1 Doc without error', function (done) {
       const update = {
-        name: 'Spanish Empire'
+        name: 'Macedonia'
       };
-      Country.updateOne(update, 'updateOneTestId1')
+      Country.updateOne(update, 'findByTestId4')
         .then(function (resolve) {
-          let expectedResolve = 'updateOneTestId1';
+          let expectedResolve = 'findByTestId4';
           if (expectedResolve == resolve) {
             return resolve
           } else {
-            done(new Error('Failure at first step of #updateOne()'))
+            done(new Error('Failure at update instance in #updateOne()'))
           }
         })
         .then(function(resolve) {
           Country.findOneById(resolve)
             .then(function(resolve) {
-              let expectedResolve = {name: 'Spanish Empire', capital: 'Madrid'};
+              let expectedResolve = {name: 'Macedonia', seas: ['Mediterranean', 'Aegean']};
               if (_.isEqual(expectedResolve, resolve)) {
                 done()
               } else {
-                done(new Error('Failure at second step of #updateOne()'))
+                done(new Error('Failure at find updated instance in #updateOne()'))
               }
             })
         })

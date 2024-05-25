@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {Country} from '../../utils/load-db.js';
+import {Country} from '../utils/load-db.js';
 
 
 
@@ -7,13 +7,13 @@ import {Country} from '../../utils/load-db.js';
 describe('Model', function () {
   describe('#create()', function () {
     it('should create 1 Doc without error', function (done) {
-      Country.create({name: 'Spain', capital: 'Madrid'}, 'createTestId1')
+      Country.create({name: 'Spain', capital: 'Madrid'}, 'createTest1Id')
         .then(function (resolve) {
-          let expectedResolve = 'createTestId1';
+          let expectedResolve = 'createTestId';
           if (expectedResolve == resolve) {
             return resolve
           } else {
-            done(new Error('Failure at first step #create() in Test 1'))
+            done(new Error('Failure at create instance in #create() Test1'))
           }
         })
         .then(function (resolve) {
@@ -23,7 +23,7 @@ describe('Model', function () {
               if (_.isEqual(expectedResolve, resolve)) {
                 done()
               } else {
-                done(new Error('Failure at second step #create() in Test 1'))
+                done(new Error('Failure at find created instance in #create() Test1'))
               }
             })
         })
@@ -47,7 +47,7 @@ describe('Model', function () {
               if (_.isEqual(expectedResolve, resolve)) {
                 done()
               } else {
-                done(new Error('Failure at #create() in Test 2'))
+                done(new Error('Failure in #create() Test2'))
               }
             })
         })

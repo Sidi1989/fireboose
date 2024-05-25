@@ -1,15 +1,10 @@
 import _ from 'lodash';
-import {Country} from '../../utils/load-db.js';
+import {Country} from '../utils/load-db.js';
 
 
 
 
 // Test
-Country.create({name: 'Spain', capital: 'Madrid'}, 'findManyTestId1');
-Country.create({name: 'France', capital: 'Paris'}, 'findManyTestId2');
-Country.create({name: 'Germany', capital: 'Berlin'}, 'findManyTestId3');
-Country.create({name: 'Morocco', capital: 'Rabat'}, 'findManyTestId4');
-
 describe('Model', function () {
   describe('#findMany()', function () {
     it('should find multiple Docs without error', function (done) {
@@ -22,7 +17,7 @@ describe('Model', function () {
           if (_.isEqual(expectedResolve, resolve)) {
             done()
           } else {
-            done(new Error('Failure at #findMany()'))
+            done(new Error('Failure in #findMany()'))
           }
         })
         .catch(function(reject) {

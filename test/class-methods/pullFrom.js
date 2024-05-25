@@ -1,25 +1,23 @@
 import _ from 'lodash';
-import {Country} from '../../utils/load-db.js';
+import {Country} from '../utils/load-db.js';
 
 
 
 
 // Test
-Country.create({name: 'Spain', rivers: ['Ebro', 'Tajo', 'Duero']}, 'pullFromTestId1');
-
 describe('Model', function () {
   describe('#pullFrom()', function () {
     it('should remove 1 element from an arrayProp, without error', function (done) {
-      const element = 'Tajo';
-      Country.pullFrom('pullFromTestId1', 'rivers', element)
+      const element = 'Shinano';
+      Country.pullFrom('findByTestId6', 'rivers', element)
         .then(function (resolve) {
           Country.findOneById(resolve)
             .then(function(resolve) {
-              let expectedResolve = {name: 'Spain', rivers: ['Ebro', 'Duero']};
+              let expectedResolve = {name: 'Japan', continent: 'Asia', rivers: ['Tone', 'Ishikari']};
               if (_.isEqual(expectedResolve, resolve)) {
                 done()
               } else {
-                done(new Error('Failure at #pullFrom()'))
+                done(new Error('Failure in #pullFrom()'))
               }
             })
         })

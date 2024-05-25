@@ -1,13 +1,8 @@
 import _ from 'lodash';
-import {Country} from '../../utils/load-db.js';
+import {Country} from '../utils/load-db.js';
 
 
 
-
-Country.create({name: 'Spain', continent: 'Europe'}, 'findManyByPropertyTestId1');
-Country.create({name: 'Morocco', continent: 'Africa'}, 'findManyByPropertyTestId2');
-Country.create({name: 'Italy', continent: 'Europe'}, 'findManyByPropertyTestId3');
-Country.create({name: 'Japan', continent: 'Asia'}, 'findManyByPropertyTestId4');
 
 // Test 1
 describe('Model', function () {
@@ -17,13 +12,13 @@ describe('Model', function () {
       Country.findManyByProperty('continent', ['Europe', 'Africa'], query)
         .then(function (resolve) {
           let expectedResolve = [
-            {name: 'Spain', continent: 'Europe'},
+            {name: 'Spain', seas: ['Atlantic', 'Mediterranean'], continent: 'Europe'},
             {name: 'Morocco', continent: 'Africa'}
           ];
           if (_.isEqual(expectedResolve, resolve)) {
             done()
           } else {
-            done(new Error('Failure at #findManyByProperty() in Test 1'))
+            done(new Error('Failure in #findManyByProperty() Test1'))
           }
         })
         .catch(function(reject) {
@@ -43,13 +38,13 @@ describe('Model', function () {
         .then(function (resolve) {
           let expectedResolve = [
             {name: 'Japan', continent: 'Asia'},
-            {name: 'Spain', continent: 'Europe'},
-            {name: 'Italy', continent: 'Europe'},
+            {name: 'Spain', seas: ['Atlantic', 'Mediterranean'], continent: 'Europe'},
+            {name: 'Italy', seas: ['Mediterranean'], continent: 'Europe'},
           ];
           if (_.isEqual(expectedResolve, resolve)) {
             done()
           } else {
-            done(new Error('Failure at #findManyByProperty() in Test 2'))
+            done(new Error('Failure in #findManyByProperty() Test2'))
           }
         })
         .catch(function(reject) {

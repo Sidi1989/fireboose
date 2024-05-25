@@ -1,15 +1,10 @@
 import _ from 'lodash';
-import {Country} from '../../utils/load-db.js';
+import {Country} from '../utils/load-db.js';
 
 
 
 
 // Test
-Country.create({name: 'Spain', seas: ['Atlantic', 'Mediterranean']}, 'findByArrayElementsTestId1');
-Country.create({name: 'Denmark', seas: ['Atlantic', 'Baltic']}, 'findByArrayElementsTestId2');
-Country.create({name: 'Italy', seas: ['Mediterranean']}, 'findByArrayElementsTestId3');
-Country.create({name: 'Greece', seas: ['Mediterranean', 'Aegean']}, 'findByArrayElementsTestId4');
-
 describe('Model', function () {
   describe('#findByArrayElements()', function () {
     it('should find multiple Docs without error', function (done) {
@@ -23,7 +18,7 @@ describe('Model', function () {
           if (_.isEqual(expectedResolve, resolve)) {
             done()
           } else {
-            done(new Error('Failure at #findByArrayElements()'))
+            done(new Error('Failure in #findByArrayElements()'))
           }
         })
         .catch(function(reject) {

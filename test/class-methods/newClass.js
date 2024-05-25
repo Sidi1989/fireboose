@@ -22,18 +22,18 @@ const Country = fireboose.model('Country', countrySchema, 'countries');
 
 // Test
 if (!fireboose.db) {
-  console.error('Failure at newClass() DbTest')
+  console.error('Failure in newClass() DbTest')
 }
 
 const actualCollection = Country.collection;
 const expectedCollection = 'countries';
 if (expectedCollection != actualCollection) {
-  console.error('Failure at newClass() CollectionTest')
+  console.error('Failure in newClass() CollectionTest')
 }
 
 const actualName = Country.name;
 const expectedName = 'Country';
 if (expectedName != actualName) {
-  console.error('Failure at newClass() NameTest')
+  console.error('Failure in newClass() NameTest')
 }
 
