@@ -1,16 +1,16 @@
-import {Dog} from '../../utils/load-db.js';
+import {Country} from '../utils/load-db';
 
 
 
 
 // Test
-const expectedId = 'newTestId1'
+const expectedId = 'saveTestId'
 
 describe('Document', function () {
   describe('#save()', function () {
     it('should save without error', function (done) {
-      const newDog = new Dog({name:'newDog', age: 3}, 'newTestId1');
-      newDog.save()
+      const saveCountry = new Country({name:'saveCountry', continent: 'Pangea'}, 'saveTestId');
+      saveCountry.save()
         .then(function (resolve) {
           if (expectedId == resolve) {
             done()

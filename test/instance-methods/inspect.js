@@ -1,18 +1,18 @@
-import {Dog} from '../../utils/load-db.js';
+import {Country} from '../utils/load-db';
 
 
 
 
 // Test
-const inspectDog = new Dog({name:'inspectDog', age: 3}, 'inspectTestId1');
+const inspectCountry = new Country({name:'inspectCountry', age: 3}, 'inspectTestId');
 
-const expectedId = 'inspectTestId1'
-if (expectedId != inspectDog.__id) {
+const expectedId = 'inspectTestId'
+if (expectedId != inspectCountry.__id) {
   console.error('Failure at inspect() when retrieving .__id')
 }
-const expectedName = 'inspectDog'
-if (expectedName != inspectDog.name) {
+const expectedName = 'inspectCountry'
+if (expectedName != inspectCountry.name) {
   console.error('Failure at inspect() when retrieving .name')
 }
 
-inspectDog.inspect();
+inspectCountry.inspect();

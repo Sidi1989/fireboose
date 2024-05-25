@@ -1,9 +1,9 @@
-import {Dog} from '../../utils/load-db.js';
+import {Country} from '../utils/load-db';
 
 
 
 
 // Test
-const validateDog = new Dog({name:'validateDog', age: 3}, 'validateTestId1');
+const validateCountry = new Country({name:'validateCountry', continent: 'Pangea'}, 'validateTestId');
 
-validateDog.validate();
+validateCountry.validate();

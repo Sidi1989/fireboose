@@ -57,7 +57,7 @@ const definition = {
 }
 const config = {};
 
-const dogSchema = new Schema(definition, config);
+const countrySchema = new Schema(definition, config);
 ```
 
 ## Model
@@ -69,12 +69,12 @@ It requires 3 parameters:
   - Collection in Firestore
 
 ```js
-const Dog = fireboose.model('Dog', dogSchema, 'dogs');
+const Country = fireboose.model('Country', countrySchema, 'countries');
 
-const kira = Dog.create({ name: 'Kira' }, 'id');
+const nation = Country.create({ name: 'Nation' }, 'id');
   ||
-const kira = new Dog({ name: 'Kira' }, 'id')
-kira.save()
+const nation = new Country({ name: 'Nation' }, 'id')
+nation.save()
 ```
 
 ## Acknowledgement

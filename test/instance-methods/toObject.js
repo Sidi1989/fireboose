@@ -1,9 +1,9 @@
-import {Dog} from '../../utils/load-db.js';
+import {Country} from '../utils/load-db';
 
 
 
 
 // Test
-const toObjectDog = new Dog({name:'toObjectDog', age: 3}, 'toObjectTestId1');
+const toObjectCountry = new Country({name:'toObjectCountry', continent: 'Pangea'}, 'toObjectTestId');
 
-console.log(toObjectDog.toObject());
+console.log(toObjectCountry.toObject());

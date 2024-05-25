@@ -3,7 +3,8 @@
  * Check multiple conditions to be fulfilled by an instance,
  * triggering before it could be saved.
  * 
- * @return
+ * @return {Boolean} Returns true if everything goes well, otherwise it 
+ * returns false
  */
 const validate = function () {
   const selfSchema = this.__proto__.constructor.schema;
@@ -15,8 +16,11 @@ const validate = function () {
   for (let prop in selfSchemaDefinition) {
     if (selfSchemaDefinition[prop].required && this[prop] === undefined) {
       console.error(`Required property ${prop} not found in the instance`);
+      return false;
     }
   }
+
+  return true;
 }
 
 
