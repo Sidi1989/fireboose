@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {Country} from '../utils/load-db.js';
+import {Country} from '../utils/country.js';
 
 
 
@@ -11,9 +11,9 @@ describe('Model', function () {
       const update = {
         name: 'Macedonia'
       };
-      Country.updateOne(update, 'findByTestId4')
+      Country.updateOne(update, 'country06')
         .then(function (resolve) {
-          let expectedResolve = 'findByTestId4';
+          let expectedResolve = 'country06';
           if (expectedResolve == resolve) {
             return resolve
           } else {

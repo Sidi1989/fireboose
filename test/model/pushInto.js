@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {Country} from '../utils/load-db.js';
+import {Country} from '../utils/country.js';
 
 
 
@@ -7,17 +7,17 @@ import {Country} from '../utils/load-db.js';
 // Test
 describe('Model', function () {
   describe('#pullFrom()', function () {
-    it('should remove 1 element from an arrayProp, without error', function (done) {
-      const element = 'Shinano';
-      Country.pullFrom('findByTestId6', 'rivers', element)
+    it('should add 1 element into an arrayProp, without error', function (done) {
+      const element = 'Teshio';
+      Country.pushInto('country04', 'rivers', element)
         .then(function (resolve) {
           Country.findOneById(resolve)
             .then(function(resolve) {
-              let expectedResolve = {name: 'Japan', continent: 'Asia', rivers: ['Tone', 'Ishikari']};
+              let expectedResolve = {name: 'Japan', continent: 'Asia', rivers: ['Tone', 'Ishikari', 'Teshio']};
               if (_.isEqual(expectedResolve, resolve)) {
                 done()
               } else {
-                done(new Error('Failure in #pullFrom()'))
+                done(new Error('Failure in #pushInto()'))
               }
             })
         })

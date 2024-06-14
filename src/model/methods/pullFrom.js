@@ -9,12 +9,25 @@ import {
 /**
  * @description
  * Update a document by removing, from one of its {Array} properties,
- * those elements whose value is coincident with the element passed
+ * those elements whose value is coincident with the one passed
  * as the argument.
- * @param {String} docId E.g: 'country1a'
- * @param {String} arrayProp E.g: 'countries'
- * @param {Mixed} element 27 || 'Spain' || true || {name: 'Spain', city: 'Madrid'}
+ * @param {String} docId E.g: 'country01'
+ * @param {String} arrayProp E.g: 'cities'
+ * @param {Mixed} element 27 || 'Madrid' || true || {name: 'Madrid', river: 'Manzanares'}
  * @returns String
+ * @example
+ * const country01 = {
+ *   id: 'country01',
+ *   cities: ['Madrid, 'Barcelona', 'Bilbao']
+ * };
+ *  
+ * await Country.pullFrom(country01, cities, 'Bilbao');
+ * 
+ * console.log(country01)
+ * // {
+ * //   id: 'country01',
+ * //   cities: ['Madrid', 'Barcelona']
+ * // };
  */
 const pullFrom = async function (docId, arrayProp, element) {
   const db = this.db;

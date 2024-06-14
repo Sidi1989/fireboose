@@ -11,21 +11,21 @@ import {
  * Update a document by adding, to one of its {Array} properties,
  * a new element that doesn’t exist there already, appending it 
  * at the end of the array.
- * @param {String} docId E.g: 'country1a'
- * @param {String} arrayProp E.g: 'countries'
- * @param {Mixed} element 27 || 'Spain' || true || {name: 'Spain', city: 'Madrid'}
+ * @param {String} docId E.g: 'country01'
+ * @param {String} arrayProp E.g: 'cities'
+ * @param {Mixed} element 27 || 'Madrid' || true || {name: 'Madrid', river: 'Manzanares'}
  * @returns String
  * @example
- * const country1a = {
- *   id: 'country1a',
+ * const country01 = {
+ *   id: 'country01',
  *   cities: ['Madrid, 'Barcelona']
  * };
  *  
- * await Country.pushInto(country1a, cities, 'Valencia');
+ * await Country.pushInto(country01, cities, 'Valencia');
  * 
- * console.log(country1a)
+ * console.log(country01)
  * // {
- * //   id: 'country1a',
+ * //   id: 'country01',
  * //   cities: ['Madrid', 'Barcelona', 'Valencia']
  * // };
  */

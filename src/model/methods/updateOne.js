@@ -11,7 +11,7 @@ import {
  * @description
  * Overwrite a document, according to the new info passed as the argument.
  * @param {Object} docInfo E.g: {name: 'Spain', capital: 'Madrid'}
- * @param {String} docId E.g: 'country1a'
+ * @param {String} docId E.g: 'country01'
  * @returns String
  * @example
  * const newCountry = await Country.create(
