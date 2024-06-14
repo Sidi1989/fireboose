@@ -21,7 +21,7 @@ const fireboose = require('fireboose');
 import fireboose from 'fireboose';
 ```
 
-## Connection
+## Connect
 
 You can connect to Fireboose using services account key from Firebase,
 as the config object should look like this:
@@ -76,6 +76,24 @@ const nation = Country.create({ name: 'Nation' }, 'id');
 const nation = new Country({ name: 'Nation' }, 'id')
 nation.save()
 ```
+
+## Query
+
+For some interaction with the collections, it could be necessary to set up firstly
+an instanced query with the parameters for searching among the documents.
+So after configuring that query with the desired methods, it would be one of the
+arguments for some Model methods (v.g.: findBy)
+
+### Caveat
+
+https://stackoverflow.com/questions/53790175/why-does-this-firestore-query-require-an-index
+https://firebase.google.com/docs/firestore/query-data/index-overview
+https://firebase.google.com/docs/firestore/query-data/queries
+https://firebase.google.com/docs/firestore/query-data/order-limit-data
+
+Contrary to https://mongoosejs.com/docs/api/model.html#Model.ensureIndexes()
+where Moongose can ask MongoDB to create the necessary indexes, 
+Fireboose CANNOT ask Firestore to do it, so it must be done manually in the UI
 
 ## Acknowledgement
 
