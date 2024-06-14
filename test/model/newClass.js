@@ -20,7 +20,7 @@ const countrySchemaConfig = {};
 const countrySchema = new Schema(countrySchemaDefinition, countrySchemaConfig);
 const Country = fireboose.model('Country', countrySchema, 'countries');
 
-// Test
+// Test (without Mocha)
 if (!fireboose.db) {
   console.error('Failure in newClass() DbTest')
 }

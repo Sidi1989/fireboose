@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import {Country} from '../utils/load-db.js';
+import {Country} from '../utils/country.js';
+
 
 
 
@@ -7,9 +8,9 @@ import {Country} from '../utils/load-db.js';
 describe('Model', function () {
   describe('#create()', function () {
     it('should create 1 Doc without error', function (done) {
-      Country.create({name: 'Mongolia', capital: 'Ulán Bator'}, 'createTest1Id')
+      Country.create({name: 'Mongolia', capital: 'Ulán Bator'}, 'createTest')
         .then(function (resolve) {
-          let expectedResolve = 'createTest1Id';
+          let expectedResolve = 'createTest';
           if (expectedResolve == resolve) {
             return resolve
           } else {

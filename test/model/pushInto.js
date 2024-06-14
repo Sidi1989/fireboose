@@ -13,7 +13,7 @@ describe('Model', function () {
         .then(function (resolve) {
           Country.findOneById(resolve)
             .then(function(resolve) {
-              let expectedResolve = {name: 'Japan', continent: 'Asia', rivers: ['Tone', 'Ishikari', 'Teshio']};
+              let expectedResolve = {name: 'Japan', continent: 'Asia', population: 125, rivers: ['Tone', 'Ishikari', 'Teshio']};
               if (_.isEqual(expectedResolve, resolve)) {
                 done()
               } else {
