@@ -1,40 +1,15 @@
-import fireboose, {Schema} from '../../src/index.js';
-import firebooseConnectionSettings from '../../runtime/config/firebase-config.json' assert { type: "json" };
+import {Country} from './country.js';
 
 
 
 
-fireboose.connect(firebooseConnectionSettings);
-
-
-// Country Model
-const countrySchemaDefinition = {
-  name: {
-    $type: String,
-    required: false
-  },
-  continent: {
-    $type: String,
-    required: false
-  },
-  capital: {
-    $type: String,
-    required: false
-  },
-  seas: {
-    $type: Array,
-    required: false
-  },
-  rivers: {
-    $type: Array,
-    required: false
-  },
-};
-const countrySchemaConfig = {};
-const countrySchema = new Schema(countrySchemaDefinition, countrySchemaConfig);
-const Country = fireboose.model('Country', countrySchema, 'countries');
-
-
-
-
-export {Country}
+Country.create({name: 'Atlantis', seas: ['Atlantic']}, 'deleteOneTest');
+Country.create({name: 'Spain', continent: 'Europe', population: 48, seas: ['Atlantic', 'Mediterranean']}, 'country01');
+Country.create({name: 'Italy', continent: 'Europe', seas: ['Mediterranean'], }, 'country02');
+Country.create({name: 'Morocco', continent: 'Africa', population: 38}, 'country03');
+Country.create({name: 'Japan', continent: 'Asia', population: 125, rivers: ['Shinano', 'Tone', 'Ishikari']}, 'country04');
+Country.create({name: 'Denmark', seas: ['Atlantic', 'Baltic']}, 'country05');
+Country.create({name: 'Greece', seas: ['Mediterranean', 'Aegean']}, 'country06');
+Country.create({name: 'France', continent: 'Europe', capital: 'Paris', population: 68}, 'country07');
+Country.create({name: 'Germany', continent: 'Europe', capital: 'Berlin', population: 84}, 'country08');
+Country.create({name: 'Argentina', continent: 'America'}, 'country09');
