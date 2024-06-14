@@ -3,7 +3,7 @@
  * Convert an instance into a Plain Object.
  * 
  * It includes only ownProperties (both enumerable and non-enumerable),
- * but not inherited properties, so it excludes methods like:
+ * and not the inherited ones, so it excludes methods like:
  * inspect(), save(),... which are inherited from its parent Class.
  * @return {Object}
  */

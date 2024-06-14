@@ -2,8 +2,8 @@
  * @description
  * Help logging information about an instance.
  * 
- * It exposes both ownProperties and the inherited ones, but only if 
- * they are enumerable.
+ * It exposes both ownProperties and the inherited ones, but only 
+ * if they are enumerable.
  * @return {Log}
  */
 const inspect = function () {
