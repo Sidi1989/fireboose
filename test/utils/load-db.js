@@ -5,7 +5,7 @@ import {Country} from './country.js';
 
 Country.create({name: 'Atlantis', seas: ['Atlantic']}, 'deleteOneTest');
 Country.create({name: 'Spain', continent: 'Europe', population: 48, seas: ['Atlantic', 'Mediterranean']}, 'country01');
-Country.create({name: 'Italy', continent: 'Europe', seas: ['Mediterranean'], }, 'country02');
+Country.create({name: 'Italy', continent: 'Europe', seas: ['Mediterranean']}, 'country02');
 Country.create({name: 'Morocco', continent: 'Africa', population: 38}, 'country03');
 Country.create({name: 'Japan', continent: 'Asia', population: 125, rivers: ['Shinano', 'Tone', 'Ishikari']}, 'country04');
 Country.create({name: 'Denmark', seas: ['Atlantic', 'Baltic']}, 'country05');

@@ -1,32 +1,41 @@
 # API
 
-## Class Methods
+## Model Methods
 
-- findMany
 - findOneById
-- findOneByProperty 
-- findManyByProperty
-- findByArrayElement
-- findByArrayElements
+- findMany
+- findOne
 - create
 - updateOne
+- updateMany
+- deleteOne
+- deleteMany
+
+### Array-related
+- findByArrayElement
+- findByArrayElements
 - pushInto
 - pullFrom
-- deleteOne
 
-| Find            | One                 | Many                    |
-| :---:           | :---:               | :---:                   |
-| ...             | findMany()          | findMany(queryLimit)    |
-| ById            | findOneById         | ...                     |
-| ByProperty      | findOneByProperty   | ...                     |
 
-@TODO Todas las divisiones que dependan del parámetro queryLimit 
-tienen que convertirse en 2 funciones distintas...
-y la actual findManyByProperty tiene que convertirse en la genérica find() o findByQuery()
+| Action      | One             | Many          |
+| :---:       | :---:           | :---:         |
+| Find        | findOneById     | ...           |
+| Find        | findOne         | findMany      |
+| Update      | updateOne       | updateMany    |
+| Delete      | deleteOne       | deleteMany    |
 
-## Instance Methods
+
+## Document Methods
 
 - toObject()
 - inspect()
 - validate()
 - save()
+
+## Query Methods
+
+- Skip
+- Limit
+- OrderBy
+- Where

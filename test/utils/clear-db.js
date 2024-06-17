@@ -8,6 +8,8 @@ import {
 
 
 
+fireboose.connect(firebooseConnectionSettings);
+
 /**
  * Función asíncrona para eliminar todos los documents consignados
  * en una collection
@@ -26,8 +28,7 @@ const deleteCollectionDocs = async function (collectionName) {
   }
 }
 
-
-deleteCollectionDocs('countries')
+await deleteCollectionDocs('countries')
 
 // Finalmente, se evita que el proceso continúe en terminal:
 //   0 -> Resultado exitoso
