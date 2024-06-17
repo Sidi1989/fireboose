@@ -9,7 +9,7 @@ import {
 /**
  * @description
  * Retrieve a Firestore document from a collection, found by its ID.
- * @param {String} docId E.g: 'country1a'
+ * @param {String} docId E.g: 'country01'
  * @returns Firestore doc || null
  */
 const findOneById = async function (docId) {
