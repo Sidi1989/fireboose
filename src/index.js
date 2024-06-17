@@ -1,7 +1,7 @@
-import { connect } from './connection.js';
-import { model } from './model.js';
-import Schema from './schema.js';
-import Query from './query.js';
+import { connect } from './connect/index.js';
+import { model } from './model/index.js';
+import Schema from './schema/index.js';
+import Query from './query/index.js';
 
 
 
