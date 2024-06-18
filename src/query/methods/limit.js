@@ -1,8 +1,8 @@
-
 /**
  * @description
  * Limit the number of documents to be retrieved in the query's results.
- * @param {Number} resultsToLimit E.g: 5
+ * @param {Number} threshold E.g: 5
+ * It would be 30 by default, if not set.
  * @returns {Query}
  * @example 
  * After the query returns 8 documents:
@@ -10,8 +10,8 @@
  * A new limitedQuery would be:
  *  [doc1, doc2, doc3, doc4, doc5]
  */
-const limit = async function (resultsToLimit) {
-  this.limitTo = resultsToLimit;
+const limit = function (threshold) {
+  this.conditions.limit = threshold;
   
   return this;
 };
