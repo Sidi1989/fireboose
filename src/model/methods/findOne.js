@@ -1,7 +1,7 @@
 import { 
   collection, getDocs, 
   query as q,
-  where, orderBy, limit, startAfter
+  where,
 } from 'firebase/firestore';
 
 
@@ -9,13 +9,16 @@ import {
 
 /**
  * @description
- * Retrieve multiple Firestore documents from a collection, according to
+ * Retrieve one Firestore document from a collection, according to
  * a previously defined query
  * @param {Query} query
- * @returns Array (of Firestore docs)
+ * @returns Firestore doc || null
  * @example
+ * 
+ * As it retrieves only one element, the query only operates through .where(),
+ * without any orderBy, skip or limit operations
  */
-const findMany = async function (query) {
+const findOne = async function (query) {
   const db = this.db;
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName);
@@ -29,25 +32,7 @@ const findMany = async function (query) {
       queryOperations.push(whereOperation);
     });
   }
-  // For the .orderBy() method
-  if (query.conditions && query.conditions.orderBy && query.conditions.orderBy.length > 0) {
-    var orderByConditions = query.conditions.orderBy;
-    orderByConditions.forEach( function (condition) {
-      var orderByOperation = orderBy(condition.property, condition.direction? condition.direction : 'asc');
-      queryOperations.push(orderByOperation);
-    });
-  }
-  // For the .limit() method
-  if (query.conditions && query.conditions.limit) {
-    var limitOperation = limit(query.conditions.limit);
-    queryOperations.push(limitOperation);
-  }
-  // For the .skip() method
-  if (query.conditions && query.conditions.skip) {
-    var skipOperation = startAfter(query.conditions.skip);
-    queryOperations.push(skipOperation);
-  }
-
+  
   // Once every queryOperation is included in the array, this array of
   // queryOperations must be passed into the query function as if each of
   // the elements of the array was an argument of the function:
@@ -56,10 +41,16 @@ const findMany = async function (query) {
   const docs = [];
   var querySnap = await getDocs(queryDocs);
   querySnap.forEach((doc) => docs.push(doc.data()));
-  return docs;
+  
+  // It only returns the first coincidence:
+  if (docs.length > 0) {
+    return docs[0];
+  } else {
+    return null
+  }
 };
 
 
 
 
-export default findMany;
+export default findOne;

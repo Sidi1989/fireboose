@@ -11,9 +11,7 @@
 - deleteOne
 - deleteMany
 
-### Array-related
-- findByArrayElement
-- findByArrayElements
+### Array-related updates
 - pushInto
 - pullFrom
 

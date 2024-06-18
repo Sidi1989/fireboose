@@ -9,6 +9,8 @@ import {Country} from '../utils/country.js';
 const newQuery = new Query()
   .where('continent', '==', 'Europe')
   // .where('population', '>=', 50)
+  // .where('seas', 'array-contains', 'Mediterranean')
+  // .where(seas, 'array-contains-any', ['Atlantic', 'Mediterranean']
   // .orderBy('population', 'desc')
   // .orderBy('name', 'desc')
   // .skip(1)
@@ -16,7 +18,7 @@ const newQuery = new Query()
 
 describe('Model', function () {
   describe('#findMany()', function () {
-    it('should find multiple Docs without error', function (done) {
+    it('should retrieve multiple Docs, without error', function (done) {
       Country.findMany(newQuery)
         .then(function (resolve) {
           let expectedResolve = [
