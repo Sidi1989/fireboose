@@ -17,24 +17,15 @@ const newQuery = new Query()
   // .limit(6)
 
 describe('Model', function () {
-  before('Model:before', function() {
-
-  });
-
-  describe('#findMany()', function () {
-    it('should retrieve multiple Docs, without error', function (done) {
-      Country.findMany(newQuery)
+  describe('#deleteMany()', function () {
+    it('should delete multiple Docs, without error', function (done) {
+      Country.deleteMany(newQuery)
         .then(function (resolve) {
-          let expectedResolve = [
-            {name: 'Spain', continent: 'Europe', population: 48, seas: ['Atlantic', 'Mediterranean']},
-            {name: 'Italy', continent: 'Europe', seas: ['Mediterranean']},
-            {name: 'France', continent: 'Europe', capital: 'Paris', population: 68},
-            {name: 'Germany', continent: 'Europe', capital: 'Berlin', population: 84}
-          ];
+          let expectedResolve = ['country01', 'country02', 'country07', 'country08'];
           if (_.isEqual(expectedResolve, resolve)) {
             done()
           } else {
-            done(new Error('Failure in #findMany()'))
+            done(new Error('Failure in #deleteMany()'))
           }
         })
         .catch(function(reject) {

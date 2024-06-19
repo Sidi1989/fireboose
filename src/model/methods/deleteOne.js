@@ -8,7 +8,7 @@ import {
 
 /**
  * @description
- * Delete a document from its collection.
+ * Delete a document from its collection, identified by its ID.
  * @param {String} docId E.g: 'country01'
  * @returns String
  */

@@ -17,7 +17,7 @@ describe('Model', function () {
             done(new Error('Failure at finding the instance to be deleted in #deleteOne()'))
           }
         })
-        .then(function (resolve) {
+        .then(function () {
           Country.deleteOne('deleteOneTest')
             .then(function (resolve) {
               let expectedResolve = 'deleteOneTest';

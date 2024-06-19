@@ -1,24 +1,24 @@
 import { 
   collection, getDocs, 
   query,
-  where, orderBy, limit, startAfter
+  where, orderBy, limit, startAfter,
+  deleteDoc
 } from 'firebase/firestore';
-
 
 
 
 /**
  * @description
- * Retrieve multiple Firestore documents from a collection, according to
+ * Delete multiple documents from its collection, , according to
  * a previously defined query
  * @param {Query} q
- * @returns Array (of Firestore docs)
+ * @returns Array (of Strings)
  * @example
  */
-const findMany = async function (q) {
+const deleteMany = async function (q) {
   const db = this.db;
   const collectionName = this.collection;
-  const collectionRef = collection(db, collectionName);
+  const collectionRef = collection(db, collectionName); 
 
   var queryOperations = [];
   // For the .where() method
@@ -53,16 +53,23 @@ const findMany = async function (q) {
   // the elements of the array was an argument of the function:
   const queryDocs = query(collectionRef, ...queryOperations);
 
-  const docs = [];
+  const docsIds = [];
+  const docsRefs = [];
   var querySnap = await getDocs(queryDocs);
 
   querySnap.forEach(function(docSnap) {
-    docs.push(docSnap.data())
-  });
-  return docs;
+    docsIds.push(docSnap.id);
+    docsRefs.push(docSnap.ref);
+  })
+
+  for (let docRef of docsRefs) {
+    await deleteDoc(docRef);
+  }
+
+  return docsIds;
 };
 
 
 
 
-export default findMany;
+export default deleteMany;
