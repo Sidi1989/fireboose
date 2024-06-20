@@ -13,6 +13,9 @@
 
 ### Array-related updates
 - pushInto
+- unshiftInto
+- shiftFrom
+- popFrom
 - pullFrom
 
 

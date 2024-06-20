@@ -8,34 +8,32 @@ import {
 
 /**
  * @description
- * Update a document by adding, to one of its {Array} properties,
- * a new element that doesn’t exist there already, appending it 
- * at the beginning of the array.
+ * Update a document by removing, from one of its {Array} properties,
+ * its first element.
  * @param {String} docId E.g: 'country01'
  * @param {String} arrayProp E.g: 'cities'
- * @param {Mixed} element 27 || 'Madrid' || true || {name: 'Madrid', river: 'Manzanares'}
  * @returns String || Null
  * @example
  * const country01 = {
  *   id: 'country01',
- *   cities: ['Madrid, 'Barcelona']
+ *   cities: ['Madrid, 'Barcelona', 'Valencia']
  * };
  *  
- * await Country.unshiftInto(country01, cities, 'Valencia');
+ * await Country.shiftFrom(country01, cities);
  * 
  * console.log(country01)
  * // {
  * //   id: 'country01',
- * //   cities: ['Valencia', 'Madrid', 'Barcelona']
+ * //   cities: ['Barcelona', 'Valencia']
  * // };
  */
-const unshiftInto = async function (docId, arrayProp, element) {
+const shiftFrom = async function (docId, arrayProp) {
   const db = this.db;
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName);
 
-  if (!docId || !arrayProp || !element) {
-    throw new Error('Not enough params for [unshiftInto]')
+  if (!docId || !arrayProp) {
+    throw new Error('Not enough params for [shiftFrom]')
   }
 
   const docRef = doc(collectionRef, docId);
@@ -43,7 +41,7 @@ const unshiftInto = async function (docId, arrayProp, element) {
 
   if (docSnap.exists()) {
     const doc = docSnap.data();
-    doc[arrayProp].unshift(element)
+    doc[arrayProp].shift()
 
     // After updating the array, it is set again as the property
     // to be overwritten:
@@ -61,4 +59,4 @@ const unshiftInto = async function (docId, arrayProp, element) {
 
 
 
-export default unshiftInto;
+export default shiftFrom;
