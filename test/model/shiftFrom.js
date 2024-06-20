@@ -6,7 +6,7 @@ import {Country} from '../utils/country.js';
 
 // Test
 describe('Model', function () {
-  describe('#popFrom()', function () {
+  describe('#shiftFrom()', function () {
     it('should remove the first element of an arrayProp, without error', function (done) {
       Country.shiftFrom('country04', 'rivers')
         .then(function (resolve) {
