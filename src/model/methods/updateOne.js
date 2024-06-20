@@ -9,7 +9,7 @@ import {
 
 /**
  * @description
- * Overwrite a document, according to the new info passed as the argument.
+ * Overwrite a document with the info passed as the argument.
  * @param {Object} docInfo E.g: {name: 'Spain', capital: 'Madrid'}
  * @param {String} docId E.g: 'country01'
  * @returns String

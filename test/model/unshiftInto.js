@@ -6,18 +6,18 @@ import {Country} from '../utils/country.js';
 
 // Test
 describe('Model', function () {
-  describe('#pushInto()', function () {
-    it('should add 1 element at the end of an arrayProp, without error', function (done) {
+  describe('#unshiftInto()', function () {
+    it('should add 1 element at the beginning of an arrayProp, without error', function (done) {
       const element = 'Teshio';
-      Country.pushInto('country04', 'rivers', element)
+      Country.unshiftInto('country04', 'rivers', element)
         .then(function (resolve) {
           Country.findOneById(resolve)
             .then(function(resolve) {
-              let expectedResolve = {name: 'Japan', continent: 'Asia', population: 125, rivers: ['Tone', 'Ishikari', 'Teshio']};
+              let expectedResolve = {name: 'Japan', continent: 'Asia', population: 125, rivers: ['Teshio', 'Shinano', 'Tone', 'Ishikari',]};
               if (_.isEqual(expectedResolve, resolve)) {
                 done()
               } else {
-                done(new Error('Failure in #pushInto()'))
+                done(new Error('Failure in #unshiftInto()'))
               }
             })
         })
