@@ -58,6 +58,7 @@ const updateOne = async function (docInfo, docId) {
 
   const docRef = doc(collectionRef, docId);
   await updateDoc(docRef, flatten(docInfo));
+  
   return docId;
 };
 

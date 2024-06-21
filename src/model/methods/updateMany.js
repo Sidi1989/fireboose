@@ -44,6 +44,10 @@ const updateMany = async function (info, q) {
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName); 
 
+  if (!info || !q) {
+    throw new Error('Not enough params for [updateMany]')
+  }
+
   // Once every queryOperation is included in the array, this array of
   // queryOperations must be passed into the query function as if each of
   // the elements of the array was an argument of the function:

@@ -1,7 +1,6 @@
 import { 
   collection, getDocs, 
   query,
-  where,
 } from 'firebase/firestore';
 
 
@@ -23,20 +22,14 @@ const findOne = async function (q) {
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName);
 
-  var queryOperations = [];
-  // For the .where() method
-  if (q.conditions && q.conditions.where && q.conditions.where.length > 0) {
-    var whereConditions = q.conditions.where;
-    whereConditions.forEach( function (condition) {
-      var whereOperation = where(condition.property, condition.operator, condition.value);
-      queryOperations.push(whereOperation);
-    });
+  if (!q) {
+    throw new Error('Not enough params for [findOne]')
   }
-  
+
   // Once every queryOperation is included in the array, this array of
   // queryOperations must be passed into the query function as if each of
   // the elements of the array was an argument of the function:
-  const queryDocs = query(collectionRef, ...queryOperations);
+  const queryDocs = query(collectionRef, ...q.queryOperations);
 
   const docs = [];
   var querySnap = await getDocs(queryDocs);

@@ -8,7 +8,7 @@ import {Country} from '../utils/country.js';
 // Test
 const newQuery = new Query()
   // .where('continent', '==', 'Europe')
-  .where('population', '>=', 120)
+  .where('population', '>=', 120).exec()
   // .where('seas', 'array-contains', 'Mediterranean')
   // .where(seas, 'array-contains-any', ['Atlantic', 'Mediterranean']
 
