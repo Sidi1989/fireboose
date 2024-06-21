@@ -3,7 +3,6 @@ import ensureIndexes from './ensureIndexes.js';
 import findOneById from './findOneById.js';
 import findOne from './findOne.js';
 import findMany from './findMany.js';
-import findManyByProperty from './findManyByProperty.js';
 import updateOne from './updateOne.js';
 import updateMany from './updateMany.js';
 import deleteOne from './deleteOne.js';
@@ -23,7 +22,6 @@ export {
   findOneById,
   findOne,
   findMany,
-  findManyByProperty,
   updateOne,
   updateMany,
   deleteOne,

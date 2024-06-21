@@ -4,7 +4,6 @@ import {
   findOneById,
   findOne,
   findMany,
-  findManyByProperty,
   updateOne,
   updateMany,
   deleteOne,
@@ -59,7 +58,6 @@ const model = function (name, schema, collection) {
   FirebooseClass.findOneById = findOneById.bind(FirebooseClass);
   FirebooseClass.findOne = findOne.bind(FirebooseClass);
   FirebooseClass.findMany = findMany.bind(FirebooseClass);
-  FirebooseClass.findManyByProperty = findManyByProperty.bind(FirebooseClass);
   FirebooseClass.updateOne = updateOne.bind(FirebooseClass);
   FirebooseClass.updateMany = updateMany.bind(FirebooseClass);
   FirebooseClass.deleteOne = deleteOne.bind(FirebooseClass);

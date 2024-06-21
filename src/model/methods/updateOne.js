@@ -11,7 +11,7 @@ import {
  * @description
  * Overwrite a document with the info passed as the argument.
  * @param {Object} docInfo E.g: {name: 'Spain', capital: 'Madrid'}
- * * About 'nested objects':
+ * About 'nested objects':
  * 
  * If the info to update is contained in a nested object like this:
  *  {

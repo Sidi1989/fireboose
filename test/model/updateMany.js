@@ -8,13 +8,6 @@ import {Country} from '../utils/country.js';
 // Test
 const newQuery = new Query()
   .where('continent', '==', 'Europe').exec()
-  // .where('population', '>=', 50)
-  // .where('seas', 'array-contains', 'Mediterranean')
-  // .where(seas, 'array-contains-any', ['Atlantic', 'Mediterranean']
-  // .orderBy('population', 'desc')
-  // .orderBy('name', 'desc')
-  // .skip(1)
-  // .limit(6)
 
 describe('Model', function () {
   describe('#updateMany()', function () {

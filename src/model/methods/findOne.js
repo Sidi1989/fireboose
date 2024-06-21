@@ -13,9 +13,6 @@ import {
  * @param {Query} q
  * @returns Firestore doc || null
  * @example
- * 
- * As it retrieves only one element, the query only operates through .where(),
- * without any orderBy, skip or limit operations
  */
 const findOne = async function (q) {
   const db = this.db;

@@ -11,6 +11,7 @@ const newQuery = new Query()
   // .where('population', '>=', 50)
   // .where('seas', 'array-contains', 'Mediterranean')
   // .where(seas, 'array-contains-any', ['Atlantic', 'Mediterranean']
+  // .where('continent', 'in', ['Europe', 'Africa'])
   // .orderBy('population', 'desc')
   // .orderBy('name', 'desc')
   // .skip(1)
