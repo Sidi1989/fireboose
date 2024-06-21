@@ -22,7 +22,7 @@ describe('Model', function () {
       const update = {
         continent: 'Old'
       };
-      Country.updateMany(newQuery, update)
+      Country.updateMany(update, newQuery)
         .then(function (resolve) {
           let expectedResolve = ['country01', 'country02', 'country07', 'country08'];
           if (_.isEqual(expectedResolve, resolve)) {

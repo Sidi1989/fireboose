@@ -38,7 +38,7 @@ const create = async function (docInfo, docId) {
     const docRef = doc(collectionRef, docId);
     await setDoc(docRef, docInfo);
     return docRef.id;
-  // If there isn't a meaningful ID for the document, Cloud Firestore 
+  // If there isn't any meaningful ID for the document, Cloud Firestore 
   // will auto-generate one for the document:
   } else {
     const docRef = await addDoc(collectionRef, docInfo);

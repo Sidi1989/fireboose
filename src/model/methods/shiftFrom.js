@@ -43,7 +43,7 @@ const shiftFrom = async function (docId, arrayProp) {
     const doc = docSnap.data();
     doc[arrayProp].shift()
 
-    // After updating the array, it is set again as the property
+    // After updating the array, it is passed again as the property
     // to be overwritten:
     let updatedArray = {
       [arrayProp]: doc[arrayProp]

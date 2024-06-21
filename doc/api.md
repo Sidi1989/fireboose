@@ -2,21 +2,21 @@
 
 ## Model Methods
 
-- findOneById
-- findMany
-- findOne
 - create
+- findOneById
+- findOne
+- findMany
 - updateOne
 - updateMany
 - deleteOne
 - deleteMany
 
 ### Array-related updates
-- pushInto
-- unshiftInto
 - shiftFrom
 - popFrom
 - pullFrom
+- unshiftInto
+- pushInto
 
 
 | Action      | One             | Many          |

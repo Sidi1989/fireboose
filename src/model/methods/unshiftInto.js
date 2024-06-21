@@ -45,7 +45,7 @@ const unshiftInto = async function (docId, arrayProp, element) {
     const doc = docSnap.data();
     doc[arrayProp].unshift(element)
 
-    // After updating the array, it is set again as the property
+    // After updating the array, it is passed again as the property
     // to be overwritten:
     let updatedArray = {
       [arrayProp]: doc[arrayProp]

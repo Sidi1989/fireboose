@@ -1,19 +1,19 @@
 import {
+  create,
+  ensureIndexes,
   findOneById,
   findOne,
   findMany,
   findManyByProperty,
-  create,
-  ensureIndexes,
   updateOne,
   updateMany,
-  pushInto,
-  unshiftInto,
+  deleteOne,
+  deleteMany,
   shiftFrom,
   popFrom,
   pullFrom,
-  deleteOne,
-  deleteMany,
+  unshiftInto,
+  pushInto,
 } from './methods/index.js';
 
 import {
@@ -54,21 +54,21 @@ const model = function (name, schema, collection) {
   };
 
   // Class methods
+  FirebooseClass.create = create.bind(FirebooseClass);
+  FirebooseClass.ensureIndexes = ensureIndexes.bind(FirebooseClass);
   FirebooseClass.findOneById = findOneById.bind(FirebooseClass);
   FirebooseClass.findOne = findOne.bind(FirebooseClass);
   FirebooseClass.findMany = findMany.bind(FirebooseClass);
   FirebooseClass.findManyByProperty = findManyByProperty.bind(FirebooseClass);
-  FirebooseClass.create = create.bind(FirebooseClass);
-  FirebooseClass.ensureIndexes = ensureIndexes.bind(FirebooseClass);
   FirebooseClass.updateOne = updateOne.bind(FirebooseClass);
   FirebooseClass.updateMany = updateMany.bind(FirebooseClass);
-  FirebooseClass.pushInto = pushInto.bind(FirebooseClass);
-  FirebooseClass.unshiftInto = unshiftInto.bind(FirebooseClass);
+  FirebooseClass.deleteOne = deleteOne.bind(FirebooseClass);
+  FirebooseClass.deleteMany = deleteMany.bind(FirebooseClass);
   FirebooseClass.shiftFrom = shiftFrom.bind(FirebooseClass);
   FirebooseClass.popFrom = popFrom.bind(FirebooseClass);
   FirebooseClass.pullFrom = pullFrom.bind(FirebooseClass);
-  FirebooseClass.deleteOne = deleteOne.bind(FirebooseClass);
-  FirebooseClass.deleteMany = deleteMany.bind(FirebooseClass);
+  FirebooseClass.unshiftInto = unshiftInto.bind(FirebooseClass);
+  FirebooseClass.pushInto = pushInto.bind(FirebooseClass);
 
   // Instance methods
   FirebooseClass.prototype.toObject = toObject;

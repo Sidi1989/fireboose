@@ -13,7 +13,6 @@ import {
  * Overwrite multiple documents of a collection
  * with the info passed as the argument,
  * according to a previously defined query
- * @param {Query} q
  * @param {Object} info E.g: {name: 'Spain', capital: 'Madrid'}
  * About 'nested objects':
  * 
@@ -35,10 +34,12 @@ import {
  * 
  * "flatten" will transform the object in a 'firebase dot notation' like this:
  *  {'capital.river': 'Manzanares'}
+ * 
+ * @param {Query} q
  * @returns Array (of Strings)
  * @example
  */
-const updateMany = async function (q, info) {
+const updateMany = async function (info, q) {
   const db = this.db;
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName); 
