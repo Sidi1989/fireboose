@@ -16,6 +16,7 @@ describe('Document', function () {
         continent: 'Pangea',
         __id: 'toObjectTestId'
       }
+      
       _.isEqual(actualResult, expectedResult)
     });
   })

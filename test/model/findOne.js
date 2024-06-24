@@ -14,7 +14,12 @@ describe('Model', function () {
     it('should retrieve 1 Doc, without error', function (done) {
       Country.findOne(newQuery)
         .then(function (resolve) {
-          let expectedResolve = {name: 'Japan', continent: 'Asia', population: 125, rivers: ['Shinano', 'Tone', 'Ishikari']};
+          let expectedResolve = {
+            name: 'Japan', 
+            continent: 'Asia', 
+            population: 125, 
+            rivers: ['Shinano', 'Tone', 'Ishikari']
+          };
           if (_.isEqual(expectedResolve, resolve)) {
             done()
           } else {

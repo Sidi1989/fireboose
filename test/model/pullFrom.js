@@ -11,15 +11,20 @@ describe('Model', function () {
       const element = 'Shinano';
       Country.pullFrom('country04', 'rivers', element)
         .then(function (resolve) {
-          Country.findOneById(resolve)
-            .then(function(resolve) {
-              let expectedResolve = {name: 'Japan', continent: 'Asia', population: 125, rivers: ['Tone', 'Ishikari']};
-              if (_.isEqual(expectedResolve, resolve)) {
-                done()
-              } else {
-                done(new Error('Failure in #pullFrom()'))
-              }
-            })
+          return Country.findOneById(resolve);
+        })
+        .then(function(resolve) {
+          let expectedResolve = {
+            name: 'Japan', 
+            continent: 'Asia', 
+            population: 125, 
+            rivers: ['Tone', 'Ishikari']
+          };
+          if (_.isEqual(expectedResolve, resolve)) {
+            done()
+          } else {
+            done(new Error('Failure in #pullFrom()'))
+          }
         })
         .catch(function(reject) {
           done(reject)

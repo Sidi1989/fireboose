@@ -18,15 +18,15 @@ describe('Model', function () {
           }
         })
         .then(function (resolve) {
-          Country.findOneById(resolve)
-            .then(function(resolve) {
-              let expectedResolve = {name: 'Mongolia', capital: 'Ulán Bator'};
-              if (_.isEqual(expectedResolve, resolve)) {
-                done()
-              } else {
-                done(new Error('Failure at find created instance in #create() Test1'))
-              }
-            })
+          return Country.findOneById(resolve)
+        })
+        .then(function(resolve) {
+          let expectedResolve = {name: 'Mongolia', capital: 'Ulán Bator'};
+          if (_.isEqual(expectedResolve, resolve)) {
+            done()
+          } else {
+            done(new Error('Failure at find created instance in #create() Test1'))
+          }
         })
         .catch(function(reject) {
           done(reject)
@@ -42,15 +42,18 @@ describe('Model', function () {
     it('should create 1 Doc without error', function (done) {
       Country.create({name: 'China', capital: 'Pekín'})
         .then(function (resolve) {
-          Country.findOneById(resolve)
-            .then(function(resolve) {
-              let expectedResolve = {name: 'China', capital: 'Pekín'};
-              if (_.isEqual(expectedResolve, resolve)) {
-                done()
-              } else {
-                done(new Error('Failure in #create() Test2'))
-              }
-            })
+          return Country.findOneById(resolve)
+        })
+        .then(function(resolve) {
+          let expectedResolve = {
+            name: 'China', 
+            capital: 'Pekín'
+          };
+          if (_.isEqual(expectedResolve, resolve)) {
+            done()
+          } else {
+            done(new Error('Failure in #create() Test2'))
+          }
         })
         .catch(function(reject) {
           done(reject)

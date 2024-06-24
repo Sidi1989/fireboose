@@ -10,7 +10,11 @@ describe('Model', function () {
     it('should find 1 Doc by its ID, without error', function (done) {
       Country.findOneById('country02')
         .then(function (resolve) {
-          let expectedResolve = {name: 'Italy', continent: 'Europe', seas: ['Mediterranean']};
+          let expectedResolve = {
+            name: 'Italy', 
+            continent: 'Europe', 
+            seas: ['Mediterranean']
+          };
           if (_.isEqual(expectedResolve, resolve)) {
             done()
           } else {

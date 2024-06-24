@@ -12,9 +12,7 @@ const newQuery = new Query()
 describe('Model', function () {
   describe('#updateMany()', function () {
     it('should update multiple Docs, without error', function (done) {
-      const update = {
-        continent: 'Old'
-      };
+      const update = {continent: 'Old'};
       Country.updateMany(update, newQuery)
         .then(function (resolve) {
           let expectedResolve = ['country01', 'country02', 'country07', 'country08'];

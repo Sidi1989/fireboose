@@ -11,18 +11,23 @@ describe('Model', function () {
       const element = 'Teshio';
       Country.unshiftInto('country04', 'rivers', element)
         .then(function (resolve) {
-          Country.findOneById(resolve)
-            .then(function(resolve) {
-              let expectedResolve = {name: 'Japan', continent: 'Asia', population: 125, rivers: ['Teshio', 'Shinano', 'Tone', 'Ishikari',]};
-              if (_.isEqual(expectedResolve, resolve)) {
-                done()
-              } else {
-                done(new Error('Failure in #unshiftInto()'))
-              }
-            })
+          return Country.findOneById(resolve);
+        })
+        .then(function(resolve) {
+          let expectedResolve = {
+            name: 'Japan',
+            continent: 'Asia',
+            population: 125,
+            rivers: ['Teshio', 'Shinano', 'Tone', 'Ishikari',]
+          };
+          if (_.isEqual(expectedResolve, resolve)) {
+            done();
+          } else {
+            done(new Error('Failure in #unshiftInto()'));
+          }
         })
         .catch(function(reject) {
-          done(reject)
+          done(reject);
         })
     });
   });

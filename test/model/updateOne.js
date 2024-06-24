@@ -8,9 +8,7 @@ import {Country} from '../utils/country.js';
 describe('Model', function () {
   describe('#updateOne()', function () {
     it('should update 1 Doc without error', function (done) {
-      const update = {
-        name: 'Macedonia'
-      };
+      const update = {name: 'Macedonia'};
       Country.updateOne(update, 'country06')
         .then(function (resolve) {
           let expectedResolve = 'country06';
@@ -21,15 +19,18 @@ describe('Model', function () {
           }
         })
         .then(function(resolve) {
-          Country.findOneById(resolve)
-            .then(function(resolve) {
-              let expectedResolve = {name: 'Macedonia', seas: ['Mediterranean', 'Aegean']};
-              if (_.isEqual(expectedResolve, resolve)) {
-                done()
-              } else {
-                done(new Error('Failure at find updated instance in #updateOne()'))
-              }
-            })
+          return Country.findOneById(resolve);
+        })
+        .then(function(resolve) {
+          let expectedResolve = {
+            name: 'Macedonia', 
+            seas: ['Mediterranean', 'Aegean']
+          };
+          if (_.isEqual(expectedResolve, resolve)) {
+            done()
+          } else {
+            done(new Error('Failure at find updated instance in #updateOne()'))
+          }
         })
         .catch(function(reject) {
           done(reject)
