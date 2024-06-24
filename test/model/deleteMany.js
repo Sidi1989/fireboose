@@ -7,7 +7,7 @@ import {UnindexedCountry} from '../utils/db.js';
 
 // Test
 const newQuery = new Query()
-  .where('continent', '==', 'Europe').exec()
+  .where('continent', '==', 'Europe')
 
 describe('Model', function () {
   describe('#deleteMany()', function () {

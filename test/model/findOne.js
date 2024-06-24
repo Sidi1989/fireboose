@@ -7,7 +7,7 @@ import {UnindexedCountry} from '../utils/db.js';
 
 // Test
 const newQuery = new Query()
-  .where('population', '>=', 120).exec()
+  .where('population', '>=', 120)
 
 describe('Model', function () {
   describe('#findOne()', function () {

@@ -23,9 +23,7 @@ const deleteOne = async function (docId) {
 
   const docRef = doc(collectionRef, docId);
   await deleteDoc(docRef);
-  // After deleting it from Firestore, it returns the old ID
-  // of the deleted document:
-  return docRef.id;
+  return docId;
 };
 
 

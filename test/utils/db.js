@@ -126,5 +126,5 @@ const UnindexedCountry = fireboose.model('UnindexedCountry', unindexedCountrySch
 export {
   deleteCollectionDocs,
   IndexedCountry,
-  UnindexedCountry
+  UnindexedCountry,
 };

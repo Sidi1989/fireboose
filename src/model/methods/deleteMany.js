@@ -24,9 +24,10 @@ const deleteMany = async function (q) {
   }
 
   // Once every queryOperation is included in the array, this array of
-  // queryOperations must be passed into the query function as if each of
-  // the elements of the array was an argument of the function:
-  const queryDocs = query(collectionRef, ...q.queryOperations);
+  // queryOperations must be retrieved and passed into the query function 
+  // as if each of its elements were an argument of the function:
+  const queryOperations = q.getQueryOperations();
+  const queryDocs = query(collectionRef, ...queryOperations);
 
   const docsIds = [];
   const docsRefs = [];

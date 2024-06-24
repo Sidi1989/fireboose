@@ -7,7 +7,7 @@ import {UnindexedCountry} from '../utils/db.js';
 
 // Test
 const newQuery = new Query()
-  .where('continent', '==', 'Europe').exec()
+  .where('continent', '==', 'Europe')
   // .where('population', '>=', 50)
   // .where('seas', 'array-contains', 'Mediterranean')
   // .where(seas, 'array-contains-any', ['Atlantic', 'Mediterranean']

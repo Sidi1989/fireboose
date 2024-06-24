@@ -12,7 +12,7 @@ import {
  * its first element.
  * @param {String} docId E.g: 'country01'
  * @param {String} arrayProp E.g: 'cities'
- * @returns String || Null
+ * @returns {String || Null}  The ID of the document having been updated
  * @example
  * const country01 = {
  *   id: 'country01',
