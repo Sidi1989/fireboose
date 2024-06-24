@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import Query from '../../src/query/index.js';
-import {Country} from '../utils/country.js';
+import {UnindexedCountry} from '../utils/db.js';
 
 
 
@@ -12,7 +12,7 @@ const newQuery = new Query()
 describe('Model', function () {
   describe('#findOne()', function () {
     it('should retrieve 1 Doc, without error', function (done) {
-      Country.findOne(newQuery)
+      UnindexedCountry.findOne(newQuery)
         .then(function (resolve) {
           let expectedResolve = {
             name: 'Japan', 

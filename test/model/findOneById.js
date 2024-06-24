@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {Country} from '../utils/country.js';
+import {UnindexedCountry} from '../utils/db.js';
 
 
 
@@ -8,7 +8,7 @@ import {Country} from '../utils/country.js';
 describe('Model', function () {
   describe('#findOneById()', function () {
     it('should find 1 Doc by its ID, without error', function (done) {
-      Country.findOneById('country02')
+      UnindexedCountry.findOneById('country02')
         .then(function (resolve) {
           let expectedResolve = {
             name: 'Italy', 

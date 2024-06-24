@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import Query from '../../src/query/index.js';
-import {Country} from '../utils/country.js';
+import {UnindexedCountry} from '../utils/db.js';
 
 
 
@@ -12,7 +12,7 @@ const newQuery = new Query()
 describe('Model', function () {
   describe('#deleteMany()', function () {
     it('should delete multiple Docs, without error', function (done) {
-      Country.deleteMany(newQuery)
+      UnindexedCountry.deleteMany(newQuery)
         .then(function (resolve) {
           let expectedResolve = ['country01', 'country02', 'country07', 'country08'];
           if (_.isEqual(expectedResolve, resolve)) {

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import Query from '../../src/query/index.js';
-import {Country} from '../utils/country.js';
+import {UnindexedCountry} from '../utils/db.js';
 
 
 
@@ -25,7 +25,7 @@ const newQuery = new Query()
 
 describe('#findMany()', function () {
   it('should retrieve multiple Docs, without error', function (done) {
-    Country.findMany(newQuery)
+    UnindexedCountry.findMany(newQuery)
       .then(function (resolve) {
         let expectedResolve = [
           {name: 'Spain', continent: 'Europe', population: 48, seas: ['Atlantic', 'Mediterranean']},

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {Country} from '../utils/country.js';
+import {UnindexedCountry} from '../utils/db.js';
 
 
 
@@ -9,9 +9,9 @@ describe('Model', function () {
   describe('#pushInto()', function () {
     it('should add 1 element at the end of an arrayProp, without error', function (done) {
       const element = 'Teshio';
-      Country.pushInto('country04', 'rivers', element)
+      UnindexedCountry.pushInto('country04', 'rivers', element)
         .then(function (resolve) {
-          return Country.findOneById(resolve);
+          return UnindexedCountry.findOneById(resolve);
         })
         .then(function(resolve) {
           let expectedResolve = {

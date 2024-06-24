@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {Country} from '../utils/country.js';
+import {UnindexedCountry} from '../utils/db.js';
 
 
 
@@ -9,7 +9,7 @@ describe('Model', function () {
   describe('#updateOne()', function () {
     it('should update 1 Doc without error', function (done) {
       const update = {name: 'Macedonia'};
-      Country.updateOne(update, 'country06')
+      UnindexedCountry.updateOne(update, 'country06')
         .then(function (resolve) {
           let expectedResolve = 'country06';
           if (expectedResolve == resolve) {
@@ -19,7 +19,7 @@ describe('Model', function () {
           }
         })
         .then(function(resolve) {
-          return Country.findOneById(resolve);
+          return UnindexedCountry.findOneById(resolve);
         })
         .then(function(resolve) {
           let expectedResolve = {

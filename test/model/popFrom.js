@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {Country} from '../utils/country.js';
+import {UnindexedCountry} from '../utils/db.js';
 
 
 
@@ -8,9 +8,9 @@ import {Country} from '../utils/country.js';
 describe('Model', function () {
   describe('#popFrom()', function () {
     it('should remove the last element of an arrayProp, without error', function (done) {
-      Country.popFrom('country04', 'rivers')
+      UnindexedCountry.popFrom('country04', 'rivers')
         .then(function (resolve) {
-          return Country.findOneById(resolve);
+          return UnindexedCountry.findOneById(resolve);
         })
         .then(function(resolve) {
           let expectedResolve = {

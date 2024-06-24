@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {Country} from '../utils/country.js';
+import {UnindexedCountry} from '../utils/db.js';
 
 
 
@@ -8,7 +8,9 @@ import {Country} from '../utils/country.js';
 describe('Document', function () {
   describe('#toObject()', function () {
     it('should convert an instance into a POJO, without error', function () {
-      const toObjectCountry = new Country({name:'toObjectCountry', continent: 'Pangea'}, 'toObjectTestId');
+      const toObjectCountry = new UnindexedCountry(
+        {name:'toObjectCountry', continent: 'Pangea'}, 'toObjectTestId'
+      );
       
       const actualResult = toObjectCountry.toObject();
       const expectedResult = {

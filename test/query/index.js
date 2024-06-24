@@ -1,5 +1,5 @@
-import Query from '../src/query/index.js';
-import {Country} from './utils/country-with-index.js';
+import Query from '../../src/query/index.js';
+import {IndexedCountry} from '../utils/db.js';
 
 
 
@@ -13,5 +13,5 @@ const newQuery = new Query()
   // .skip(1)
   // .limit(6)
 
-const countries = await Country.findMany(newQuery);
-console.log(countries)
+const indexedCountries = await IndexedCountry.findMany(newQuery);
+console.log(indexedCountries)

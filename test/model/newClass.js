@@ -18,7 +18,9 @@ const countrySchemaDefinition = {
 };
 const countrySchemaConfig = {};
 const countrySchema = new Schema(countrySchemaDefinition, countrySchemaConfig);
+
 const Country = fireboose.model('Country', countrySchema, 'countries');
+
 
 // Test (without Mocha)
 if (!fireboose.db) {

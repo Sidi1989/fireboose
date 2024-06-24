@@ -1,8 +1,11 @@
-import {Country} from '../utils/country.js';
+import {UnindexedCountry} from '../utils/db.js';
 
 
 
 
 // Test (without Mocha)
-const inspectCountry = new Country({name:'inspectCountry', continent: 'Pangea'}, 'inspectTestId');
+const inspectCountry = new UnindexedCountry(
+  {name:'inspectCountry', continent: 'Pangea'}, 'inspectTestId'
+);
+
 inspectCountry.inspect();

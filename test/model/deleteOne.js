@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {Country} from '../utils/country.js';
+import {UnindexedCountry} from '../utils/db.js';
 
 
 
@@ -8,7 +8,7 @@ import {Country} from '../utils/country.js';
 describe('Model', function () {
   describe('#deleteOne()', function () {
     it('should delete 1 Doc without error', function (done) {
-      Country.findOneById('deleteOneTest')
+      UnindexedCountry.findOneById('deleteOneTest')
         .then(function (resolve) {
           let expectedResolve = {
             name: 'Atlantis', 
@@ -21,7 +21,7 @@ describe('Model', function () {
           }
         })
         .then(function () {
-          return Country.deleteOne('deleteOneTest');
+          return UnindexedCountry.deleteOne('deleteOneTest');
         })
         .then(function (resolve) {
           let expectedResolve = 'deleteOneTest';
@@ -32,7 +32,7 @@ describe('Model', function () {
           }
         })
         .then(function(resolve) {
-          return Country.findOneById(resolve);
+          return UnindexedCountry.findOneById(resolve);
         })
         .then(function(resolve) {
           let expectedResolve = null;
