@@ -1,4 +1,4 @@
-import {UnindexedCountry} from './db.js';
+import UnindexedCountry from './unindexedCountryModel.js';
 
 
 

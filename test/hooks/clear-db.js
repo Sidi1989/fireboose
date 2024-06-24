@@ -1,11 +1,12 @@
-import { deleteCollectionDocs } from './db.js';
+import { deleteCollectionDocs } from '../../src/utils/db.js';
 
 
 
 
 console.log('[INFO] Start clearing DB');
 
-await deleteCollectionDocs('countries');
+await deleteCollectionDocs('indexedCountries');
+await deleteCollectionDocs('unindexedCountries');
 
 console.log('[INFO] Finish clearing DB');
 

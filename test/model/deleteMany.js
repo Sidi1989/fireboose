@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import Query from '../../src/query/index.js';
-import {UnindexedCountry} from '../utils/db.js';
+import UnindexedCountry from '../hooks/unindexedCountryModel.js';
 
 
 

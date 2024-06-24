@@ -1,5 +1,5 @@
 import Query from '../../src/query/index.js';
-import {IndexedCountry} from '../utils/db.js';
+import IndexedCountry from '../hooks/indexedCountryModel.js';
 
 
 
