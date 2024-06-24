@@ -8,9 +8,9 @@ import {
   updateMany,
   deleteOne,
   deleteMany,
+  pullFrom,
   shiftFrom,
   popFrom,
-  pullFrom,
   unshiftInto,
   pushInto,
 } from './methods/index.js';
@@ -62,9 +62,9 @@ const model = function (name, schema, collection) {
   FirebooseClass.updateMany = updateMany.bind(FirebooseClass);
   FirebooseClass.deleteOne = deleteOne.bind(FirebooseClass);
   FirebooseClass.deleteMany = deleteMany.bind(FirebooseClass);
+  FirebooseClass.pullFrom = pullFrom.bind(FirebooseClass);
   FirebooseClass.shiftFrom = shiftFrom.bind(FirebooseClass);
   FirebooseClass.popFrom = popFrom.bind(FirebooseClass);
-  FirebooseClass.pullFrom = pullFrom.bind(FirebooseClass);
   FirebooseClass.unshiftInto = unshiftInto.bind(FirebooseClass);
   FirebooseClass.pushInto = pushInto.bind(FirebooseClass);
 

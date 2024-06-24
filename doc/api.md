@@ -3,6 +3,7 @@
 ## Model Methods
 
 - create
+- ensureIndexes
 - findOneById
 - findOne
 - findMany
@@ -12,12 +13,14 @@
 - deleteMany
 
 ### Array-related updates
-- shiftFrom
-- popFrom
-- pullFrom
-- unshiftInto
-- pushInto
 
+- pullFrom (remove coincident elements)
+- shiftFrom (remove first element)
+- popFrom (remove last element)
+- unshiftInto (add element at the beginning)
+- pushInto (add element at the end)
+
+### Basic arrangement
 
 | Action      | One             | Many          |
 | :---:       | :---:           | :---:         |
@@ -40,3 +43,4 @@
 - Limit
 - OrderBy
 - Where
+- getQueryOperations

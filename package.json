@@ -10,7 +10,7 @@
     "doc": "doc"
   },
   "scripts": {
-    "test": "node ./test/index.js; mocha ./test/instance-methods/*; mocha ./test/class-methods/*"
+    "test": "node ./test/utils/load-db.js; mocha ./test/model/*; node ./test/utils/clear-db.js"
   },
   "repository": {
     "type": "git",

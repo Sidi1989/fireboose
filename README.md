@@ -23,7 +23,7 @@ import fireboose from 'fireboose';
 
 ## Connect
 
-You can connect to Fireboose using services account key from Firebase,
+You can connect to Fireboose using a Service Account key from Firebase,
 as the config object should look like this:
 
 ```js
@@ -55,18 +55,20 @@ const definition = {
     default: 18
   }
 }
-const config = {};
+const config = {
+  // Default options that can be modified
+};
 
 const countrySchema = new Schema(definition, config);
 ```
 
 ## Model
 
-Once set an schema, you can create a new model from it.
+Once set an Schema, you can create a new Model from it.
 It requires 3 parameters:
   - Name of the Class
   - Schema for the Class
-  - Collection in Firestore
+  - Name of the Collection in Firestore
 
 ```js
 const Country = fireboose.model('Country', countrySchema, 'countries');
@@ -81,8 +83,14 @@ nation.save()
 
 For some interaction with the collections, it could be necessary to set up firstly
 an instanced query with the parameters for searching among the documents.
-So after configuring that query with the desired methods, it would be one of the
-arguments for some Model methods (v.g.: findBy)
+So after configuring that query with the desired methods -with an array of all of those
+searching operations as the key to compose correct queries-, the query itself would be
+one of the arguments for some Model methods (v.g.: findMany)
+
+```js
+const query = new Query().where('continent', '==', 'Europe')
+const countries = Country.findMany(query)
+```
 
 ### Caveat
 
@@ -93,7 +101,10 @@ https://firebase.google.com/docs/firestore/query-data/order-limit-data
 
 Contrary to https://mongoosejs.com/docs/api/model.html#Model.ensureIndexes()
 where Moongose can ask MongoDB to create the necessary indexes, 
-Fireboose CANNOT ask Firestore to do it, so it must be done manually in the UI
+Fireboose CANNOT ask Firestore to do it, so it must be done manually in the UI.
+However, thanks to the query method "ensureIndexes" and the default config "autoIndex",
+a list of all the needed links (for that visual creation of the indexes) will be triggered
+as soon as their fault is detected.
 
 ## Acknowledgement
 
