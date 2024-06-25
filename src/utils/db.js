@@ -1,5 +1,4 @@
 import fireboose from '../index.js';
-import firebooseConnectionSettings from '../../runtime/config/firebase-config.json' assert { type: "json" };
 import { 
   collection, doc,
   getDocs, deleteDoc,
@@ -8,22 +7,18 @@ import {
 
 
 
-// All the DB functions will need a previous connection to Firestore 
-fireboose.connect(firebooseConnectionSettings);
-
-
 /**
  * @description
  * Delete all the Documents from a Collection.
  * @param {String} collectionName E.g: members 
  */
 const deleteCollectionDocs = async function (collectionName) {
-  // First, it retrieves all the IDs from the Documents in the Collection
+  // Firstly, it retrieves all the IDs from the Documents in the Collection
   const collectionRef = collection(fireboose.db, collectionName); 
   var collectionData = await getDocs(collectionRef);
   const collectionDocsIds = collectionData.docs.map((doc) => doc.id);
 
-  // And then it removes each Document through their IDs
+  // And then, it removes each Document through their IDs
   for (let id of collectionDocsIds) {
     const docRef = doc(collectionRef, id);
     await deleteDoc(docRef);
