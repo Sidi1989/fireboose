@@ -47,8 +47,11 @@ const indexedCountrySchema = new Schema(indexedCountrySchemaDefinition, indexedC
 // Addition of some indexes to the instanced schema
 indexedCountrySchema.addIndex({name: 'asc', continent: 'asc'});
 indexedCountrySchema.addIndex({name: 'asc', continent: 'desc'});
-indexedCountrySchema.addIndex({name: 'desc', population: 'asc'});
 indexedCountrySchema.addIndex({continent: 'desc', population: 'desc'});
+indexedCountrySchema.addIndex({continent: '==', population: '>'});
+indexedCountrySchema.addIndex({name: '==', population: 'asc'});
+indexedCountrySchema.addIndex({continent: '==', rivers: 'array-contains'});
+indexedCountrySchema.addIndex({population: 'asc', rivers: 'array-contains'});
 
 // While creating the Model, it will trigger Model.ensureIndexes():
 const IndexedCountry = fireboose.model('IndexedCountry', indexedCountrySchema, 'indexedCountries');

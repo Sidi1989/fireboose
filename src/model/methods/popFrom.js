@@ -50,7 +50,7 @@ const popFrom = async function (docId, arrayProp) {
     }
 
     await updateDoc(docRef, updatedArray);
-    return doc.id
+    return docRef.id
   } else {
     return null;
   }

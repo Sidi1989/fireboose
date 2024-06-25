@@ -1,11 +1,20 @@
 import _ from 'lodash';
 import UnindexedCountry from '../hooks/unindexedCountryModel.js';
+import { deleteCollectionDocs } from '../../src/utils/db.js';
 
 
 
 
 // Test
 describe('Model', function () {
+  before(async function () {
+    UnindexedCountry.create({name: 'Atlantis', seas: ['Atlantic']}, 'deleteOneTest');
+  });
+
+  after(async function () {
+    await deleteCollectionDocs('unindexedCountries');
+  });
+
   describe('#deleteOne()', function () {
     it('should delete 1 Doc without error', function (done) {
       UnindexedCountry.findOneById('deleteOneTest')

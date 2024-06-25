@@ -52,7 +52,7 @@ const unshiftInto = async function (docId, arrayProp, element) {
     }
 
     await updateDoc(docRef, updatedArray);
-    return doc.id
+    return docRef.id
   } else {
     return null;
   }

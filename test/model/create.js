@@ -1,11 +1,16 @@
 import _ from 'lodash';
 import UnindexedCountry from '../hooks/unindexedCountryModel.js';
+import { deleteCollectionDocs } from '../../src/utils/db.js';
 
 
 
 
 // Test 1
 describe('Model', function () {
+  after(async function () {
+    await deleteCollectionDocs('unindexedCountries');
+  });
+
   describe('#create()', function () {
     it('should create 1 Doc without error', function (done) {
       UnindexedCountry.create(
@@ -40,6 +45,10 @@ describe('Model', function () {
 
 // Test 2
 describe('Model', function () {
+  after(async function () {
+    await deleteCollectionDocs('unindexedCountries');
+  });
+  
   describe('#create()', function () {
     it('should create 1 Doc without error', function (done) {
       UnindexedCountry.create(
