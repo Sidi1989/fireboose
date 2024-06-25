@@ -13,11 +13,10 @@
  * 
  * Attention:
  * Firestore has its own internal sort order (usually the document.id); 
- * so if a query is sorted .orderBy(), the first document will be relative
- * to that sorting.
- * So the truth is that only an orderBy() query will have a real concept of 
- * a "0" position; which means that query.skip() will always require a previous
- * orderBy() operator
+ * so if a query is sorted with .orderBy(), the first document will be 
+ * relative to that sorting.
+ * That way, only an orderBy() query will have a real concept of a "0" position;
+ * which means that a query.skip() will always require a previous orderBy() operator
  */
 const skip = function (offset) {
   this.conditions.skip = offset;

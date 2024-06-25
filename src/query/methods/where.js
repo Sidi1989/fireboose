@@ -81,8 +81,8 @@
  * It will return countries such as Mexico and Japan
  * 
  * @limitations
- * There cannot be a combination of [!=] and [not-in], in a compound query.
- * In a compound query, range (<, <=, >, >=) and not equals (!=, not-in) comparisons 
+ * There cannot be a combination of [!=] and [not-in], in a composite query.
+ * In a composite query, range (<, <=, >, >=) and not equals (!=, not-in) comparisons 
  * must all filter on the same field.
  */
 const WhereCondition = class {

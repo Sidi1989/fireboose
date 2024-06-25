@@ -102,7 +102,7 @@ https://firebase.google.com/docs/firestore/query-data/order-limit-data
 Contrary to https://mongoosejs.com/docs/api/model.html#Model.ensureIndexes()
 where Moongose can ask MongoDB to create the necessary indexes, 
 Fireboose CANNOT ask Firestore to do it, so it must be done manually in the UI.
-However, thanks to the query method "ensureIndexes" and the default config "autoIndex",
+However, thanks to the query method "ensureIndexes()" and the default config "autoIndex",
 a list of all the needed links (for that visual creation of the indexes) will be triggered
 as soon as their fault is detected.
 
