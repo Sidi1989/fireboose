@@ -20,11 +20,13 @@ const Schema = class {
       this.config[prop] = config[prop];
     }
 
-    // Instance method for adding indexes into their array
-    this.addIndex = addIndex;
+    // List of composite indexes needed for Firestore to run cmposite queries:
     this.indexes = [];
   }
 }
+
+// Instance method for adding indexes into their array
+Schema.prototype.addIndex = addIndex;
 
 
 
