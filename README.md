@@ -56,7 +56,7 @@ const definition = {
   }
 }
 const config = {
-  // Default options that can be modified
+  // Default options, that can be modified
 };
 
 const countrySchema = new Schema(definition, config);
@@ -94,17 +94,10 @@ const countries = Country.findMany(query)
 
 ### Caveat
 
-https://stackoverflow.com/questions/53790175/why-does-this-firestore-query-require-an-index
-https://firebase.google.com/docs/firestore/query-data/index-overview
-https://firebase.google.com/docs/firestore/query-data/queries
-https://firebase.google.com/docs/firestore/query-data/order-limit-data
-
-Contrary to https://mongoosejs.com/docs/api/model.html#Model.ensureIndexes()
-where Moongose can ask MongoDB to create the necessary indexes, 
-Fireboose CANNOT ask Firestore to do it, so it must be done manually in the UI.
-However, thanks to the query method "ensureIndexes()" and the default config "autoIndex",
-a list of all the needed links (for that visual creation of the indexes) will be triggered
-as soon as their fault is detected.
+It is recommended to read the Docs about:
+  - the needed values for an adequate .env configuration
+  - the relation of methods offered by Fireboose
+  - the Firestore Limitations in the configuration of composite queries
 
 ## Acknowledgement
 
