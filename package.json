@@ -1,6 +1,6 @@
 {
   "name": "fireboose",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "module",
   "author": "Miguel Díaz Laclaustra",
   "license": "ISC",
@@ -10,7 +10,10 @@
     "doc": "doc"
   },
   "scripts": {
-    "test": "echo 'hello fireboose'"
+    "test:document": "mocha ./test/document/*",
+    "test:model": "mocha ./test/model/*",
+    "test:query": "mocha ./test/query/*",
+    "test:all": "mocha ./test/document/*; mocha ./test/model/*; mocha ./test/query/*"
   },
   "repository": {
     "type": "git",
@@ -22,6 +25,7 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "eslint": "^8.57.0"
+    "eslint": "^8.57.0",
+    "mocha": "^10.4.0"
   }
 }

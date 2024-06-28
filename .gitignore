@@ -13,9 +13,9 @@
 # runtime files
 /runtime
 
+# static files eligible for CDN
+public/
+
 # builtime files
 /build
 /dist
-
-# static files eligible for CDN
-public/
