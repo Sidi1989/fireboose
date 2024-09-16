@@ -14,9 +14,9 @@ describe('Model', function () {
     await deleteCollectionDocs('unindexedCountries');
   });
   
-  describe('#shiftFrom()', function () {
+  describe('#shiftOneById()', function () {
     it('should remove the first element of an arrayProp, without error', function (done) {
-      UnindexedCountry.shiftFrom('country04', 'rivers')
+      UnindexedCountry.shiftOneById('country04', 'rivers')
         .then(function (resolve) {
           return UnindexedCountry.findOneById(resolve);
         })
@@ -30,7 +30,7 @@ describe('Model', function () {
           if (_.isEqual(expectedResolve, resolve)) {
             done()
           } else {
-            done(new Error('Failure in #shiftFrom()'))
+            done(new Error('Failure in #shiftOneById()'))
           }
         })
         .catch(function(reject) {
