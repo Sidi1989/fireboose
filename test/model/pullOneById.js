@@ -14,11 +14,11 @@ describe('Model', function () {
     await deleteCollectionDocs('unindexedCountries');
   });
 
-  describe('#pullFrom()', function () {
+  describe('#pullOneById()', function () {
     it('should remove 1 element from an arrayProp, without error', function (done) {
       const element = 'Tone';
 
-      UnindexedCountry.pullFrom('country04', 'rivers', element)
+      UnindexedCountry.pullOneById('country04', 'rivers', element)
         .then(function (resolve) {
           return UnindexedCountry.findOneById(resolve);
         })
@@ -32,7 +32,7 @@ describe('Model', function () {
           if (_.isEqual(expectedResolve, resolve)) {
             done()
           } else {
-            done(new Error('Failure in #pullFrom()'))
+            done(new Error('Failure in #pullOneById()'))
           }
         })
         .catch(function(reject) {

@@ -1,6 +1,6 @@
 import { 
   collection, doc,
-  updateDoc, arrayRemove,
+  arrayRemove, updateDoc,
 } from 'firebase/firestore';
 
 
@@ -8,20 +8,21 @@ import {
 
 /**
  * @description
- * Update a document by removing, from one of its {Array} properties,
- * those elements whose value is coincident with the one passed
- * as the argument.
+ * Update a document (identified by its Id) by removing, 
+ * from one of its {Array} properties,
+ * those elements whose value is coincident with the one 
+ * passed as the argument.
  * @param {String} docId E.g: 'country01'
  * @param {String} arrayProp E.g: 'cities'
  * @param {Mixed} element 27 || 'Madrid' || true || {name: 'Madrid', river: 'Manzanares'}
- * @returns String
+ * @returns {String} Id of the updated document
  * @example
  * const country01 = {
  *   id: 'country01',
  *   cities: ['Madrid, 'Barcelona', 'Bilbao']
  * };
  *  
- * await Country.pullFrom(country01, cities, 'Bilbao');
+ * await Country.pullOneById(country01, cities, 'Bilbao');
  * 
  * console.log(country01)
  * // {
@@ -29,13 +30,13 @@ import {
  * //   cities: ['Madrid', 'Barcelona']
  * // };
  */
-const pullFrom = async function (docId, arrayProp, element) {
+const pullOneById = async function (docId, arrayProp, element) {
   const db = this.db;
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName); 
 
   if (!docId || !arrayProp || !element) {
-    throw new Error('Not enough params for [pullFrom]')
+    throw new Error('Not enough params for [pullOneById]')
   }
   
   // According to Firebase Blog: 
@@ -56,4 +57,4 @@ const pullFrom = async function (docId, arrayProp, element) {
 
 
 
-export default pullFrom;
+export default pullOneById;
