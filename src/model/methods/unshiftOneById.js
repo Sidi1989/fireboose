@@ -8,20 +8,21 @@ import {
 
 /**
  * @description
- * Update a document by adding, to one of its {Array} properties,
- * a new element that doesn’t exist there already, appending it 
- * at the beginning of the array.
+ * Update a document (identified by its Id) by adding, 
+ * to one of its {Array} properties,
+ * a new element that doesn’t exist there already, 
+ * appending it at the beginning of the array.
  * @param {String} docId E.g: 'country01'
  * @param {String} arrayProp E.g: 'cities'
  * @param {Mixed} element 27 || 'Madrid' || true || {name: 'Madrid', river: 'Manzanares'}
- * @returns {String || Null}  The ID of the document having been updated
+ * @returns {String || Null}  Id of the updated document || Null
  * @example
  * const country01 = {
  *   id: 'country01',
  *   cities: ['Madrid, 'Barcelona']
  * };
  *  
- * await Country.unshiftInto(country01, cities, 'Valencia');
+ * await Country.unshiftOneById(country01, cities, 'Valencia');
  * 
  * console.log(country01)
  * // {
@@ -29,13 +30,13 @@ import {
  * //   cities: ['Valencia', 'Madrid', 'Barcelona']
  * // };
  */
-const unshiftInto = async function (docId, arrayProp, element) {
+const unshiftOneById = async function (docId, arrayProp, element) {
   const db = this.db;
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName);
 
   if (!docId || !arrayProp || !element) {
-    throw new Error('Not enough params for [unshiftInto]')
+    throw new Error('Not enough params for [unshiftOneById]')
   }
 
   const docRef = doc(collectionRef, docId);
@@ -61,4 +62,4 @@ const unshiftInto = async function (docId, arrayProp, element) {
 
 
 
-export default unshiftInto;
+export default unshiftOneById;
