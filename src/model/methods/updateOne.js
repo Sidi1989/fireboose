@@ -1,6 +1,7 @@
 import { flatten } from 'flat';
 import { 
   collection, doc,
+  getDocs, query,
   updateDoc,
 } from 'firebase/firestore';
 
@@ -9,7 +10,9 @@ import {
 
 /**
  * @description
- * Overwrite a document with the info passed as the argument.
+ * Overwrite a document, identified as the result of a query,
+ * with the info passed as the argument
+ * @param {Query} q
  * @param {Object} docInfo E.g: {name: 'Spain', capital: 'Madrid'}
  * About 'nested objects':
  * 
@@ -32,8 +35,7 @@ import {
  * "flatten" will transform the object in a 'firebase dot notation' like this:
  *  {'capital.river': 'Manzanares'}
  * 
- * @param {String} docId E.g: 'country01'
- * @returns String
+ * @returns {String || Null} Id of the updated document || Null
  * @example
  * const newCountry = await Country.create(
  *    {name: 'Italy', capital: 'Rome'}, 
@@ -41,25 +43,45 @@ import {
  * );
  * 
  * const updatedCountry = await Country.updateOne(
- *    {name: 'Roman Empire', capital: 'Rome'}
+ *    query,
+ *    {name: 'Roman Empire'}
  * );
  * 
  * console.log(await Country.findOneById(newCountryId))
  * // {name: 'Roman Empire', capital: 'Rome'}
  */
-const updateOne = async function (docInfo, docId) {
+const updateOne = async function (q, docInfo) {
   const db = this.db;
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName); 
 
-  if (!docInfo || !docId) {
+  if (!q || !docInfo) {
     throw new Error('Not enough params for [updateOne]')
   }
 
-  const docRef = doc(collectionRef, docId);
-  await updateDoc(docRef, flatten(docInfo));
-  
-  return docId;
+  // Once every queryOperation is included in the array, 
+  // this array itself must be retrieved and passed into the query function 
+  // as if each of its elements were an argument of the function:
+  const queryOperations = q.getQueryOperations();
+  const queryDocs = query(collectionRef, ...queryOperations);
+
+  const docsIds = [];
+  var querySnap = await getDocs(queryDocs);
+
+  querySnap.forEach(function(docSnap) {
+    docsIds.push(docSnap.id)
+  });
+
+  // It only keeps the first coincidence:
+  if (docsIds.length > 0) {
+    const queriedDocumentId = docsIds[0];
+    const docRef = doc(collectionRef, queriedDocumentId);
+    await updateDoc(docRef, flatten(docInfo));
+
+    return docRef.id;
+  } else {
+    return null
+  }
 };
 
 

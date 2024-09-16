@@ -1,7 +1,7 @@
 import { flatten } from 'flat';
 import { 
-  collection, getDocs, 
-  query,
+  collection, 
+  getDocs, query,
   updateDoc,
 } from 'firebase/firestore';
 
@@ -10,9 +10,10 @@ import {
 
 /**
  * @description
- * Overwrite multiple documents of a collection
- * with the info passed as the argument,
- * according to a previously defined query
+ * Overwrite multiple documents of a collection, 
+ * found according to a previously defined query,
+ * with new info passed as the argument
+ * @param {Query} q
  * @param {Object} info E.g: {name: 'Spain', capital: 'Madrid'}
  * About 'nested objects':
  * 
@@ -35,20 +36,18 @@ import {
  * "flatten" will transform the object in a 'firebase dot notation' like this:
  *  {'capital.river': 'Manzanares'}
  * 
- * @param {Query} q
- * @returns Array (of Strings)
- * @example
+ * @returns {Array (of Strings)} Ids of the updated documents
  */
-const updateMany = async function (info, q) {
+const updateMany = async function (q, info) {
   const db = this.db;
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName); 
 
-  if (!info || !q) {
+  if (!q || !info) {
     throw new Error('Not enough params for [updateMany]')
   }
 
-   // Once every queryOperation is included in the array, this array of
+  // Once every queryOperation is included in the array, this array of
   // queryOperations must be retrieved and passed into the query function 
   // as if each of its elements were an argument of the function:
   const queryOperations = q.getQueryOperations();

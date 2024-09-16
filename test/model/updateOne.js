@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import Query from '../../src/query/index.js';
 import UnindexedCountry from '../hooks/unindexedCountryModel.js';
 import { deleteCollectionDocs } from '../../src/utils/db.js';
 import loadBeforeUnindexedCountries from '../hooks/loadBeforeUnindexedCountries.js';
@@ -16,17 +17,11 @@ describe('Model', function () {
 
   describe('#updateOne()', function () {
     it('should update 1 Doc without error', function (done) {
+      const newQuery = new Query()
+        .where('name', '==', 'Greece');
       const update = {name: 'Macedonia'};
       
-      UnindexedCountry.updateOne(update, 'country06')
-        .then(function (resolve) {
-          let expectedResolve = 'country06';
-          if (expectedResolve == resolve) {
-            return resolve
-          } else {
-            done(new Error('Failure at update instance in #updateOne()'))
-          }
-        })
+      UnindexedCountry.updateOne(newQuery, update)
         .then(function(resolve) {
           return UnindexedCountry.findOneById(resolve);
         })

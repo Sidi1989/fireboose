@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import Query from '../../src/query/index.js';
 import UnindexedCountry from '../hooks/unindexedCountryModel.js';
 import { deleteCollectionDocs } from '../../src/utils/db.js';
 import loadBeforeUnindexedCountries from '../hooks/loadBeforeUnindexedCountries.js';
@@ -15,19 +14,23 @@ describe('Model', function () {
     await deleteCollectionDocs('unindexedCountries');
   });
 
-  describe('#updateMany()', function () {
-    it('should update multiple Docs, without error', function (done) {
-      const newQuery = new Query()
-        .where('continent', '==', 'Europe');
-      const update = {continent: 'Old'};
-
-      UnindexedCountry.updateMany(newQuery, update)
-        .then(function (resolve) {
-          let expectedResolve = ['country01', 'country02', 'country07', 'country08'];
+  describe('#updateOneById()', function () {
+    it('should update 1 Doc without error', function (done) {
+      const update = {name: 'Macedonia'};
+      
+      UnindexedCountry.updateOneById('country06', update)
+        .then(function(resolve) {
+          return UnindexedCountry.findOneById(resolve);
+        })
+        .then(function(resolve) {
+          let expectedResolve = {
+            name: 'Macedonia', 
+            seas: ['Mediterranean', 'Aegean']
+          };
           if (_.isEqual(expectedResolve, resolve)) {
             done()
           } else {
-            done(new Error('Failure in #updateMany()'))
+            done(new Error('Failure at find updated instance in #updateOneById()'))
           }
         })
         .catch(function(reject) {
