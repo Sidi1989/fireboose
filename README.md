@@ -72,9 +72,17 @@ It requires 3 parameters:
 
 ```js
 const Country = fireboose.model('Country', countrySchema, 'countries');
+```
 
+Once a Class has been created, you can now create instances out of it, like:
+
+```js
 const nation = Country.create({ name: 'Nation' }, 'id');
-  ||
+```
+
+Or alternatively:
+
+```js
 const nation = new Country({ name: 'Nation' }, 'id')
 nation.save()
 ```
@@ -83,13 +91,12 @@ nation.save()
 
 For some interaction with the collections, it could be necessary to set up firstly
 an instanced query with the parameters for searching among the documents.
-So after configuring that query with the desired methods -with an array of all of those
-searching operations as the key to compose correct queries-, the query itself would be
+So after configuring that query with the desired filters, the query itself would be
 one of the arguments for some Model methods (v.g.: findMany)
 
 ```js
 const query = new Query().where('continent', '==', 'Europe')
-const countries = Country.findMany(query)
+const europeanCountries = Country.findMany(query)
 ```
 
 ### Caveat
