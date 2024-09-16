@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import Query from '../../src/query/index.js';
 import UnindexedCountry from '../hooks/unindexedCountryModel.js';
 import { deleteCollectionDocs } from '../../src/utils/db.js';
 import loadBeforeUnindexedCountries from '../hooks/loadBeforeUnindexedCountries.js';
@@ -14,11 +15,13 @@ describe('Model', function () {
     await deleteCollectionDocs('unindexedCountries');
   });
 
-  describe('#pushInto()', function () {
+  describe('#pushOne()', function () {
     it('should add 1 element at the end of an arrayProp, without error', function (done) {
+      const newQuery = new Query()
+        .where('name', '==', 'Japan');
       const element = 'Teshio';
 
-      UnindexedCountry.pushInto('country04', 'rivers', element)
+      UnindexedCountry.pushOne(newQuery, 'rivers', element)
         .then(function (resolve) {
           return UnindexedCountry.findOneById(resolve);
         })
@@ -32,7 +35,7 @@ describe('Model', function () {
           if (_.isEqual(expectedResolve, resolve)) {
             done()
           } else {
-            done(new Error('Failure in #pushInto()'))
+            done(new Error('Failure in #pushOne()'))
           }
         })
         .catch(function(reject) {
