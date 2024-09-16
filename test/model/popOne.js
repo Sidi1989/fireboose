@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import Query from '../../src/query/index.js';
 import UnindexedCountry from '../hooks/unindexedCountryModel.js';
 import { deleteCollectionDocs } from '../../src/utils/db.js';
 import loadBeforeUnindexedCountries from '../hooks/loadBeforeUnindexedCountries.js';
@@ -14,9 +15,12 @@ describe('Model', function () {
     await deleteCollectionDocs('unindexedCountries');
   });
   
-  describe('#popFrom()', function () {
+  describe('#popOne()', function () {
     it('should remove the last element of an arrayProp, without error', function (done) {
-      UnindexedCountry.popFrom('country04', 'rivers')
+      const newQuery = new Query()
+        .where('name', '==', 'Japan');
+
+      UnindexedCountry.popOne(newQuery, 'rivers')
         .then(function (resolve) {
           return UnindexedCountry.findOneById(resolve);
         })
@@ -30,7 +34,7 @@ describe('Model', function () {
           if (_.isEqual(expectedResolve, resolve)) {
             done()
           } else {
-            done(new Error('Failure in #popFrom()'))
+            done(new Error('Failure in #popOne()'))
           }
         })
         .catch(function(reject) {

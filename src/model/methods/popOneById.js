@@ -8,18 +8,19 @@ import {
 
 /**
  * @description
- * Update a document by removing, from one of its {Array} properties,
+ * Update a document (identified by its Id) by removing, 
+ * from one of its {Array} properties,
  * its last element.
  * @param {String} docId E.g: 'country01'
  * @param {String} arrayProp E.g: 'cities'
- * @returns {String || Null}  The ID of the document having been updated
+ * @returns {String || Null} Id of the updated document || Null
  * @example
  * const country01 = {
  *   id: 'country01',
  *   cities: ['Madrid, 'Barcelona', 'Valencia']
  * };
  *  
- * await Country.popFrom(country01, cities);
+ * await Country.popOneById(country01, cities);
  * 
  * console.log(country01)
  * // {
@@ -27,13 +28,13 @@ import {
  * //   cities: ['Madrid', 'Barcelona']
  * // };
  */
-const popFrom = async function (docId, arrayProp) {
+const popOneById = async function (docId, arrayProp) {
   const db = this.db;
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName);
 
   if (!docId || !arrayProp) {
-    throw new Error('Not enough params for [popFrom]')
+    throw new Error('Not enough params for [popOneById]')
   }
 
   const docRef = doc(collectionRef, docId);
@@ -59,4 +60,4 @@ const popFrom = async function (docId, arrayProp) {
 
 
 
-export default popFrom;
+export default popOneById;
