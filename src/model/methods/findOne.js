@@ -12,7 +12,6 @@ import {
  * a previously defined query
  * @param {Query} q
  * @returns Firestore doc || null
- * @example
  */
 const findOne = async function (q) {
   const db = this.db;
@@ -23,8 +22,8 @@ const findOne = async function (q) {
     throw new Error('Not enough params for [findOne]')
   }
 
-  // Once every queryOperation is included in the array, this array of
-  // queryOperations must be retrieved and passed into the query function 
+  // Once every queryOperation is included in the array, 
+  // this array itself must be retrieved and passed into the query function 
   // as if each of its elements were an argument of the function:
   const queryOperations = q.getQueryOperations();
   const queryDocs = query(collectionRef, ...queryOperations);

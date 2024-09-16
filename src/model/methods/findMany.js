@@ -1,6 +1,6 @@
 import { 
-  collection, getDocs, 
-  query,
+  collection, 
+  getDocs, query,
 } from 'firebase/firestore';
 
 

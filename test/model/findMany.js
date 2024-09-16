@@ -8,17 +8,6 @@ import loadBeforeUnindexedCountries from '../hooks/loadBeforeUnindexedCountries.
 
 
 // Test
-const newQuery = new Query()
-  .where('continent', '==', 'Europe')
-  // .where('population', '>=', 50)
-  // .where('seas', 'array-contains', 'Mediterranean')
-  // .where(seas, 'array-contains-any', ['Atlantic', 'Mediterranean']
-  // .where('continent', 'in', ['Europe', 'Africa'])
-  // .orderBy('population', 'desc')
-  // .orderBy('name', 'desc')
-  // .skip(1)
-  // .limit(6)
-
 describe('Model', function () {
   before(loadBeforeUnindexedCountries);
 
@@ -28,6 +17,17 @@ describe('Model', function () {
 
   describe('#findMany()', function () {
     it('should retrieve multiple Docs, without error', function (done) {
+      const newQuery = new Query()
+        .where('continent', '==', 'Europe')
+        // .where('population', '>=', 50)
+        // .where('seas', 'array-contains', 'Mediterranean')
+        // .where(seas, 'array-contains-any', ['Atlantic', 'Mediterranean']
+        // .where('continent', 'in', ['Europe', 'Africa'])
+        // .orderBy('population', 'desc')
+        // .orderBy('name', 'desc')
+        // .skip(1)
+        // .limit(6)
+
       UnindexedCountry.findMany(newQuery)
         .then(function (resolve) {
           let expectedResolve = [
