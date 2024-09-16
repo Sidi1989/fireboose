@@ -1,6 +1,6 @@
 import { 
-  collection, getDocs, 
-  query,
+  collection, 
+  getDocs, query,
   deleteDoc
 } from 'firebase/firestore';
 
@@ -11,7 +11,7 @@ import {
  * Delete multiple documents from its collection, according to
  * a previously defined query
  * @param {Query} q
- * @returns Array (of Strings)
+ * @returns {Array (of Strings)} Ids of the deleted documents
  * @example
  */
 const deleteMany = async function (q) {

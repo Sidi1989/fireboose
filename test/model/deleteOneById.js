@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import Query from '../../src/query/index.js';
 import UnindexedCountry from '../hooks/unindexedCountryModel.js';
 import { deleteCollectionDocs } from '../../src/utils/db.js';
 
@@ -9,25 +8,22 @@ import { deleteCollectionDocs } from '../../src/utils/db.js';
 // Test
 describe('Model', function () {
   before(async function () {
-    UnindexedCountry.create({name: 'Atlantis', seas: ['Atlantic']}, 'deleteOneTest');
+    UnindexedCountry.create({name: 'Atlantis', seas: ['Atlantic']}, 'deleteOneByIdTest');
   });
 
   after(async function () {
     await deleteCollectionDocs('unindexedCountries');
   });
 
-  describe('#deleteOne()', function () {
+  describe('#deleteOneById()', function () {
     it('should delete 1 Doc without error', function (done) {
-      const newQuery = new Query()
-        .where('name', '==', 'Atlantis');
-
-      UnindexedCountry.deleteOne(newQuery)
+      UnindexedCountry.deleteOneById('deleteOneByIdTest')
         .then(function (resolve) {
-          let expectedResolve = 'deleteOneTest';
+          let expectedResolve = 'deleteOneByIdTest';
           if (expectedResolve == resolve) {
             return resolve;
           } else {
-            done(new Error('Failure at deleting instance in #deleteOne()'))
+            done(new Error('Failure at deleting instance in #deleteOneById()'))
           }
         })
         .then(function(resolve) {
@@ -38,7 +34,7 @@ describe('Model', function () {
           if (expectedResolve == resolve) {
             done()
           } else {
-            done(new Error('Failure at finding the deleted instance in #deleteOne()'))
+            done(new Error('Failure at finding the deleted instance in #deleteOneById()'))
           }
         })
         .catch(function(reject) {

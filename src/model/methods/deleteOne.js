@@ -1,5 +1,6 @@
 import { 
   collection, doc,
+  getDocs, query,
   deleteDoc,
 } from 'firebase/firestore';
 
@@ -8,22 +9,43 @@ import {
 
 /**
  * @description
- * Delete a document from its collection, identified by its ID.
- * @param {String} docId E.g: 'country01'
- * @returns String
+ * Delete a document from its collection, 
+ * identified as the result of a query
+ * @param {Query} q
+ * @returns {String || Null} Id of the deleted document || Null
  */
-const deleteOne = async function (docId) {
+const deleteOne = async function (q) {
   const db = this.db;
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName); 
 
-  if (!docId) {
+  if (!q) {
     throw new Error('Not enough params for [deleteOne]')
   }
 
-  const docRef = doc(collectionRef, docId);
-  await deleteDoc(docRef);
-  return docId;
+  // Once every queryOperation is included in the array, 
+  // this array itself must be retrieved and passed into the query function 
+  // as if each of its elements were an argument of the function:
+  const queryOperations = q.getQueryOperations();
+  const queryDocs = query(collectionRef, ...queryOperations);
+
+  const docsIds = [];
+  var querySnap = await getDocs(queryDocs);
+
+  querySnap.forEach(function(docSnap) {
+    docsIds.push(docSnap.id)
+  });
+
+  // It only keeps the first coincidence:
+  if (docsIds.length > 0) {
+    const queriedDocumentId = docsIds[0];
+    const docRef = doc(collectionRef, queriedDocumentId);
+    await deleteDoc(docRef);
+
+    return queriedDocumentId;
+  } else {
+    return null
+  }
 };
 
 
