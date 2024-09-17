@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import Query from '../../src/query/index.js';
 import UnindexedCountry from '../hooks/unindexedCountryModel.js';
 import { deleteCollectionDocs } from '../../src/utils/db.js';
 import loadBeforeUnindexedCountries from '../hooks/loadBeforeUnindexedCountries.js';
@@ -14,25 +15,18 @@ describe('Model', function () {
     await deleteCollectionDocs('unindexedCountries');
   });
 
-  describe('#pushOneById()', function () {
-    it('should add 1 specific element at the end of an arrayProp, without error', function (done) {
-      const element = 'Teshio';
+  describe('#pushMany()', function () {
+    it('should add 1 specific element at the end of an arrayProp in multiple Docs, without error', function (done) {
+      const newQuery = new Query()
+        .where('founder', '==', 'Spain');
 
-      UnindexedCountry.pushOneById('country04', 'rivers', element)
+      UnindexedCountry.pushMany(newQuery, 'languages', 'Spanish')
         .then(function (resolve) {
-          return UnindexedCountry.findOneById(resolve);
-        })
-        .then(function(resolve) {
-          let expectedResolve = {
-            name: 'Japan', 
-            continent: 'Asia', 
-            population: 125, 
-            rivers: ['Shinano', 'Tone', 'Ishikari', 'Teshio']
-          };
+          let expectedResolve = ['country10', 'country11'];
           if (_.isEqual(expectedResolve, resolve)) {
             done()
           } else {
-            done(new Error('Failure in #pushOneById()'))
+            done(new Error('Failure in #pushMany()'))
           }
         })
         .catch(function(reject) {

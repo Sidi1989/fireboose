@@ -16,7 +16,7 @@ describe('Model', function () {
   });
 
   describe('#pushOne()', function () {
-    it('should add 1 element at the end of an arrayProp, without error', function (done) {
+    it('should add 1 specific element at the end of an arrayProp, without error', function (done) {
       const newQuery = new Query()
         .where('name', '==', 'Japan');
       const element = 'Teshio';

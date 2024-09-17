@@ -1,5 +1,5 @@
 import { 
-  collection, doc,
+  collection,
   getDocs, query,
   arrayUnion, updateDoc,
 } from 'firebase/firestore';
@@ -9,36 +9,55 @@ import {
 
 /**
  * @description
- * Update a document (identified as the result of a query) 
- * by adding, to one of its {Array} properties,
+ * Update multiple documents of a collection, 
+ * found according to a previously defined query,
+ * by adding, to one of their {Array} properties
+ * (that must be common to all of them), 
  * a new element that doesn’t exist there already, 
- * appending it at the end of the array.
+ * appending it at the end.
  * @param {Query} q
  * @param {String} arrayProp E.g: 'cities'
  * @param {Mixed} element 27 || 'Madrid' || true || {name: 'Madrid', river: 'Manzanares'}
- * @returns {String || Null} Id of the updated document || Null
+ * @returns {Array (of Strings)} Ids of the updated documents
  * @example
  * const country01 = {
  *   id: 'country01',
  *   name: 'Spain',
- *   cities: ['Madrid, 'Barcelona']
+ *   location: "Southwest",
+ *   rivers: ['Ebro, 'Júcar', 'Tajo']
  * };
- *  
- * await Country.pushOne(query, cities, 'Valencia');
  * 
- * console.log(country01)
+ * const country02 = {
+ *   id: 'country02',
+ *   name: 'Portugal',
+ *   location: "Southwest",
+ *   rivers: ['Mondego, 'Tajo']
+ * };
+ * 
+ * await Country.pushMany(query, rivers, 'Duero');
+ * 
+ * console.log(country01, country02)
  * // {
  * //   id: 'country01',
- * //   cities: ['Madrid', 'Barcelona', 'Valencia']
+ * //   name: 'Spain',
+ * //   location: "Southwest",
+ * //   rivers: ['Ebro', 'Júcar', 'Tajo', 'Duero']
+ * // };
+ * //
+ * // {
+ * //   id: 'country02',
+ * //   name: 'Portugal',
+ * //   location: "Southwest",
+ * //   rivers: ['Mondego', 'Tajo', 'Duero']
  * // };
  */
-const pushOne = async function (q, arrayProp, element) {
+const pushMany = async function (q, arrayProp, element) {
   const db = this.db;
   const collectionName = this.collection;
   const collectionRef = collection(db, collectionName);
 
   if (!q || !arrayProp || !element) {
-    throw new Error('Not enough params for [pushOne]')
+    throw new Error('Not enough params for [pushMany]')
   }
 
   // Once every queryOperation is included in the array, 
@@ -48,17 +67,15 @@ const pushOne = async function (q, arrayProp, element) {
   const queryDocs = query(collectionRef, ...queryOperations);
 
   const docsIds = [];
+  const docsRefs = [];
   var querySnap = await getDocs(queryDocs);
-
+  
   querySnap.forEach(function(docSnap) {
-    docsIds.push(docSnap.id)
-  });
+    docsIds.push(docSnap.id);
+    docsRefs.push(docSnap.ref);
+  })
 
-  // It only keeps the first coincidence:
-  if (docsIds.length > 0) {
-    const queriedDocumentId = docsIds[0];
-    const docRef = doc(collectionRef, queriedDocumentId);
-
+  for (let docRef of docsRefs) {
     // According to Firebase Blog: 
     // https://firebase.blog/posts/2018/08/better-arrays-in-cloud-firestore/
     // In order to avoid some of the issues that can arise in a multi-user environment,
@@ -70,13 +87,12 @@ const pushOne = async function (q, arrayProp, element) {
     }
 
     await updateDoc(docRef, updateInfo);
-    return docRef.id
-  } else {
-    return null
   }
+
+  return docsIds;
 };
 
 
 
 
-export default pushOne;
+export default pushMany;
