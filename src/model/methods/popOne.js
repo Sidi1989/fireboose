@@ -9,8 +9,8 @@ import {
 
 /**
  * @description
- * Update a document (identified as the result of a query) by removing, 
- * from one of its {Array} properties,
+ * Update a document (identified as the result of a query) 
+ * by removing, from one of its {Array} properties,
  * its last element.
  * @param {Query} q
  * @param {String} arrayProp E.g: 'cities'
@@ -60,7 +60,7 @@ const popOne = async function (q, arrayProp) {
 
     if (docSnap.exists()) {
       const doc = docSnap.data();
-      doc[arrayProp].pop()
+      doc[arrayProp].pop();
   
       // After changing the array, this is passed again 
       // as the property to be overwritten in the Doc:

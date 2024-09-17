@@ -8,8 +8,8 @@ import {
 
 /**
  * @description
- * Update a document (identified by its Id) by removing, 
- * from one of its {Array} properties,
+ * Update a document (identified by its Id) 
+ * by removing, from one of its {Array} properties,
  * its last element.
  * @param {String} docId E.g: 'country01'
  * @param {String} arrayProp E.g: 'cities'
