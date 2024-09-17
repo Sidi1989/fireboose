@@ -19,23 +19,23 @@
 ### Array-related updates
 
 - pop (remove last element)
-- pull (remove coincident elements)
-- push (add element at the end)
 - shift (remove first element)
+- push (add element at the end)
 - unshift (add element at the beginning)
+- pull (remove coincident elements)
 
 | Update    | One             | Many          |
 | :---:     | :---:           | :---:         |
 | Pop       | popOne          | popMany       |
 | Pop       | popOneById      | ...           |
-| Pull      | pullOne         | pullMany      |
-| Pull      | pullOneById     | ...           |
-| Push      | pushOne         | pushMany      |
-| Push      | pushOneById     | ...           |
 | Shift     | shiftOne        | shiftMany     |
 | Shift     | shiftOneById    | ...           |
+| Push      | pushOne         | pushMany      |
+| Push      | pushOneById     | ...           |
 | Unshift   | unshiftOne      | unshiftMany   |
 | Unshift   | unshiftOneById  | ...           |
+| Pull      | pullOne         | pullMany      |
+| Pull      | pullOneById     | ...           |
 
 ## Document Methods
 

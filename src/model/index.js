@@ -14,14 +14,19 @@ import {
 
   popOne,
   popOneById,
-  pullOne,
-  pullOneById,
-  pushOne,
-  pushOneById,
+  popMany,
   shiftOneById,
   shiftOne,
+  shiftMany,
+  pushOne,
+  pushOneById,
+  pushMany,
   unshiftOneById,
   unshiftOne,
+  unshiftMany,
+  pullOne,
+  pullOneById,
+  pullMany,
 } from './methods/index.js';
 
 import {
@@ -77,14 +82,19 @@ const model = function (name, schema, collection) {
   
   FirebooseClass.popOne = popOne.bind(FirebooseClass);
   FirebooseClass.popOneById = popOneById.bind(FirebooseClass);
-  FirebooseClass.pullOne = pullOne.bind(FirebooseClass);
-  FirebooseClass.pullOneById = pullOneById.bind(FirebooseClass);
-  FirebooseClass.pushOne = pushOne.bind(FirebooseClass);
-  FirebooseClass.pushOneById = pushOneById.bind(FirebooseClass);
+  FirebooseClass.popMany = popMany.bind(FirebooseClass);
   FirebooseClass.shiftOne = shiftOne.bind(FirebooseClass);
   FirebooseClass.shiftOneById = shiftOneById.bind(FirebooseClass);
+  FirebooseClass.shiftMany = shiftMany.bind(FirebooseClass);
+  FirebooseClass.pushOne = pushOne.bind(FirebooseClass);
+  FirebooseClass.pushOneById = pushOneById.bind(FirebooseClass);
+  FirebooseClass.pushMany = pushMany.bind(FirebooseClass);
   FirebooseClass.unshiftOne = unshiftOne.bind(FirebooseClass);
   FirebooseClass.unshiftOneById = unshiftOneById.bind(FirebooseClass);
+  FirebooseClass.unshiftMany = unshiftMany.bind(FirebooseClass);
+  FirebooseClass.pullOne = pullOne.bind(FirebooseClass);
+  FirebooseClass.pullOneById = pullOneById.bind(FirebooseClass);
+  FirebooseClass.pullMany = pullMany.bind(FirebooseClass);
 
   // Instance methods
   FirebooseClass.prototype.toObject = toObject;

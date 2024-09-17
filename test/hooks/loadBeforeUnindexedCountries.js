@@ -13,6 +13,11 @@ const loadBeforeInModelTests = async function () {
   UnindexedCountry.create({name: 'France', continent: 'Europe', capital: 'Paris', population: 68}, 'country07');
   UnindexedCountry.create({name: 'Germany', continent: 'Europe', capital: 'Berlin', population: 84}, 'country08');
   UnindexedCountry.create({name: 'Argentina', continent: 'America'}, 'country09');
+  UnindexedCountry.create({name: 'Mexico', founder: 'Spain', languages: ['Spanish', 'English', 'Nahuatl']}, 'country10');
+  UnindexedCountry.create({name: 'Cuba', founder: 'Spain', languages: ['Spanish', 'English']}, 'country11');
+  UnindexedCountry.create({name: 'Martinique', founder: 'France', languages: ['English']}, 'country12');
+  UnindexedCountry.create({name: 'Canada', founder: 'France', languages: ['French', 'English']}, 'country13');
+  UnindexedCountry.create({name: 'Haiti', founder: 'France', languages: ['French', 'Spanish']}, 'country14');
 };
 
 
