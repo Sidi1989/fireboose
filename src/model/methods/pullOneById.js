@@ -8,8 +8,8 @@ import {
 
 /**
  * @description
- * Update a document (identified by its Id) by removing, 
- * from one of its {Array} properties,
+ * Update a document (identified by its Id) 
+ * by removing, from one of its {Array} properties,
  * those elements whose value is coincident with the one 
  * passed as the argument.
  * @param {String} docId E.g: 'country01'

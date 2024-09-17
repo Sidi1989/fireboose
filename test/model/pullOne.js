@@ -16,7 +16,7 @@ describe('Model', function () {
   });
 
   describe('#pullOne()', function () {
-    it('should remove 1 element from an arrayProp, without error', function (done) {
+    it('should remove 1 specific element of an arrayProp, without error', function (done) {
       const newQuery = new Query()
         .where('name', '==', 'Japan');
       const element = 'Tone';
