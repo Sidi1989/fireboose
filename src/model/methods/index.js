@@ -11,6 +11,9 @@ import deleteOne from './deleteOne.js';
 import deleteOneById from './deleteOneById.js';
 import deleteMany from './deleteMany.js';
 
+import renameOne from './renameOne.js';
+import renameOneById from './renameOneById.js';
+import renameMany from './renameMany.js';
 import unsetOne from './unsetOne.js';
 import unsetOneById from './unsetOneById.js';
 import unsetMany from './unsetMany.js';
@@ -48,6 +51,9 @@ export {
   deleteOneById,
   deleteMany,
 
+  renameOne,
+  renameOneById,
+  renameMany,
   unsetOne,
   unsetOneById,
   unsetMany,

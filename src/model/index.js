@@ -12,6 +12,9 @@ import {
   deleteOneById,
   deleteMany,
 
+  renameOne,
+  renameOneById,
+  renameMany,
   unsetOne,
   unsetOneById,
   unsetMany,
@@ -84,6 +87,9 @@ const model = function (name, schema, collection) {
   FirebooseClass.deleteOneById = deleteOneById.bind(FirebooseClass);
   FirebooseClass.deleteMany = deleteMany.bind(FirebooseClass);
 
+  FirebooseClass.renameOne = renameOne.bind(FirebooseClass);
+  FirebooseClass.renameOneById = renameOneById.bind(FirebooseClass);
+  FirebooseClass.renameMany = renameMany.bind(FirebooseClass);
   FirebooseClass.unsetOne = unsetOne.bind(FirebooseClass);
   FirebooseClass.unsetOneById = unsetOneById.bind(FirebooseClass);
   FirebooseClass.unsetMany = unsetMany.bind(FirebooseClass);
