@@ -16,6 +16,18 @@
 | Delete      | deleteOne       | deleteMany    |
 | Delete      | deleteOneById   | ...           |
 
+### Field-related updates
+
+- unset (delete a field)
+- rename (rename a field)
+
+| Action    | One             | Many          |
+| :---:     | :---:           | :---:         |
+| Rename    | renameOne       | renameMany    |
+| Rename    | renameOneById   | ...           |
+| Unset     | unsetOne        | unsetMany     |
+| Unset     | unsetOneById    | ...           |
+
 ### Array-related updates
 
 - pop (remove last element)
@@ -36,18 +48,6 @@
 | Unshift   | unshiftOneById  | ...           |
 | Pull      | pullOne         | pullMany      |
 | Pull      | pullOneById     | ...           |
-
-### Field-related updates
-
-- unset (delete a field)
-- rename (rename a field)
-
-| Action    | One             | Many          |
-| :---:     | :---:           | :---:         |
-| Rename    | renameOne       | renameMany    |
-| Rename    | renameOneById   | ...           |
-| Unset     | unsetOne        | unsetMany     |
-| Unset     | unsetOneById    | ...           |
 
 ## Document Methods
 

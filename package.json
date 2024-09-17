@@ -13,10 +13,12 @@
     "node": "^18.0.0"
   },
   "scripts": {
+    "test:model:common": "mocha ./test/model/common/*",
+    "test:model:field": "mocha ./test/model/field/*",
+    "test:model:array": "mocha ./test/model/array/*",
+    "test:model:all": "mocha ./test/model/common/*; mocha ./test/model/field/*; mocha ./test/model/array/*",
     "test:document": "mocha ./test/document/*",
-    "test:model": "mocha ./test/model/*",
-    "test:query": "mocha ./test/query/*",
-    "test:all": "mocha ./test/document/*; mocha ./test/model/*; mocha ./test/query/*"
+    "test:query": "mocha ./test/query/*"
   },
   "repository": {
     "type": "git",
