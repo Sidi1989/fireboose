@@ -11,6 +11,10 @@ import deleteOne from './deleteOne.js';
 import deleteOneById from './deleteOneById.js';
 import deleteMany from './deleteMany.js';
 
+import unsetOne from './unsetOne.js';
+import unsetOneById from './unsetOneById.js';
+import unsetMany from './unsetMany.js';
+
 import popOne from './popOne.js';
 import popOneById from './popOneById.js';
 import popMany from './popMany.js';
@@ -43,6 +47,10 @@ export {
   deleteOne,
   deleteOneById,
   deleteMany,
+
+  unsetOne,
+  unsetOneById,
+  unsetMany,
   
   popOne,
   popOneById,
