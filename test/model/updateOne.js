@@ -16,7 +16,7 @@ describe('Model', function () {
   });
 
   describe('#updateOne()', function () {
-    it('should update 1 Doc without error', function (done) {
+    it('should update 1 Doc, without error', function (done) {
       const newQuery = new Query()
         .where('name', '==', 'Greece');
       const update = {name: 'Macedonia'};

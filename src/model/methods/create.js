@@ -16,7 +16,7 @@ import {
  * @example
  * const newCountryWithChosenId = await Country.create(
  *    {name: 'Italy', capital: 'Rome'}, 
- *    newCountryId
+ *    'newCountryId'
  * );
  * // After saving it to Firestore, it returns the id: 'newCountryId'
  * 

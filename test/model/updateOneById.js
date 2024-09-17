@@ -15,7 +15,7 @@ describe('Model', function () {
   });
 
   describe('#updateOneById()', function () {
-    it('should update 1 Doc without error', function (done) {
+    it('should update 1 Doc, without error', function (done) {
       const update = {name: 'Macedonia'};
       
       UnindexedCountry.updateOneById('country06', update)

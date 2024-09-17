@@ -39,7 +39,7 @@ import {
  * @example
  * const newCountry = await Country.create(
  *    {name: 'Italy', capital: 'Rome'}, 
- *    newCountryId
+ *    'newCountryId'
  * );
  * 
  * const updatedCountry = await Country.updateOne(
@@ -47,7 +47,7 @@ import {
  *    {name: 'Roman Empire'}
  * );
  * 
- * console.log(await Country.findOneById(newCountryId))
+ * console.log(await Country.findOneById('newCountryId'))
  * // {name: 'Roman Empire', capital: 'Rome'}
  */
 const updateOne = async function (q, docInfo) {
