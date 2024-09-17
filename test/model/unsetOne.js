@@ -32,7 +32,7 @@ describe('Model', function () {
           if (_.isEqual(expectedResolve, resolve)) {
             done()
           } else {
-            done(new Error('Failure at find updated instance in #unsetOne()'))
+            done(new Error('Failure in #unsetOne()'))
           }
         })
         .catch(function(reject) {

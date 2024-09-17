@@ -33,7 +33,7 @@ describe('Model', function () {
           if (_.isEqual(expectedResolve, resolve)) {
             done()
           } else {
-            done(new Error('Failure at find updated instance in #updateOne()'))
+            done(new Error('Failure in #updateOne()'))
           }
         })
         .catch(function(reject) {

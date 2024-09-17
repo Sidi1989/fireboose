@@ -29,7 +29,7 @@ describe('Model', function () {
           if (_.isEqual(expectedResolve, resolve)) {
             done()
           } else {
-            done(new Error('Failure at find updated instance in #unsetOneById()'))
+            done(new Error('Failure in #unsetOneById()'))
           }
         })
         .catch(function(reject) {

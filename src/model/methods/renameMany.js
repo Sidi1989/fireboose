@@ -41,7 +41,7 @@ const renameMany = async function (q, oldKey, newKey) {
     docsRefs.push(docSnap.ref);
   })
 
-  for (let docRef of docsRefs) {  
+  for (let docRef of docsRefs) { 
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
