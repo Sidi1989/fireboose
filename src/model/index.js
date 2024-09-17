@@ -1,7 +1,6 @@
 import {
   create,
   ensureIndexes,
-
   findOne,
   findOneById,
   findMany,
@@ -76,7 +75,6 @@ const model = function (name, schema, collection) {
   // Class methods
   FirebooseClass.create = create.bind(FirebooseClass);
   FirebooseClass.ensureIndexes = ensureIndexes.bind(FirebooseClass);
-  
   FirebooseClass.findOne = findOne.bind(FirebooseClass);
   FirebooseClass.findOneById = findOneById.bind(FirebooseClass);
   FirebooseClass.findMany = findMany.bind(FirebooseClass);
