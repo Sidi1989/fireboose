@@ -15,7 +15,7 @@ describe('Model', function () {
   });
 
   describe('#unshiftOneById()', function () {
-    it('should add 1 element at the beginning of an arrayProp, without error', function (done) {
+    it('should add 1 specific element at the beginning of an arrayProp, without error', function (done) {
       const element = 'Teshio';
       
       UnindexedCountry.unshiftOneById('country04', 'rivers', element)

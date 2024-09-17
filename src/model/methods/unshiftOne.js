@@ -9,8 +9,8 @@ import {
 
 /**
  * @description
- * Update a document (identified as the result of a query) by adding, 
- * to one of its {Array} properties,
+ * Update a document (identified as the result of a query) 
+ * by adding, to one of its {Array} properties,
  * a new element that doesn’t exist there already, 
  * appending it at the beginning of the array.
  * @param {Query} q

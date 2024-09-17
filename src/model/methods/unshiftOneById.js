@@ -8,8 +8,8 @@ import {
 
 /**
  * @description
- * Update a document (identified by its Id) by adding, 
- * to one of its {Array} properties,
+ * Update a document (identified by its Id) 
+ * by adding, to one of its {Array} properties,
  * a new element that doesn’t exist there already, 
  * appending it at the beginning of the array.
  * @param {String} docId E.g: 'country01'

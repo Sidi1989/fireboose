@@ -16,7 +16,7 @@ describe('Model', function () {
   });
 
   describe('#unshiftOne()', function () {
-    it('should add 1 element at the beginning of an arrayProp, without error', function (done) {
+    it('should add 1 specific element at the beginning of an arrayProp, without error', function (done) {
       const newQuery = new Query()
         .where('name', '==', 'Japan');
       const element = 'Teshio';
