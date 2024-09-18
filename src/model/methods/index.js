@@ -32,6 +32,9 @@ import unshiftMany from './array/unshiftMany.js';
 import pullOne from './array/pullOne.js';
 import pullOneById from './array/pullOneById.js';
 import pullMany from './array/pullMany.js';
+import sortOne from './array/sortOne.js';
+import sortOneById from './array/sortOneById.js';
+import sortMany from './array/sortMany.js';
 
 
 
@@ -71,4 +74,7 @@ export {
   pullOne,
   pullOneById,
   pullMany,
+  sortOne,
+  sortOneById,
+  sortMany,
 }

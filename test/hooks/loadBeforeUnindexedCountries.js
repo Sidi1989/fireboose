@@ -18,6 +18,8 @@ const loadBeforeInModelTests = async function () {
   UnindexedCountry.create({name: 'Martinique', founder: 'France', languages: ['English']}, 'country12');
   UnindexedCountry.create({name: 'Canada', founder: 'France', languages: ['French', 'English']}, 'country13');
   UnindexedCountry.create({name: 'Haiti', founder: 'France', languages: ['French', 'Spanish']}, 'country14');
+  UnindexedCountry.create({name: 'Castille', isExtinct: true, dynasties: [1029, 931, 1157, 1504, 1367]}, 'country15');
+  UnindexedCountry.create({name: 'Aragon', isExtinct: true, dynasties: [802, 943, 1164, 1035, 1412]}, 'country16');
 };
 
 

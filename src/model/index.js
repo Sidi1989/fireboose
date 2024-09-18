@@ -21,18 +21,21 @@ import {
   popOne,
   popOneById,
   popMany,
-  shiftOneById,
   shiftOne,
+  shiftOneById,
   shiftMany,
   pushOne,
   pushOneById,
   pushMany,
-  unshiftOneById,
   unshiftOne,
+  unshiftOneById,
   unshiftMany,
   pullOne,
   pullOneById,
   pullMany,
+  sortOne,
+  sortOneById,
+  sortMany,
 } from './methods/index.js';
 
 import {
@@ -107,6 +110,9 @@ const model = function (name, schema, collection) {
   FirebooseClass.pullOne = pullOne.bind(FirebooseClass);
   FirebooseClass.pullOneById = pullOneById.bind(FirebooseClass);
   FirebooseClass.pullMany = pullMany.bind(FirebooseClass);
+  FirebooseClass.sortOne = sortOne.bind(FirebooseClass);
+  FirebooseClass.sortOneById = sortOneById.bind(FirebooseClass);
+  FirebooseClass.sortMany = sortMany.bind(FirebooseClass);
 
   // Instance methods
   FirebooseClass.prototype.toObject = toObject;

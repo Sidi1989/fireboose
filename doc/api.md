@@ -35,6 +35,7 @@
 - push (add element at the end)
 - unshift (add element at the beginning)
 - pull (remove coincident elements)
+- sort (sort elements in ascending or descending order)
 
 | Action    | One             | Many          |
 | :---:     | :---:           | :---:         |
@@ -48,6 +49,8 @@
 | Unshift   | unshiftOneById  | ...           |
 | Pull      | pullOne         | pullMany      |
 | Pull      | pullOneById     | ...           |
+| Sort      | sortOne         | sortMany      |
+| Sort      | sortOneById     | ...           |
 
 ## Document Methods
 
