@@ -14,7 +14,7 @@ import {
  * its first element.
  * @param {Query} q
  * @param {String} arrayProp E.g: 'cities'
- * @returns {String || Null} Id of the updated document || Null
+ * @returns {Promise<String|Null>} docId
  * @example
  * const country01 = {
  *   id: 'country01',

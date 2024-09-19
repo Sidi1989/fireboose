@@ -11,7 +11,7 @@ import {
  * Delete multiple documents from its collection, according to
  * a previously defined query
  * @param {Query} q
- * @returns {Array (of Strings)} Ids of the deleted documents
+ * @returns {Promise<String[]>} Array of docIds
  * @example
  */
 const deleteMany = async function (q) {

@@ -12,7 +12,7 @@ import {
  * Delete a document from its collection, 
  * identified as the result of a query
  * @param {Query} q
- * @returns {String || Null} Id of the deleted document || Null
+ * @returns {Promise<String|Null>} docId
  */
 const deleteOne = async function (q) {
   const db = this.db;

@@ -34,7 +34,7 @@ import {
  * "flatten" will transform the object in a 'firebase dot notation' like this:
  *  {'capital.river': 'Manzanares'}
  * 
- * @returns {String} docId
+ * @returns {Promise<String>} docId
  * @example
  * const newCountry = await Country.create(
  *    {name: 'Italy', capital: 'Rome'}, 

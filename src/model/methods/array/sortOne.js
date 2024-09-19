@@ -17,7 +17,7 @@ import {
  *    there can only be {Number},
  *    but neither {String} nor {Object}
  * @param {String} order 'asc' | 'desc'
- * @returns {String || Null} Id of the updated document || Null
+ * @returns {Promise<String|Null>} docId
  * @example
  * const country01 = {
  *   id: 'country01',

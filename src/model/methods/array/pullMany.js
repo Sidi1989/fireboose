@@ -18,7 +18,7 @@ import {
  * @param {Query} q
  * @param {String} arrayProp E.g: 'cities'
  * @param {Mixed} element 27 || 'Madrid' || true || {name: 'Madrid', river: 'Manzanares'}
- * @returns {Array (of Strings)} Ids of the updated documents
+ * @returns {Promise<String[]>} Array of docIds
  * @example
  * const country01 = {
  *   id: 'country01',

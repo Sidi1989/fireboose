@@ -15,7 +15,7 @@ import {
  * @param {Query} q
  * @param {String} oldKey E.g: 'countries'
  * @param {String} newKey E.g: 'nations'
- * @returns {Array (of Strings)} Ids of the updated documents
+ * @returns {Promise<String[]>} Array of docIds
  */
 const renameMany = async function (q, oldKey, newKey) {
   const db = this.db;

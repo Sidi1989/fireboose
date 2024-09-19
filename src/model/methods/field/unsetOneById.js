@@ -12,7 +12,7 @@ import {
  * identified by its Id
  * @param {String} docId E.g: 'country01'
  * @param {String} field E.g: 'rivers'
- * @returns {String} docId
+ * @returns {Promise<String>} docId
  * @example
  * const newCountry = await Country.create(
  *    {name: 'Spain', capital: 'Madrid', rivers: ['Ebro', 'Tajo', 'Duero']}, 

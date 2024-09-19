@@ -12,7 +12,7 @@ import {
  * 'id' argument.
  * @param {Object} docInfo E.g: {name: 'Spain', capital: 'Madrid'}
  * @param {String} docId (Optional) E.g: 'country01'
- * @return String
+ * @returns {Promise<String>} docId
  * @example
  * const newCountryWithChosenId = await Country.create(
  *    {name: 'Italy', capital: 'Rome'}, 

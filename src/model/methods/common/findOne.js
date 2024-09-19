@@ -11,7 +11,7 @@ import {
  * Retrieve one Firestore document from a collection, according to
  * a previously defined query
  * @param {Query} q
- * @returns Firestore doc || null
+ * @returns {Promise<FirestoreDoc|Null>}
  */
 const findOne = async function (q) {
   const db = this.db;

@@ -36,7 +36,7 @@ import {
  * "flatten" will transform the object in a 'firebase dot notation' like this:
  *  {'capital.river': 'Manzanares'}
  * 
- * @returns {Array (of Strings)} Ids of the updated documents
+ * @returns {Promise<String[]>} Array of docIds
  */
 const updateMany = async function (q, info) {
   const db = this.db;

@@ -7,6 +7,7 @@ import Query from '../../../query/index.js';
  * @description Check the composite indexes needed for the Model, so it won't
  * be created when some of those indexes are not previously set in Firestore.
  * It will only trigger when (autoIndex == true).
+ * @return {Log}
  */
 const ensureIndexes = function () {
   const indexes = this.schema.indexes;

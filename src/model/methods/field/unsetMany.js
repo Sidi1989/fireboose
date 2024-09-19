@@ -13,7 +13,7 @@ import {
  * from multiple documents of a collection.
  * @param {Query} q
  * @param {String} field E.g: 'rivers'
- * @returns {Array (of Strings)} Ids of the updated documents
+ * @returns {Promise<String[]>} Array of docIds
  */
 const unsetMany = async function (q, field) {
   const db = this.db;

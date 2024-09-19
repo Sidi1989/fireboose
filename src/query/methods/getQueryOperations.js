@@ -9,9 +9,7 @@ import {
  * @description
  * Retreive all the operations defining the query, to create an array
  * that will be passed as an argument for the Firestore query( methods)
- * @returns {Query}
- * @example 
- * 
+ * @returns {Array} Array of queryOperations
  */
 const getQueryOperations = function () {
   const queryOperations = []

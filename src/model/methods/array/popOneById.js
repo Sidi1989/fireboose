@@ -13,7 +13,7 @@ import {
  * its last element.
  * @param {String} docId E.g: 'country01'
  * @param {String} arrayProp E.g: 'cities'
- * @returns {String || Null} Id of the updated document || Null
+ * @returns {Promise<String|Null>} docId
  * @example
  * const country01 = {
  *   id: 'country01',

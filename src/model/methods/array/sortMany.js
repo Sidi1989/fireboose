@@ -17,7 +17,7 @@ import {
  *    there can only be {Number},
  *    but neither {String} nor {Object}
  * @param {String} order 'asc' | 'desc'
- * @returns {Array (of Strings)} Ids of the updated documents
+ * @returns {Promise<String[]>} Array of docIds
  */
 const sortMany = async function (q, arrayProp, order) {
   const db = this.db;

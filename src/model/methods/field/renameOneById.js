@@ -14,7 +14,7 @@ import {
  * @param {String} docId E.g: 'continent01'
  * @param {String} oldKey E.g: 'countries'
  * @param {String} newKey E.g: 'nations'
- * @returns {String || Null} Id of the updated document || Null
+ * @returns {Promise<String|Null>} docId
  * @example
  * const newCountry = await Country.create(
  *    {name: 'USA', colonies: ['Virginia', 'Maryland', 'Delaware']}, 

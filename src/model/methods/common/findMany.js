@@ -11,8 +11,7 @@ import {
  * Retrieve multiple Firestore documents from a collection, according to
  * a previously defined query
  * @param {Query} q
- * @returns Array (of Firestore docs)
- * @example
+ * @returns {Promise<FirestoreDoc[]>} Array of FirestoreDocs
  */
 const findMany = async function (q) {
   const db = this.db;
@@ -32,8 +31,8 @@ const findMany = async function (q) {
   const docs = [];
   var querySnap = await getDocs(queryDocs);
 
-  querySnap.forEach(function(docSnap) {
-    docs.push(docSnap.data())
+  querySnap.forEach(function(queryDocSnap) {
+    docs.push(queryDocSnap.data())
   });
 
   return docs;

@@ -11,6 +11,7 @@ import {
  * @description
  * Delete all the Documents from a Collection.
  * @param {String} collectionName E.g: members 
+ * @return {Void}
  */
 const deleteCollectionDocs = async function (collectionName) {
   // Firstly, it retrieves all the IDs from the Documents in the Collection

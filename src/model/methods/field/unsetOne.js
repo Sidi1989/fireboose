@@ -13,7 +13,7 @@ import {
  * identified as the result of a query
  * @param {Query} q
  * @param {String} field E.g: 'rivers'
- * @returns {String || Null} Id of the updated document || Null
+ * @returns {Promise<String|Null>} docId
  * @example
  * const newCountry = await Country.create(
  *     {name: 'Spain', capital: 'Madrid', rivers: ['Ebro', 'Tajo', 'Duero']}, 

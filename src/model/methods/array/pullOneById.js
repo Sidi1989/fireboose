@@ -15,7 +15,7 @@ import {
  * @param {String} docId E.g: 'country01'
  * @param {String} arrayProp E.g: 'cities'
  * @param {Mixed} element 27 || 'Madrid' || true || {name: 'Madrid', river: 'Manzanares'}
- * @returns {String} Id of the updated document
+ * @returns {Promise<String>} docId
  * @example
  * const country01 = {
  *   id: 'country01',
