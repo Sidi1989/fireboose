@@ -1,13 +1,3 @@
-import { flatten } from 'flat';
-import { 
-  collection, doc,
-  getDocs, query,
-  updateDoc,
-} from 'firebase/firestore';
-
-
-
-
 /**
  * @description
  * Overwrite a document, identified as the result of a query,
@@ -50,38 +40,25 @@ import {
  * console.log(await Country.findOneById('newCountryId'))
  * // {name: 'Roman Empire', capital: 'Rome'}
  */
-const updateOne = async function (q, docInfo) {
-  const db = this.db;
-  const collectionName = this.collection;
-  const collectionRef = collection(db, collectionName); 
-
+const updateOne = function (q, docInfo) {
   if (!q || !docInfo) {
     throw new Error('Not enough params for [updateOne]')
   }
 
-  // Once every queryOperation is included in the array, 
-  // this array itself must be retrieved and passed into the query function 
-  // as if each of its elements were an argument of the function:
-  const queryOperations = q.getQueryOperations();
-  const queryDocs = query(collectionRef, ...queryOperations);
+  // As the method is set to keep only the first result, 
+  // a new queryOperation (limit) must be added:
+  const limitedQ = q.limit(1);
+  var docId =
+      this.updateMany(limitedQ, docInfo)
+        .then(function (resolve) {
+          if(resolve.length > 0) {
+            return resolve[0];
+          } else {
+            return null;
+          }
+        })
 
-  const docsIds = [];
-  var querySnap = await getDocs(queryDocs);
-
-  querySnap.forEach(function(docSnap) {
-    docsIds.push(docSnap.id)
-  });
-
-  // It only keeps the first coincidence:
-  if (docsIds.length > 0) {
-    const queriedDocumentId = docsIds[0];
-    const docRef = doc(collectionRef, queriedDocumentId);
-    await updateDoc(docRef, flatten(docInfo));
-
-    return docRef.id;
-  } else {
-    return null
-  }
+  return docId;
 };
 
 
