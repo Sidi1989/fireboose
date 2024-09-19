@@ -1,18 +1,41 @@
 import {
   create,
   ensureIndexes,
-  findOneById,
   findOne,
+  findOneById,
   findMany,
   updateOne,
+  updateOneById,
   updateMany,
   deleteOne,
+  deleteOneById,
   deleteMany,
-  pullFrom,
-  shiftFrom,
-  popFrom,
-  unshiftInto,
-  pushInto,
+
+  renameOne,
+  renameOneById,
+  renameMany,
+  unsetOne,
+  unsetOneById,
+  unsetMany,
+
+  popOne,
+  popOneById,
+  popMany,
+  shiftOne,
+  shiftOneById,
+  shiftMany,
+  pushOne,
+  pushOneById,
+  pushMany,
+  unshiftOne,
+  unshiftOneById,
+  unshiftMany,
+  pullOne,
+  pullOneById,
+  pullMany,
+  sortOne,
+  sortOneById,
+  sortMany,
 } from './methods/index.js';
 
 import {
@@ -55,18 +78,41 @@ const model = function (name, schema, collection) {
   // Class methods
   FirebooseClass.create = create.bind(FirebooseClass);
   FirebooseClass.ensureIndexes = ensureIndexes.bind(FirebooseClass);
-  FirebooseClass.findOneById = findOneById.bind(FirebooseClass);
   FirebooseClass.findOne = findOne.bind(FirebooseClass);
+  FirebooseClass.findOneById = findOneById.bind(FirebooseClass);
   FirebooseClass.findMany = findMany.bind(FirebooseClass);
   FirebooseClass.updateOne = updateOne.bind(FirebooseClass);
+  FirebooseClass.updateOneById = updateOneById.bind(FirebooseClass);
   FirebooseClass.updateMany = updateMany.bind(FirebooseClass);
   FirebooseClass.deleteOne = deleteOne.bind(FirebooseClass);
+  FirebooseClass.deleteOneById = deleteOneById.bind(FirebooseClass);
   FirebooseClass.deleteMany = deleteMany.bind(FirebooseClass);
-  FirebooseClass.pullFrom = pullFrom.bind(FirebooseClass);
-  FirebooseClass.shiftFrom = shiftFrom.bind(FirebooseClass);
-  FirebooseClass.popFrom = popFrom.bind(FirebooseClass);
-  FirebooseClass.unshiftInto = unshiftInto.bind(FirebooseClass);
-  FirebooseClass.pushInto = pushInto.bind(FirebooseClass);
+
+  FirebooseClass.renameOne = renameOne.bind(FirebooseClass);
+  FirebooseClass.renameOneById = renameOneById.bind(FirebooseClass);
+  FirebooseClass.renameMany = renameMany.bind(FirebooseClass);
+  FirebooseClass.unsetOne = unsetOne.bind(FirebooseClass);
+  FirebooseClass.unsetOneById = unsetOneById.bind(FirebooseClass);
+  FirebooseClass.unsetMany = unsetMany.bind(FirebooseClass);
+  
+  FirebooseClass.popOne = popOne.bind(FirebooseClass);
+  FirebooseClass.popOneById = popOneById.bind(FirebooseClass);
+  FirebooseClass.popMany = popMany.bind(FirebooseClass);
+  FirebooseClass.shiftOne = shiftOne.bind(FirebooseClass);
+  FirebooseClass.shiftOneById = shiftOneById.bind(FirebooseClass);
+  FirebooseClass.shiftMany = shiftMany.bind(FirebooseClass);
+  FirebooseClass.pushOne = pushOne.bind(FirebooseClass);
+  FirebooseClass.pushOneById = pushOneById.bind(FirebooseClass);
+  FirebooseClass.pushMany = pushMany.bind(FirebooseClass);
+  FirebooseClass.unshiftOne = unshiftOne.bind(FirebooseClass);
+  FirebooseClass.unshiftOneById = unshiftOneById.bind(FirebooseClass);
+  FirebooseClass.unshiftMany = unshiftMany.bind(FirebooseClass);
+  FirebooseClass.pullOne = pullOne.bind(FirebooseClass);
+  FirebooseClass.pullOneById = pullOneById.bind(FirebooseClass);
+  FirebooseClass.pullMany = pullMany.bind(FirebooseClass);
+  FirebooseClass.sortOne = sortOne.bind(FirebooseClass);
+  FirebooseClass.sortOneById = sortOneById.bind(FirebooseClass);
+  FirebooseClass.sortMany = sortMany.bind(FirebooseClass);
 
   // Instance methods
   FirebooseClass.prototype.toObject = toObject;

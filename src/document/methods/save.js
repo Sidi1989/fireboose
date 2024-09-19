@@ -11,7 +11,7 @@ import {
  * Set an instance (previously created through: new Class(info)) as a 
  * Firestore document in a collection.
  * 
- * @return {String} Id of the instance
+ * @returns {Promise<String>} Id of the instance
  */
 const save = async function () {
   let Constructor = this.__proto__.constructor;

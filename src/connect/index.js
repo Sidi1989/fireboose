@@ -7,7 +7,7 @@ import { getFirestore } from 'firebase/firestore';
 /**
  * @description 
  * @param {Object} clientConfig 
- * @return void
+ * @return {Void}
  */
 const connect = function (clientConfig) {
   this.config = clientConfig;

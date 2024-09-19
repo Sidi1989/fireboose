@@ -3,8 +3,9 @@
  * Check multiple conditions to be fulfilled by an instance,
  * triggering before it could be saved.
  * 
- * @return {Boolean} Returns true if everything goes well, otherwise it 
- * returns false
+ * @return {Boolean} 
+ * It returns true if everything goes well, 
+ * otherwise it returns false
  */
 const validate = function () {
   const selfSchema = this.__proto__.constructor.schema;
