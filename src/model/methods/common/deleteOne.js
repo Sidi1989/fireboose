@@ -5,7 +5,7 @@
  * @param {Query} q
  * @returns {Promise<String|Null>} docId
  */
-const deleteOne = async function (q) {
+const deleteOne = function (q) {
   if (!q) {
     throw new Error('Not enough params for [deleteOne]')
   }

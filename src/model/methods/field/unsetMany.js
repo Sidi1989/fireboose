@@ -1,6 +1,7 @@
 import { 
   collection, 
   getDocs, query,
+  getDoc,
   deleteField, updateDoc,
 } from 'firebase/firestore';
 
@@ -39,12 +40,21 @@ const unsetMany = async function (q, field) {
     docsRefs.push(docSnap.ref);
   })
 
-  const deletion = {[field]: deleteField()};
+  const modifiedDocsIds = [];
   for (let docRef of docsRefs) {
-    await updateDoc(docRef, deletion);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const doc = docSnap.data();
+
+      if (doc[field]) {
+        const deletion = {[field]: deleteField()};
+        await updateDoc(docRef, deletion);
+        modifiedDocsIds.push(docRef.id)
+      }
+    }
   }
 
-  return docsIds;
+  return modifiedDocsIds;
 };
 
 

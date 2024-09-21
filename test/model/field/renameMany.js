@@ -24,7 +24,7 @@ describe('Model', function () {
       
       UnindexedCountry.renameMany(newQuery, oldKey, newKey)
       .then(function (resolve) {
-        let expectedResolve = ['country01', 'country02', 'country07', 'country08'];
+        let expectedResolve = ['country01', 'country02'];
         if (_.isEqual(expectedResolve, resolve)) {
           done()
         } else {
