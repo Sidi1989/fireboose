@@ -51,7 +51,7 @@ const pullOneById = async function (docId, arrayProp, element) {
     [arrayProp]: arrayRemove(element)
   }
   await updateDoc(docRef, updateInfo);
-  return docId;
+  return docRef.id;
 };
 
 

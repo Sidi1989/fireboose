@@ -47,20 +47,21 @@ const sortOneById = async function (docId, arrayProp, order) {
     const doc = docSnap.data();
 
     let sortedArray = [];
-    if (order == 'asc') {
-      sortedArray = doc[arrayProp].sort((a, b) => a - b);
-    } else if (order == 'desc') {
-      sortedArray = doc[arrayProp].sort((a, b) => b - a);
+    if (doc[arrayProp]) {
+      if (order == 'asc') {
+        sortedArray = doc[arrayProp].sort((a, b) => a - b);
+      } else if (order == 'desc') {
+        sortedArray = doc[arrayProp].sort((a, b) => b - a);
+      }
+  
+      // After updating the array, it is passed again as the property
+      // to be overwritten:
+      const updatedArray = {
+        [arrayProp]: sortedArray
+      }
+      await updateDoc(docRef, updatedArray);
+      return docRef.id;
     }
-
-    // After updating the array, it is passed again as the property
-    // to be overwritten:
-    const updatedArray = {
-      [arrayProp]: sortedArray
-    }
-    await updateDoc(docRef, updatedArray);
-
-    return docRef.id;
   } else {
     return null;
   }

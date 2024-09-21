@@ -1,12 +1,3 @@
-import { 
-  collection, doc,
-  getDocs, query,
-  arrayUnion, updateDoc,
-} from 'firebase/firestore';
-
-
-
-
 /**
  * @description
  * Update a document (identified as the result of a query) 
@@ -32,48 +23,25 @@ import {
  * //   cities: ['Madrid', 'Barcelona', 'Valencia']
  * // };
  */
-const pushOne = async function (q, arrayProp, element) {
-  const db = this.db;
-  const collectionName = this.collection;
-  const collectionRef = collection(db, collectionName);
-
+const pushOne = function (q, arrayProp, element) {
   if (!q || !arrayProp || !element) {
     throw new Error('Not enough params for [pushOne]')
   }
 
-  // Once every queryOperation is included in the array, 
-  // this array itself must be retrieved and passed into the query function 
-  // as if each of its elements were an argument of the function:
-  const queryOperations = q.getQueryOperations();
-  const queryDocs = query(collectionRef, ...queryOperations);
+  // As the method is set to keep only the first result, 
+  // a new queryOperation (limit) must be added:
+  const limitedQ = q.limit(1);
+  var docId =
+      this.pushMany(limitedQ, arrayProp, element)
+        .then(function (resolve) {
+          if(resolve.length > 0) {
+            return resolve[0];
+          } else {
+            return null;
+          }
+        })
 
-  const docsIds = [];
-  var querySnap = await getDocs(queryDocs);
-
-  querySnap.forEach(function(docSnap) {
-    docsIds.push(docSnap.id)
-  });
-
-  // It only keeps the first coincidence:
-  if (docsIds.length > 0) {
-    const queriedDocumentId = docsIds[0];
-    const docRef = doc(collectionRef, queriedDocumentId);
-
-    // According to Firebase Blog: 
-    // https://firebase.blog/posts/2018/08/better-arrays-in-cloud-firestore/
-    // In order to avoid some of the issues that can arise in a multi-user environment,
-    // you’ll be adding elements with more of a set-like functionality.
-    // So the arrayUnion operator will append an element to an array at the end of it,
-    // and only if it doesn’t exist in the array already.
-    let updateInfo = {
-      [arrayProp]: arrayUnion(element)
-    }
-
-    await updateDoc(docRef, updateInfo);
-    return docRef.id
-  } else {
-    return null
-  }
+  return docId;
 };
 
 

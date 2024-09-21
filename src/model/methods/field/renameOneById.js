@@ -61,7 +61,7 @@ const renameOneById = async function (docId, oldKey, newKey) {
       const deletion = {[oldKey]: deleteField()};
       await updateDoc(docRef, deletion);
 
-      return docId;
+      return docRef.id;
     }
 
     // When 'Old key' exists and 'New key' does not, the Doc is updated:
@@ -73,7 +73,7 @@ const renameOneById = async function (docId, oldKey, newKey) {
       const deletion = {[oldKey]: deleteField()};
       await updateDoc(docRef, deletion);
 
-      return docId
+      return docRef.id
     }
   } else {
     return null;

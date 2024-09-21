@@ -51,7 +51,7 @@ const pushOneById = async function (docId, arrayProp, element) {
     [arrayProp]: arrayUnion(element)
   }
   await updateDoc(docRef, updateInfo);
-  return docId;
+  return docRef.id;
 };
 
 

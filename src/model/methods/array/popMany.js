@@ -68,9 +68,9 @@ const popMany = async function (q, arrayProp) {
   const docsRefs = [];
   var querySnap = await getDocs(queryDocs);
   
-  querySnap.forEach(function(docSnap) {
-    docsIds.push(docSnap.id);
-    docsRefs.push(docSnap.ref);
+  querySnap.forEach(function(queryDocSnap) {
+    docsIds.push(queryDocSnap.id);
+    docsRefs.push(queryDocSnap.ref);
   })
 
   for (let docRef of docsRefs) {

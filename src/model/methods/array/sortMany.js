@@ -1,7 +1,7 @@
 import { 
-  collection, doc,
+  collection,
   getDocs, query,
-  getDoc, updateDoc
+  getDoc, updateDoc,
 } from 'firebase/firestore';
 
 
@@ -38,9 +38,9 @@ const sortMany = async function (q, arrayProp, order) {
   const docsRefs = [];
   var querySnap = await getDocs(queryDocs);
 
-  querySnap.forEach(function(docSnap) {
-    docsIds.push(docSnap.id);
-    docsRefs.push(docSnap.ref);
+  querySnap.forEach(function(queryDocSnap) {
+    docsIds.push(queryDocSnap.id);
+    docsRefs.push(queryDocSnap.ref);
   });
 
   for (let docRef of docsRefs) {
@@ -48,18 +48,20 @@ const sortMany = async function (q, arrayProp, order) {
     const doc = docSnap.data();
     
     let sortedArray = [];
-    if (order == 'asc') {
-      sortedArray = doc[arrayProp].sort((a, b) => a - b);
-    } else if (order == 'desc') {
-      sortedArray = doc[arrayProp].sort((a, b) => b - a);
+    if (doc[arrayProp]) {
+      if (order == 'asc') {
+        sortedArray = doc[arrayProp].sort((a, b) => a - b);
+      } else if (order == 'desc') {
+        sortedArray = doc[arrayProp].sort((a, b) => b - a);
+      }
+  
+      // After updating the array, it is passed again as the property
+      // to be overwritten:
+      const updatedArray = {
+        [arrayProp]: sortedArray
+      }
+      await updateDoc(docRef, updatedArray);
     }
-
-    // After updating the array, it is passed again as the property
-    // to be overwritten:
-    const updatedArray = {
-      [arrayProp]: sortedArray
-    }
-    await updateDoc(docRef, updatedArray);
   }
   
   return docsIds;

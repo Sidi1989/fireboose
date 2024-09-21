@@ -40,7 +40,7 @@ const unsetOneById = async function (docId, field) {
   const deletion = {[field]: deleteField()};
 
   await updateDoc(docRef, deletion);
-  return docId;
+  return docRef.id;
 };
 
 

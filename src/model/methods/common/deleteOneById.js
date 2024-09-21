@@ -24,7 +24,7 @@ const deleteOneById = async function (docId) {
 
   const docRef = doc(collectionRef, docId);
   await deleteDoc(docRef);
-  return docId;
+  return docRef.id;
 };
 
 
