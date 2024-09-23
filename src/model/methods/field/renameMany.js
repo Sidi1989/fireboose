@@ -15,7 +15,7 @@ import {
  * @param {Query} q
  * @param {String} oldKey E.g: 'countries'
  * @param {String} newKey E.g: 'nations'
- * @returns {Promise<String[]>} Array of docIds
+ * @returns {Promise<String[]>} Array of modified docIds
  */
 const renameMany = async function (q, oldKey, newKey) {
   const db = this.db;
@@ -32,12 +32,9 @@ const renameMany = async function (q, oldKey, newKey) {
   const queryOperations = q.getQueryOperations();
   const queryDocs = query(collectionRef, ...queryOperations);
 
-  const docsIds = [];
   const docsRefs = [];
   var querySnap = await getDocs(queryDocs);
-  
   querySnap.forEach(function(queryDocSnap) {
-    docsIds.push(queryDocSnap.id);
     docsRefs.push(queryDocSnap.ref);
   })
 
@@ -53,6 +50,7 @@ const renameMany = async function (q, oldKey, newKey) {
       if (doc[oldKey] && doc[newKey]) {
         const deletion = {[oldKey]: deleteField()};
         await updateDoc(docRef, deletion);
+        
         modifiedDocsIds.push(docRef.id)
       }
 
@@ -68,10 +66,9 @@ const renameMany = async function (q, oldKey, newKey) {
         modifiedDocsIds.push(docRef.id)
       }
 
-      // When 'New key' already exist, but 'Old key' does not
-      // or
-      // When neither 'Old key' nor 'New key' exist,
-      // As there are no modifications, no Id will be passed to the returning Array
+      // When 'Old key' does not exist in the Doc:
+      // the modifications cannot take place, 
+      // so no Id will be passed to the returning Array
     }
   };
   

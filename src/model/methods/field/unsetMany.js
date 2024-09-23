@@ -14,7 +14,7 @@ import {
  * from multiple documents of a collection.
  * @param {Query} q
  * @param {String} field E.g: 'rivers'
- * @returns {Promise<String[]>} Array of docIds
+ * @returns {Promise<String[]>} Array of modified docIds
  */
 const unsetMany = async function (q, field) {
   const db = this.db;
@@ -31,12 +31,9 @@ const unsetMany = async function (q, field) {
   const queryOperations = q.getQueryOperations();
   const queryDocs = query(collectionRef, ...queryOperations);
 
-  const docsIds = [];
   const docsRefs = [];
   var querySnap = await getDocs(queryDocs);
-
   querySnap.forEach(function(queryDocSnap) {
-    docsIds.push(queryDocSnap.id);
     docsRefs.push(queryDocSnap.ref);
   })
 
@@ -49,8 +46,13 @@ const unsetMany = async function (q, field) {
       if (doc[field]) {
         const deletion = {[field]: deleteField()};
         await updateDoc(docRef, deletion);
+        
         modifiedDocsIds.push(docRef.id)
       }
+      
+      // When the field does not exist in the Doc:
+      // the deletion cannot take place, 
+      // so no Id will be passed to the returning Array
     }
   }
 
