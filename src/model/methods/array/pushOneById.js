@@ -15,7 +15,7 @@ import {
  * @param {String} docId E.g: 'country01'
  * @param {String} arrayProp E.g: 'cities'
  * @param {Mixed} element 27 || 'Madrid' || true || {name: 'Madrid', river: 'Manzanares'}
- * @returns {Promise<String>} docId
+ * @returns {Promise<String|Null>} docId
  * @example
  * const country01 = {
  *   id: 'country01',
@@ -39,19 +39,23 @@ const pushOneById = async function (docId, arrayProp, element) {
     throw new Error('Not enough params for [pushOneById]')
   }
 
-  // According to Firebase Blog: 
-  // https://firebase.blog/posts/2018/08/better-arrays-in-cloud-firestore/
-  // In order to avoid some of the issues that can arise in a multi-user environment,
-  // you’ll be adding elements with more of a set-like functionality.
-  // So the arrayUnion operator will append an element to an array at the end of it,
-  // and only if it doesn’t exist in the array already.
-
   const docRef = doc(collectionRef, docId);
-  let updateInfo = {
-    [arrayProp]: arrayUnion(element)
+  if(docRef) {
+    // According to Firebase Blog: 
+    // https://firebase.blog/posts/2018/08/better-arrays-in-cloud-firestore/
+    // In order to avoid some of the issues that can arise in a multi-user environment,
+    // you’ll be adding elements with more of a set-like functionality.
+    // So the arrayUnion operator will append an element to an array at the end of it,
+    // and only if it doesn’t exist in the array already.
+    let updateInfo = {
+      [arrayProp]: arrayUnion(element)
+    }
+
+    await updateDoc(docRef, updateInfo);
+    return docRef.id;
+  } else {
+    return null;
   }
-  await updateDoc(docRef, updateInfo);
-  return docId;
 };
 
 

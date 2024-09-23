@@ -34,7 +34,7 @@ import {
  * "flatten" will transform the object in a 'firebase dot notation' like this:
  *  {'capital.river': 'Manzanares'}
  * 
- * @returns {Promise<String>} docId
+ * @returns {Promise<String|Null>} docId
  * @example
  * const newCountry = await Country.create(
  *    {name: 'Italy', capital: 'Rome'}, 
@@ -59,9 +59,12 @@ const updateOneById = async function (docId, docInfo) {
   }
 
   const docRef = doc(collectionRef, docId);
-  await updateDoc(docRef, flatten(docInfo));
-  
-  return docId;
+  if (docRef) {
+    await updateDoc(docRef, flatten(docInfo));
+    return docRef.id;
+  } else {
+    return null;
+  }
 };
 
 

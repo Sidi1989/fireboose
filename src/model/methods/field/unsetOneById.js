@@ -1,5 +1,6 @@
 import { 
   collection, doc,
+  getDoc,
   deleteField, updateDoc,
 } from 'firebase/firestore';
 
@@ -12,7 +13,7 @@ import {
  * identified by its Id
  * @param {String} docId E.g: 'country01'
  * @param {String} field E.g: 'rivers'
- * @returns {Promise<String>} docId
+ * @returns {Promise<String|Null>} docId
  * @example
  * const newCountry = await Country.create(
  *    {name: 'Spain', capital: 'Madrid', rivers: ['Ebro', 'Tajo', 'Duero']}, 
@@ -37,10 +38,22 @@ const unsetOneById = async function (docId, field) {
   }
 
   const docRef = doc(collectionRef, docId);
-  const deletion = {[field]: deleteField()};
+  var docSnap = await getDoc(docRef);
 
-  await updateDoc(docRef, deletion);
-  return docId;
+  if (docSnap.exists()) {
+    const doc = docSnap.data();
+
+    if (doc[field]) {
+      const deletion = {[field]: deleteField()};
+      await updateDoc(docRef, deletion);
+      
+      return docRef.id;
+    } else {
+      throw new Error('Cannot unset inexistent key');
+    }
+  } else {
+    return null;
+  }
 };
 
 

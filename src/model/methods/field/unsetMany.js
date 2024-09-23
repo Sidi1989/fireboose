@@ -1,6 +1,7 @@
 import { 
   collection, 
   getDocs, query,
+  getDoc,
   deleteField, updateDoc,
 } from 'firebase/firestore';
 
@@ -13,7 +14,7 @@ import {
  * from multiple documents of a collection.
  * @param {Query} q
  * @param {String} field E.g: 'rivers'
- * @returns {Promise<String[]>} Array of docIds
+ * @returns {Promise<String[]>} Array of modified docIds
  */
 const unsetMany = async function (q, field) {
   const db = this.db;
@@ -30,21 +31,32 @@ const unsetMany = async function (q, field) {
   const queryOperations = q.getQueryOperations();
   const queryDocs = query(collectionRef, ...queryOperations);
 
-  const docsIds = [];
   const docsRefs = [];
   var querySnap = await getDocs(queryDocs);
-
-  querySnap.forEach(function(docSnap) {
-    docsIds.push(docSnap.id);
-    docsRefs.push(docSnap.ref);
+  querySnap.forEach(function(queryDocSnap) {
+    docsRefs.push(queryDocSnap.ref);
   })
 
-  const deletion = {[field]: deleteField()};
+  const modifiedDocsIds = [];
   for (let docRef of docsRefs) {
-    await updateDoc(docRef, deletion);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const doc = docSnap.data();
+
+      if (doc[field]) {
+        const deletion = {[field]: deleteField()};
+        await updateDoc(docRef, deletion);
+        
+        modifiedDocsIds.push(docRef.id)
+      }
+      
+      // When the field does not exist in the Doc:
+      // the deletion cannot take place, 
+      // so no Id will be passed to the returning Array
+    }
   }
 
-  return docsIds;
+  return modifiedDocsIds;
 };
 
 

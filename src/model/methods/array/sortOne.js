@@ -1,12 +1,3 @@
-import { 
-  collection, doc,
-  getDocs, query,
-  getDoc, updateDoc
-} from 'firebase/firestore';
-
-
-
-
 /**
  * @description
  * Update a document (identified as the result of a query) 
@@ -32,56 +23,25 @@ import {
  * //   coasts: [910, 1090, 1200]
  * // };
  */
-const sortOne = async function (q, arrayProp, order) {
-  const db = this.db;
-  const collectionName = this.collection;
-  const collectionRef = collection(db, collectionName);
-
+const sortOne = function (q, arrayProp, order) {
   if (!q || !arrayProp || !order) {
     throw new Error('Not enough params for [sortOne]')
   }
 
-  // Once every queryOperation is included in the array, 
-  // this array itself must be retrieved and passed into the query function 
-  // as if each of its elements were an argument of the function:
-  const queryOperations = q.getQueryOperations();
-  const queryDocs = query(collectionRef, ...queryOperations);
+  // As the method is set to keep only the first result, 
+  // a new queryOperation (limit) must be added:
+  const limitedQ = q.limit(1);
+  var docId =
+      this.sortMany(limitedQ, arrayProp, order)
+        .then(function (resolve) {
+          if(resolve.length > 0) {
+            return resolve[0];
+          } else {
+            return null;
+          }
+        })
 
-  const docsIds = [];
-  var querySnap = await getDocs(queryDocs);
-
-  querySnap.forEach(function(docSnap) {
-    docsIds.push(docSnap.id);
-  });
-
-  // It only keeps the first coincidence:
-  if (docsIds.length > 0) {
-    const queriedDocumentId = docsIds[0];
-    const docRef = doc(collectionRef, queriedDocumentId);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const doc = docSnap.data();
-
-      let sortedArray = [];
-      if (order == 'asc') {
-        sortedArray = doc[arrayProp].sort((a, b) => a - b);
-      } else if (order == 'desc') {
-        sortedArray = doc[arrayProp].sort((a, b) => b - a);
-      }
-
-      // After updating the array, it is passed again as the property
-      // to be overwritten:
-      const updatedArray = {
-        [arrayProp]: sortedArray
-      }
-      await updateDoc(docRef, updatedArray);
-
-      return docRef.id;
-    } else {
-      return null;
-    }
-  }
+  return docId;
 };
 
 

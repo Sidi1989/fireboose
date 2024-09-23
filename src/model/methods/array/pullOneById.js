@@ -15,7 +15,7 @@ import {
  * @param {String} docId E.g: 'country01'
  * @param {String} arrayProp E.g: 'cities'
  * @param {Mixed} element 27 || 'Madrid' || true || {name: 'Madrid', river: 'Manzanares'}
- * @returns {Promise<String>} docId
+ * @returns {Promise<String|Null>} docId
  * @example
  * const country01 = {
  *   id: 'country01',
@@ -39,19 +39,23 @@ const pullOneById = async function (docId, arrayProp, element) {
     throw new Error('Not enough params for [pullOneById]')
   }
   
-  // According to Firebase Blog: 
-  // https://firebase.blog/posts/2018/08/better-arrays-in-cloud-firestore/
-  // In order to avoid some of the issues that can arise in a multi-user environment,
-  // you’ll be removing elements with more of a set-like functionality.
-  // So rather than asking to delete an item at index [i], you would ask to remove, 
-  // for example, all elements whose value is the string "Spain".
-  
   const docRef = doc(collectionRef, docId);
-  let updateInfo = {
-    [arrayProp]: arrayRemove(element)
+  if(docRef) {
+    // According to Firebase Blog: 
+    // https://firebase.blog/posts/2018/08/better-arrays-in-cloud-firestore/
+    // In order to avoid some of the issues that can arise in a multi-user environment,
+    // you’ll be removing elements with more of a set-like functionality.
+    // So rather than asking to delete an item at index [i], you would ask to remove, 
+    // for example, all elements whose value is the string "Spain".
+    let updateInfo = {
+      [arrayProp]: arrayRemove(element)
+    }
+
+    await updateDoc(docRef, updateInfo);
+    return docRef.id;
+  } else {
+    return null;
   }
-  await updateDoc(docRef, updateInfo);
-  return docId;
 };
 
 

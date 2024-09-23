@@ -1,7 +1,7 @@
 import { 
-  collection, doc,
+  collection,
   getDocs, query,
-  getDoc, updateDoc
+  getDoc, updateDoc,
 } from 'firebase/firestore';
 
 
@@ -17,7 +17,7 @@ import {
  *    there can only be {Number},
  *    but neither {String} nor {Object}
  * @param {String} order 'asc' | 'desc'
- * @returns {Promise<String[]>} Array of docIds
+ * @returns {Promise<String[]>} Array of modified docIds
  */
 const sortMany = async function (q, arrayProp, order) {
   const db = this.db;
@@ -34,35 +34,44 @@ const sortMany = async function (q, arrayProp, order) {
   const queryOperations = q.getQueryOperations();
   const queryDocs = query(collectionRef, ...queryOperations);
 
-  const docsIds = [];
   const docsRefs = [];
   var querySnap = await getDocs(queryDocs);
-
-  querySnap.forEach(function(docSnap) {
-    docsIds.push(docSnap.id);
-    docsRefs.push(docSnap.ref);
+  querySnap.forEach(function(queryDocSnap) {
+    docsRefs.push(queryDocSnap.ref);
   });
 
+  const modifiedDocsIds = [];
   for (let docRef of docsRefs) {
     const docSnap = await getDoc(docRef);
-    const doc = docSnap.data();
-    
-    let sortedArray = [];
-    if (order == 'asc') {
-      sortedArray = doc[arrayProp].sort((a, b) => a - b);
-    } else if (order == 'desc') {
-      sortedArray = doc[arrayProp].sort((a, b) => b - a);
-    }
 
-    // After updating the array, it is passed again as the property
-    // to be overwritten:
-    const updatedArray = {
-      [arrayProp]: sortedArray
+    if (docSnap.exists()) {
+      const doc = docSnap.data();
+    
+      let sortedArray = [];
+      if (doc[arrayProp]) {
+        if (order == 'asc') {
+          sortedArray = doc[arrayProp].sort((a, b) => a - b);
+        } else if (order == 'desc') {
+          sortedArray = doc[arrayProp].sort((a, b) => b - a);
+        }
+    
+        // After updating the array, it is passed again as the property
+        // to be overwritten:
+        const updatedArray = {
+          [arrayProp]: sortedArray
+        }
+        await updateDoc(docRef, updatedArray);
+
+        modifiedDocsIds.push(docRef.id)
+      }
+
+      // When the arrayProp does not exist in the Doc:
+      // the update cannot take place, 
+      // so no Id will be passed to the returning Array
     }
-    await updateDoc(docRef, updatedArray);
-  }
+  };
   
-  return docsIds;
+  return modifiedDocsIds;
 };
 
 

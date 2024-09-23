@@ -44,16 +44,6 @@ const renameOneById = async function (docId, oldKey, newKey) {
 
   if (docSnap.exists()) {
     const doc = docSnap.data();
-    
-    // When 'New key' already exist, but 'Old key' does not:
-    if (doc[newKey] && !doc[oldKey]) {
-      return null;
-    }
-
-    // When neither 'Old key' nor 'New key' exist:
-    if (!doc[newKey] && !doc[oldKey]) {
-      return null;
-    }
 
     // When both 'Old key' and 'New key' exist:
     //   -the 'Old key' field is deleted
@@ -61,7 +51,7 @@ const renameOneById = async function (docId, oldKey, newKey) {
       const deletion = {[oldKey]: deleteField()};
       await updateDoc(docRef, deletion);
 
-      return docId;
+      return docRef.id;
     }
 
     // When 'Old key' exists and 'New key' does not, the Doc is updated:
@@ -73,7 +63,12 @@ const renameOneById = async function (docId, oldKey, newKey) {
       const deletion = {[oldKey]: deleteField()};
       await updateDoc(docRef, deletion);
 
-      return docId
+      return docRef.id
+    }
+
+    // When 'Old key' does not exist in the Doc:
+    if (!doc[oldKey]) {
+      throw new Error('Cannot rename inexistent key');
     }
   } else {
     return null;

@@ -1,12 +1,3 @@
-import { 
-  collection, doc,
-  getDocs, query,
-  deleteField, updateDoc,
-} from 'firebase/firestore';
-
-
-
-
 /**
  * @description
  * Delete a specific field from a document, 
@@ -28,39 +19,25 @@ import {
  * console.log(await Country.findOneById('newCountryId'))
  * // {name: 'Spain', capital: 'Madrid'}
  */
-const unsetOne = async function (q, field) {
-  const db = this.db;
-  const collectionName = this.collection;
-  const collectionRef = collection(db, collectionName); 
-
+const unsetOne = function (q, field) {
   if (!q || !field) {
     throw new Error('Not enough params for [unsetOne]')
   }
 
-  // Once every queryOperation is included in the array, 
-  // this array itself must be retrieved and passed into the query function 
-  // as if each of its elements were an argument of the function:
-  const queryOperations = q.getQueryOperations();
-  const queryDocs = query(collectionRef, ...queryOperations);
+  // As the method is set to keep only the first result, 
+  // a new queryOperation (limit) must be added:
+  const limitedQ = q.limit(1);
+  var docId =
+      this.unsetMany(limitedQ, field)
+        .then(function (resolve) {
+          if(resolve.length > 0) {
+            return resolve[0];
+          } else {
+            return null;
+          }
+        })
 
-  const docsIds = [];
-  var querySnap = await getDocs(queryDocs);
-
-  querySnap.forEach(function(docSnap) {
-    docsIds.push(docSnap.id)
-  });
-
-  // It only keeps the first coincidence:
-  if (docsIds.length > 0) {
-    const queriedDocumentId = docsIds[0];
-    const docRef = doc(collectionRef, queriedDocumentId);
-    const deletion = {[field]: deleteField()};
-
-    await updateDoc(docRef, deletion);
-    return docRef.id;
-  } else {
-    return null
-  }
+  return docId;
 };
 
 
