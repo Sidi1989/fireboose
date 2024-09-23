@@ -11,7 +11,7 @@ import {
  * Delete a document from its collection, 
  * identified by its Id.
  * @param {String} docId E.g: 'country01'
- * @returns {Promise<String>} docId
+ * @returns {Promise<String|Null>} docId
  */
 const deleteOneById = async function (docId) {
   const db = this.db;
@@ -23,8 +23,12 @@ const deleteOneById = async function (docId) {
   }
 
   const docRef = doc(collectionRef, docId);
-  await deleteDoc(docRef);
-  return docRef.id;
+  if (docRef) {
+    await deleteDoc(docRef);
+    return docRef.id;
+  } else {
+    return null;
+  }
 };
 
 
