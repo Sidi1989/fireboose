@@ -16,7 +16,7 @@ import {
  * its first element.
  * @param {Query} q
  * @param {String} arrayProp E.g: 'cities'
- * @returns {Promise<String[]>} Array of docIds
+ * @returns {Promise<String[]>} Array of modified docIds
  * @example
  * const country01 = {
  *   id: 'country01',
@@ -64,30 +64,39 @@ const shiftMany = async function (q, arrayProp) {
   const queryOperations = q.getQueryOperations();
   const queryDocs = query(collectionRef, ...queryOperations);
 
-  const docsIds = [];
   const docsRefs = [];
   var querySnap = await getDocs(queryDocs);
-  
   querySnap.forEach(function(queryDocSnap) {
-    docsIds.push(queryDocSnap.id);
     docsRefs.push(queryDocSnap.ref);
   })
 
+  const modifiedDocsIds = [];
   for (let docRef of docsRefs) {
     const docSnap = await getDoc(docRef);
-    const doc = docSnap.data();
-    doc[arrayProp].shift();
 
-    // After changing the array, this is passed again 
-    // as the property to be overwritten in the Doc:
-    let updatedArray = {
-      [arrayProp]: doc[arrayProp]
+    if (docSnap.exists()) {
+      const doc = docSnap.data();
+
+      if (doc[arrayProp]) {
+        doc[arrayProp].shift();
+
+        // After changing the array, this is passed again 
+        // as the property to be overwritten in the Doc:
+        let updatedArray = {
+          [arrayProp]: doc[arrayProp]
+        }
+        await updateDoc(docRef, updatedArray);
+
+        modifiedDocsIds.push(docRef.id)
+      }
+
+      // When the arrayProp does not exist in the Doc:
+      // the update cannot take place, 
+      // so no Id will be passed to the returning Array
     }
+  };
 
-    await updateDoc(docRef, updatedArray);
-  }
-
-  return docsIds;
+  return modifiedDocsIds;
 };
 
 

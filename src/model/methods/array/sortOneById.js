@@ -60,7 +60,10 @@ const sortOneById = async function (docId, arrayProp, order) {
         [arrayProp]: sortedArray
       }
       await updateDoc(docRef, updatedArray);
+      
       return docRef.id;
+    } else {
+      throw new Error('Cannot update inexistent arrayProp');
     }
   } else {
     return null;

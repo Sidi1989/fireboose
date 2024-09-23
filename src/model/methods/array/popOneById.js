@@ -42,16 +42,21 @@ const popOneById = async function (docId, arrayProp) {
 
   if (docSnap.exists()) {
     const doc = docSnap.data();
-    doc[arrayProp].pop()
 
-    // After updating the array, it is passed again as the property
-    // to be overwritten:
-    let updatedArray = {
-      [arrayProp]: doc[arrayProp]
+    if (doc[arrayProp]) {
+      doc[arrayProp].pop()
+
+      // After updating the array, it is passed again as the property
+      // to be overwritten:
+      let updatedArray = {
+        [arrayProp]: doc[arrayProp]
+      }
+      await updateDoc(docRef, updatedArray);
+
+      return docRef.id;
+    } else {
+      throw new Error('Cannot update inexistent arrayProp');
     }
-
-    await updateDoc(docRef, updatedArray);
-    return docRef.id
   } else {
     return null;
   }
